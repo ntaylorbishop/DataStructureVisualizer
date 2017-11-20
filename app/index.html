@@ -18,10 +18,15 @@
 <body>
   <page-header></page-header>
 
-  <div id="DragDropArea" ng-controller="DragDropController" ng-mousemove="captureCoordinate($event)">
+  <div id="DragDropArea" ng-mousemove="captureCoordinate($event)" drag-drop>
       <!-- <div>x: {{x}}</div>
       <div>y: {{y}}</div> -->
-      <div id="DragDroppable" drag-drop></div>
+      <div id="DragDroppable">
+        <div line-draw>64</div>
+      </div>
+      <div id="DragDroppable">
+        <div line-draw>64</div>
+      </div>
   </div>
 
 
