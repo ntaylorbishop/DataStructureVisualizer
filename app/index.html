@@ -18,17 +18,13 @@
 <body>
   <page-header></page-header>
 
-  <div id="DragDropArea" ng-mousemove="captureCoordinate($event)" drag-drop>
-      <!-- <div>x: {{x}}</div>
-      <div>y: {{y}}</div> -->
-      <div id="DragDroppable">
-        <div line-draw>64</div>
-      </div>
-      <div id="DragDroppable">
-        <div line-draw>64</div>
-      </div>
+  <canvas id="LineDrawCanvas" width="1903" height="900"></canvas>
+  <div class="Node" drag-drop>
+    <div class="NodeValue" line-draw>16</div>
   </div>
-
+  <div class="Node" drag-drop>
+    <div class="NodeValue" line-draw>24</div>
+  </div>
 
 
 
@@ -47,6 +43,7 @@
   <script src="Header/page-header.component.js"></script>
   <script src="StructureTemplates/BST/bst.js"></script>
   <script src="StructureTemplates/Heap/heap.js"></script>
-  <script src="DragDrop/DragDrop.js"></script>
+  <script src="NodeSystem/NodeSystem.js"></script>
+  <script src="Person.js"></script>  
 </body>
 </html>
