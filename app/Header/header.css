@@ -12,21 +12,21 @@
 }
 
 #header a:link {
-    color: #ffffff;
-    text-decoration:  none;
-}
-
-#header a:visited {
-    color: #ffffff;
-    text-decoration:  none;
-}
-
-#header a:hover {
     color: #FEFAE0;
     text-decoration:  none;
 }
 
+#header a:visited {
+    color: #FEFAE0;
+    text-decoration:  none;
+}
+
+#header a:hover {
+    color: #DDA15E;
+    text-decoration:  none;
+}
+
 #header a:active {
-    color: #ffffff;
+    color: #FEFAE0;
     text-decoration:  none;
 }

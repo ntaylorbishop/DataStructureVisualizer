@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
   <link rel="stylesheet" href="app.css">
   <link rel="stylesheet" href="Header/header.css">
-  <link rel="stylesheet" href="login-form.css">
+  <link rel="stylesheet" href="LoginForm/login-form.css">
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body>
@@ -27,15 +27,18 @@
     <div class="NodeValue" line-draw>24</div>
   </div>
 
-  <div id="Login">
+  <!-- <div id="Login">
     <span>Please log in</span>
     <br />
     <form>
-      <input type="text" name="username" value="username"><br>
-      <input type="password" name="password" value="password">
+      <input type="text" name="username" value="username" onfocus="this.value = this.value=='username'?'':this.value;" onblur="this.value = this.value==''?'username':this.value;"><br>
+      <input type="password" name="password" value="password" onfocus="this.value = this.value=='password'?'':this.value;" onblur="this.value = this.value==''?'password':this.value;"><br>
+      <input type="button" name="login" value="Login">
     </form>
+    <a href="">Need to create an account?</a> -->
 
-    <a href="">Need to create an account?</a>
+    <login-form></login-form>
+
   </div>
 
 
@@ -56,6 +59,7 @@
   <script src="StructureTemplates/BST/bst.js"></script>
   <script src="StructureTemplates/Heap/heap.js"></script>
   <script src="NodeSystem/NodeSystem.js"></script>
+  <script src="LoginForm/login-form.component.js"></script>
   <script src="Person.js"></script>  
 </body>
 </html>

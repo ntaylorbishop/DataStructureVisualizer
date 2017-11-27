@@ -4,7 +4,7 @@ div#Login {
     text-align: center;
     margin: auto;
     width: 300px;
-    height: 200px;
+    height: 250px;
     top: 150px;
     font-size: 1.2em;
     font-family: "Segoe UI",Arial,sans-serif;
@@ -14,7 +14,7 @@ div#Login {
 div#Login form {
     width: 300px;
     height: 100px;
-    top: 50%;
+    top: 40%;
     left: 50%;
     position: absolute;
     margin: -50px 0 0 -150px;
@@ -22,6 +22,36 @@ div#Login form {
 
 div#Login input {
       margin: 10px 0 10px 0;
+      width: 220px;      
+}
+
+div#Login input[name="login"] {
+    width: 229px;
+    background-color: #BC6C25;
+    padding: 0;
+    border: none;
+    height: 32px;
+    color: #FEFAE0;
+}
+
+div#Login input[name="login"]:hover {
+    background-color: #DDA15E;
+    text-decoration:  none;
+    padding: 0;
+    border: none;
+    color: #FEFAE0;
+}
+
+
+
+div#Login input[value="username"] {
+    color: #90949c;
+    padding-left: 5px;
+}
+
+div#Login input[value="password"] {
+    color: #90949c;
+    padding-left: 5px;    
 }
   
 div#Login a {
@@ -44,12 +74,4 @@ div#Login span {
     left: 50%;
     margin: 0 0 0 -100px;
     position: absolute;
-}
-
-div#Login input[value="username"] {
-    color: #90949c;
-}
-
-div#Login input[value="password"] {
-    color: #90949c;
 }
