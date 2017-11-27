@@ -1,6 +1,7 @@
 angular.module('DataStructureVisualizer').
   component('loginForm', {
-    template:   
+    template:
+      '<div id="LoginBlackout"></div>' + 
       '<div id="Login">' + 
         '<span>Please log in</span>' + 
         '<br />' + 
