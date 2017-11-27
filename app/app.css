@@ -7,7 +7,7 @@ canvas#LineDrawCanvas {
 }
 
 div.Node {
-  background: rgb(73, 122, 255);  
+  background: #283618;  
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -27,7 +27,7 @@ div.NodeValue {
     font-size: 1.2em;
     font-family: "Segoe UI",Arial,sans-serif;
     color: white;
-    background: rgb(73, 122, 255);  
+    background: #283618;  
     text-align: center;
     vertical-align: center;
     cursor: pointer;
