@@ -1,18 +1,21 @@
-angular.module('DataStructureVisualizer').
-  component('loginForm', {
-    template:
-      '<div id="LoginBlackout"></div>' + 
-      '<div id="Login">' + 
-        '<span>Please log in</span>' + 
-        '<br />' + 
-        '<form>' + 
-          '<input type="text" name="username" value="username" onfocus="this.value = this.value==\'username\'?\'\':this.value;" onblur="this.value = this.value==\'\'?\'username\':this.value;"><br>' + 
-          '<input type="password" name="password" value="password" onfocus="this.value = this.value==\'password\'?\'\':this.value;" onblur="this.value = this.value==\'\'?\'password\':this.value;"><br>' + 
-          '<input type="button" name="login" value="Login">' + 
-        '</form>' + 
-        '<a href="">Need to create an account?</a>' + 
-        '</div>',
-    controller: function GreetUserController() {
 
-    }
-  });
+angular.module('DataStructureVisualizer').
+component('loginForm', {
+  templateUrl: 'LoginForm/login-form.html'
+});
+
+angular.module('DataStructureVisualizer').
+controller("LoginShowController", function($scope, $rootScope) {
+  
+  $scope.toggleLoginForm = function() {
+
+    $rootScope.show = ! $rootScope.show;
+    console.log($rootScope.show);
+  }
+
+  $scope.isLoginFormShown = function() {
+
+    console.log($rootScope.show);
+    return $rootScope.show;
+  }
+});

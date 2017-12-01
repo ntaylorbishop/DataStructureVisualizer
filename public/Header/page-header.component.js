@@ -3,8 +3,8 @@
 angular.
   module('DataStructureVisualizer').
   component('pageHeader', {
-    templateUrl: 'header.html',
-    controller: function PageHeaderController($scope) {
-      
+    templateUrl: 'Header/header.html',
+    controller: function PageHeaderController() {
+
     }
   });

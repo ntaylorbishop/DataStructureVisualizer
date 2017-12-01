@@ -4,6 +4,7 @@
     font-family: "Segoe UI",Arial,sans-serif;
     padding-bottom: 10px;
     padding-top: 10px;
+    position: relative;
 }
 
 #header a {
@@ -29,4 +30,39 @@
 #header a:active {
     color: #FEFAE0;
     text-decoration:  none;
+}
+
+#header div#Username {
+    height: 75px;
+    font-size: 0.7em;
+    font-family: "Segoe UI",Arial,sans-serif;
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    text-align: center;
+    color: #FEFAE0;
+}
+
+#header div#Username a:link {
+    text-decoration:  none;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;    
+}
+
+#header div#Username a:visited {
+    text-decoration:  none;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;    
+}
+
+#header div#Username a:hover {
+    text-decoration:  none;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+}
+
+#header div#Username a:active {
+    text-decoration:  none;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;    
 }
