@@ -13,3 +13,13 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 }]);
 
 
+//rootScope defaults
+angular.module('DataStructureVisualizer')
+.run(["$rootScope", function ($rootScope) {
+    angular.extend($rootScope, {
+        RegLoginForm: {
+            showForm: false,
+            isOnLoginForm: true
+        },
+    });
+}]);

@@ -1,4 +1,4 @@
-div#Login {
+div#RegLogin {
     position: relative;
     background-color: #283618;  
     text-align: center;
@@ -12,7 +12,7 @@ div#Login {
     z-index: 101;
   }
   
-div#Login form {
+div#RegLogin form {
     width: 300px;
     height: 100px;
     top: 40%;
@@ -21,12 +21,12 @@ div#Login form {
     margin: -50px 0 0 -150px;
 }
 
-div#Login input {
+div#RegLogin input {
       margin: 10px 0 10px 0;
       width: 220px;      
 }
 
-div#Login input[name="login"] {
+div#RegLogin input[name="login"] {
     width: 229px;
     background-color: #BC6C25;
     padding: 0;
@@ -35,7 +35,7 @@ div#Login input[name="login"] {
     color: #FEFAE0;
 }
 
-div#Login input[name="login"]:hover {
+div#RegLogin input[name="login"]:hover {
     background-color: #DDA15E;
     text-decoration:  none;
     padding: 0;
@@ -43,19 +43,17 @@ div#Login input[name="login"]:hover {
     color: #FEFAE0;
 }
 
-
-
-div#Login input[value="username"] {
+div#RegLogin input[value="username"] {
     color: #90949c;
     padding-left: 5px;
 }
 
-div#Login input[value="password"] {
+div#RegLogin input[value="password"] {
     color: #90949c;
     padding-left: 5px;    
 }
   
-div#Login a {
+div#RegLogin a {
     bottom: 10px;
     position: absolute;
     width: 200px;
@@ -65,11 +63,11 @@ div#Login a {
     color: #DDA15E;
 }
 
-div#Login a:hover {
+div#RegLogin a:hover {
     color: #FEFAE0;    
 }
 
-div#Login span {
+div#RegLogin span {
     top: 10px;
     width: 200px;
     left: 50%;
@@ -77,7 +75,7 @@ div#Login span {
     position: absolute;
 }
 
-div#LoginBlackout {
+div#RegLoginBlackout {
     position: absolute;
     left: 0px;
     top: 0px;
