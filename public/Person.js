@@ -17,6 +17,4 @@ var Suzy = new Person("Suzy", "Rottencrotch", 24, SkinColor.WHITE);
 var Sam = new Person("Sam", "Allen", 23, SkinColor.ASIAN);
 var Taylor = new Person("Taylor", "Bishop", 26, SkinColor.WHITE);
 
-console.log(Suzy);
-
 //alert(Suzy);

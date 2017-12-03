@@ -15,9 +15,7 @@ mongoose.connection.on('error',function (err)       { console.log('MongoDB: ERRO
 mongoose.connection.on('close',function (err)       { console.log('MongoDB: Connection Closed');                            }); 
 mongoose.connection.on('reconnected', function ()   { console.log('MongoDB: Database link was reconnected');                });
 mongoose.connection.on('disconnected', function ()  { console.log('MongoDB: The connection was ended on: ' + dbURI );       });
-mongoose.connection.on('open', function(ref)        { console.log("Connected to mongo server.");                            });
 mongoose.connect(dbURI);
-
 
 app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
 app.use(morgan('dev'));                                         // log every request to the console

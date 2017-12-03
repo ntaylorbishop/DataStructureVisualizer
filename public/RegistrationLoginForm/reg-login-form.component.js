@@ -90,6 +90,7 @@ controller("RegLoginController", function($scope, $rootScope, $http) {
     $http.get('/api/user')
     .success(function(data) {
         console.log(data);
+        console.log("success!");
     })
     .error(function(data) {
         console.log('Error: ' + data);
