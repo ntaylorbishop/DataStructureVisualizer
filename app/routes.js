@@ -1,6 +1,6 @@
 var usersModel = require('./models/user');
 
-function getUser(username, res) {
+function doesUserExist(username, res) {
 
     usersModel.findOne({ 'username': username }, function (err, user) {
         if (err) {
@@ -15,10 +15,9 @@ function getUser(username, res) {
 module.exports = function (app) {
 
     // api ---------------------------------------------------------------------
-    // get all todos
     app.get('/api/user', function (req, res) {
         // use mongoose to get all todos in the database
-        getUser(res);
+        doesUserExist(res);
     });
 
     // create todo and send back all todos after creation

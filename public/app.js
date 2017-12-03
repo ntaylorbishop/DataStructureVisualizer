@@ -19,7 +19,7 @@ angular.module('DataStructureVisualizer')
     angular.extend($rootScope, {
         RegLoginForm: {
             showForm: false,
-            isOnLoginForm: true
+            isOnLoginForm: true,
         },
     });
 }]);

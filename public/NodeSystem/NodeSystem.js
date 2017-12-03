@@ -96,8 +96,6 @@ return {
         canvasContext.lineWidth = 1;
         canvasContext.closePath();
         canvasContext.stroke();    
-
-        console.log(start);
       }
   }
 };

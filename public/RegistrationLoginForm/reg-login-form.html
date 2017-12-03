@@ -1,17 +1,21 @@
-<div id="RegLoginBlackout" ng-controller="RegLoginController" ng-show="isRegLoginFormShown()" ng-click="toggleRegLoginForm()"></div>
-<div id="RegLogin" ng-controller="RegLoginController" ng-show="isRegLoginFormShown()"> 
-  <span>Please log in</span>
-  <br />
-  <form>
-    <input type="text" name="username" value="username" 
-      onfocus="this.value = this.value=='username'?'':this.value;" 
-      onblur="this.value = this.value==''?'username':this.value;">
+<div id=RegLoginContainer ng-controller="RegLoginController">
+  <div id="RegLoginBlackout"  ng-show="isRegLoginFormShown()" ng-click="toggleRegLoginForm()"></div>
+  <div id="RegLogin" ng-show="isRegLoginFormShown()"> 
+    <span id="formHeader">{{formHeader}}</span>
+    <br />
+    <form>
+      <input type="text" name="username" ng-model="username" value="username" 
+        onfocus="this.value = this.value=='username'?'':this.value;" 
+        onblur="this.value = this.value==''?'username':this.value;">
+        <br>
+      <input type="password" name="password" ng-model="password" value="password" 
+        onfocus="this.value = this.value=='password'?'':this.value;" 
+        onblur="this.value = this.value==''?'password':this.value;">
       <br>
-    <input type="password" name="password" value="password" 
-      onfocus="this.value = this.value=='password'?'':this.value;" 
-      onblur="this.value = this.value==''?'password':this.value;">
-    <br>
-    <input type="button" name="login" value="Login">
-  </form>
-  <a href="" ng-controller="RegLoginToggleForms" ng-click="switchToRegistration()">{{registrationText}}</a>
+      <input type="button" name="login" value="{{submitBtn}}" ng-click="validateInputAndSubmit()">
+    </form>
+    <img src="img/LoadingIcon.png" id="LoadingIcon" ng-show="isSubmitting" />
+    <span id="RegLoginErrMsg">{{errMsg}}</span>
+    <a href="" ng-click="switchToRegistration()">{{registrationText}}</a>
+  </div>
 </div>
