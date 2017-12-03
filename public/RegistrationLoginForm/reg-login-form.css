@@ -87,7 +87,7 @@ div#RegLoginBlackout {
     overflow: hidden;
 }
 
-div#RegLogin span#RegLoginErrMsg {
+div#RegLogin span#RegLoginOutputMsg {
     bottom: 32px;
     position: absolute;
     width: 250px;

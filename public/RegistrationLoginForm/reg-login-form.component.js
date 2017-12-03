@@ -26,13 +26,13 @@ controller("RegLoginController", function($scope, $rootScope, $http) {
       $scope.registrationText = 'Need to create an account?'; 
       $scope.formHeader = 'Please log in';
       $scope.submitBtn = 'Login';
-      $scope.errMsg = '';
+      $scope.outputMsg = '';
     }
     else {
       $scope.registrationText = ''; 
       $scope.formHeader = 'Make an account';
       $scope.submitBtn = 'Register';
-      $scope.errMsg = '';
+      $scope.outputMsg = 'NOTE: Info you submit is NOT safe';
     }
   });
 
@@ -50,30 +50,30 @@ controller("RegLoginController", function($scope, $rootScope, $http) {
     var isValid = true;
 
     if($scope.password.length == 0 || ($scope.password == 'password' && $rootScope.RegLoginForm.isOnLoginForm == true)) {
-      $scope.errMsg = 'Please enter a password';
+      $scope.outputMsg = 'Please enter a password';
       isValid = false;
     }
     if($scope.password.length <= 6) {
-      $scope.errMsg = 'Password must be longer than 6 characters';
+      $scope.outputMsg = 'Password must be longer than 6 characters';
       isValid = false;
     }
     if($scope.username.length >= 15) {
-      $scope.errMsg = 'User must be less than 15 characters';
+      $scope.outputMsg = 'User must be less than 15 characters';
       isValid = false;
     }
     if($scope.username.length == 0 || $scope.username == 'username') {
-      $scope.errMsg = 'Please enter a username';
+      $scope.outputMsg = 'Please enter a username';
       isValid = false;
     }
     if($scope.username.length >= 20) {
-      $scope.errMsg = 'Username must be less than 20 characters';
+      $scope.outputMsg = 'Username must be less than 20 characters';
     }
 
     if(isValid == false) {
       return;
     }
 
-    $scope.errMsg = '';
+    $scope.outputMsg = '';
 
     if($rootScope.RegLoginForm.isOnLoginForm == true) {
       submitLogin();
@@ -87,10 +87,23 @@ controller("RegLoginController", function($scope, $rootScope, $http) {
   function submitLogin() {
     $scope.isSubmitting = true;
 
-    $http.get('/api/user')
+    var userData = {
+      username : $scope.username,
+      password : $scope.password
+    };
+
+    $http.post('/api/user/login', userData)
     .success(function(data) {
-        console.log(data);
-        console.log("success!");
+
+      if(data.doesExist == false) {
+        $scope.outputMsg = 'Username does not exist.';
+      }
+      else {
+        $scope.outputMsg = data.outputMsg;
+      }
+
+      $scope.outputMsg = data.outputMsg;
+      $scope.isSubmitting = false;
     })
     .error(function(data) {
         console.log('Error: ' + data);
@@ -98,6 +111,29 @@ controller("RegLoginController", function($scope, $rootScope, $http) {
   }
 
   function submitRegistration() {
-    $scope.isSubmitting = true;    
+    $scope.isSubmitting = true;
+
+    var userData = {
+      username : $scope.username,
+      password : $scope.password
+    };
+
+    $http.post('/api/user/register', userData)
+    .success(function(data) {
+      
+      if(data.accountCreated == false) {
+        console.log("Registration denied.");
+        $scope.outputMsg = data.outputMsg;
+      }
+      else {
+        console.log("Registration successful");
+        $scope.outputMsg = data.outputMsg;
+      }
+      
+      $scope.isSubmitting = false;
+    })
+    .error(function(data) {
+        console.log('Error: ' + data);
+    });
   }
 });
