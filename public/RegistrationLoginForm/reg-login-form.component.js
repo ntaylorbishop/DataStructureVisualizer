@@ -10,12 +10,12 @@ controller("RegLoginController", function($scope, $rootScope, $http) {
   //Show / hide login form
   $scope.toggleRegLoginForm = function() {
     $rootScope.RegLoginForm.showForm = ! $rootScope.RegLoginForm.showForm;
-    
-    if($rootScope.RegLoginForm.showForm == true) {
-      $rootScope.RegLoginForm.isOnLoginForm = true;
-    }
-  }
   
+    if($rootScope.RegLoginForm.showForm == true) {
+        $rootScope.RegLoginForm.isOnLoginForm = true;
+    }
+}
+
   $scope.isRegLoginFormShown = function() {
     return $rootScope.RegLoginForm.showForm;
   }
@@ -104,6 +104,9 @@ controller("RegLoginController", function($scope, $rootScope, $http) {
 
       $scope.outputMsg = data.outputMsg;
       $scope.isSubmitting = false;
+      $rootScope.username = $scope.username;
+
+      setTimeout(closeFormAndUpdateHeader, 1000);
     })
     .error(function(data) {
         console.log('Error: ' + data);
@@ -122,18 +125,25 @@ controller("RegLoginController", function($scope, $rootScope, $http) {
     .success(function(data) {
       
       if(data.accountCreated == false) {
-        console.log("Registration denied.");
         $scope.outputMsg = data.outputMsg;
       }
       else {
-        console.log("Registration successful");
         $scope.outputMsg = data.outputMsg;
       }
       
       $scope.isSubmitting = false;
+      $rootScope.username = $scope.username;
+
+      setTimeout(closeFormAndUpdateHeader, 1000);      
     })
     .error(function(data) {
         console.log('Error: ' + data);
     });
+  }
+
+  function closeFormAndUpdateHeader() {
+    $rootScope.isLoggedIn = true;       
+    $rootScope.RegLoginForm.showForm = false;
+    $rootScope.$apply();
   }
 });

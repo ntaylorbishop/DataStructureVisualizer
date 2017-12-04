@@ -1,0 +1,10 @@
+<div id="Sidebar" ng-controller="SidebarController">
+    <center>
+        <div id="StructureTitle">{{structureTitle}}</div>
+    </center>
+    <div id="StructureLinks">
+        <div class="StructureLink" ng-repeat="dataStructure in structuresList">
+            <input type="text" class="StructureLinkName" value="{{dataStructure.name}}"></input>
+        </div>
+    </div>
+</div>

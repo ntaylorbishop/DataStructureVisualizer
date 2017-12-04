@@ -1,14 +1,13 @@
 'use strict';
 
 angular.module('DataStructureVisualizer.heap', ['ngRoute'])
-
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/Heap', {
-    templateUrl: 'StructureTemplates/Heap/heap.html',
-    controller: 'HeapCtrl'
+    templateUrl: 'StructureTemplates/Views/heap.html',
+    controller: 'HeapController'
   });
 }])
 
-.controller('HeapCtrl', [function() {
-
+.controller('HeapController', [function() {
+  console.log('HeapController');
 }]);

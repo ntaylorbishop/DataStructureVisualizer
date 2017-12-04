@@ -21,5 +21,15 @@ angular.module('DataStructureVisualizer')
             showForm: false,
             isOnLoginForm: true,
         },
+        isLoggedIn : false,
+        username : '',
+        DataStructure: {
+            currStructurePage : StructurePage.STRUCTURE_PAGE_BST,
+            binarySearchTrees : { },
+            stacks : { },
+            queues : { },
+            heaps : { },
+            linkedLists : { }
+        }
     });
 }]);

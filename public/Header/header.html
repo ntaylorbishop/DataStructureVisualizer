@@ -1,10 +1,15 @@
 <div id="header">
-    <center>
-        <a href="#!/BinaryTree">Binary Tree</a>
-        <a href="#!/Stack">Stack</a>
-        <a href="#!/Queue">Queue</a>
-        <a href="#!/Heap">Heap</a>
-        <a href="#!/LinkedList">Linked List</a>
+    <center ng-controller="StructureLoaderController">
+        <a href="" ng-click="LoadBST()">Binary Tree</a>
+        <a href="" ng-click="LoadStack()">Stack</a>
+        <a href="" ng-click="LoadQueue()">Queue</a>
+        <a href="" ng-click="LoadHeap()">Heap</a>
+        <a href="" ng-click="LoadLinkedList()">Linked List</a>
     </center>
-    <div id="Username">Please <a href="#" ng-controller="RegLoginController" ng-click="toggleRegLoginForm()">login.</a></div>
+    <div id="Username" ng-controller="HeaderLoginController" ng-show="isLoggedIn">
+        Welcome, {{username}}!
+    </div>    
+    <div id="Username" ng-controller="HeaderLoginController" ng-show="!isLoggedIn">
+        Please <a href="#" ng-click="toggleRegLoginForm()">login.</a>
+    </div>
 </div>
