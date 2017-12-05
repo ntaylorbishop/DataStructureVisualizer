@@ -35,7 +35,7 @@ module.exports = function (app) {
         });    
     });
 
-    // create todo and send back all todos after creation
+    //Register user
     app.post('/api/user/register', function (req, res) {
 
         usersModel.find({ 'username': req.body.username }, function (err, users) {

@@ -18,19 +18,12 @@
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body>
-  <div id="ContentContainer">
+  <div id="ContentContainer" ng-controller="DataHandlerController">
     <page-header></page-header>
     <sidebar></sidebar>
     
     <canvas id="LineDrawCanvas" width="1903" height="900"></canvas>
-    
-    <!-- <div class="Node" drag-drop>
-      <div class="NodeValue" line-draw>16</div>
-    </div>
-    <div class="Node" drag-drop>
-      <div class="NodeValue" line-draw>24</div>
-    </div> -->
-
+    <node-view></node-view>
     <reg-login-form></reg-login-form>
   </div>
 
@@ -41,10 +34,15 @@
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="global-enums.js"></script>
   <script src="app.js"></script>
+  <script src="NodeSystem/data-handler.controller.js"></script>
   <script src="Structures/Controllers/bst.js"></script>
   <script src="Structures/Controllers/heap.js"></script>
   <script src="Header/page-header.component.js"></script>
   <script src="Header/header-login.controller.js"></script>
+  <script src="NodeSystem/Link.js"></script>
+  <script src="NodeSystem/Node.js"></script>
+  <script src="NodeSystem/NodeView.controller.js"></script>
+  <script src="NodeSystem/NodeView.component.js"></script>
   <script src="NodeSystem/NodeSystem.js"></script>
   <script src="RegistrationLoginForm/reg-login-form.component.js"></script>
   <script src="Sidebar/sidebar.component.js"></script>

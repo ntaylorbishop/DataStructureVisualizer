@@ -17,12 +17,7 @@ angular.module('DataStructureVisualizer.bst', ['ngRoute'])
 //BST definition
 class BinarySearchTree {
   constructor(name, arrayOfValues) {
-
     this.name = name;
-    parseValues(arrayOfValues);
-
-    function parseValues(arrayOfValues) {
-
-    }
+    this.arrayOfValues = arrayOfValues;
   }
 }
