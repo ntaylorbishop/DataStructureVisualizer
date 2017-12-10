@@ -1,6 +1,6 @@
 
 angular.module('DataStructureVisualizer').
-controller("DataHandlerController", function($scope, $rootScope) {
+controller("DataHandlerController", function($scope, structureDataService) {
 
     
     $scope.LoadStructureWithName = function(name, structureType) {
@@ -21,7 +21,7 @@ controller("DataHandlerController", function($scope, $rootScope) {
             value: 30
         }
     ];
-    $rootScope.DataStructure.binarySearchTrees[0] = new BinarySearchTree('first', arrayOfValues);
+    structureDataService.binarySearchTrees[0] = new BinarySearchTree('first', arrayOfValues);
     
     $scope.loadAllStructures = function() {
         //get from server
@@ -31,8 +31,9 @@ controller("DataHandlerController", function($scope, $rootScope) {
         //heaps = ;
         //linkedLists = ;
 
-        console.log($rootScope.DataStructure.binarySearchTrees[0]);
-        debugger;
+        structureDataService.SetCurrStructurePage(StructurePage.STRUCTURE_PAGE_BST);
+
+        console.log(structureDataService.binarySearchTrees[0]);
     }
 });
 

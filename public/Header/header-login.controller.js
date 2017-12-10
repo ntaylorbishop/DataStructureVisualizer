@@ -1,25 +1,28 @@
 
 angular.module('DataStructureVisualizer').
-controller("HeaderLoginController", function($scope, $rootScope) {
+controller("HeaderLoginController", function($scope, $rootScope, structureDataService, userService, loginFormService) {
 
     $scope.isLoggedIn = false;
 
-    $scope.$watch('$root.isLoggedIn', function() {
+    //FIX
+    function subscribeToUserLogin() {
+        $scope.username = userService.GetUsername();
+        $scope.isLoggedIn = userService.GetIsLoggedIn();        
+    }
+    userService.registerCallbackToIsLoggedIn(subscribeToUserLogin);
 
-        $scope.isLoggedIn = $rootScope.isLoggedIn;
-    });
-
-    $scope.$watch('$root.username', function() {
-        
-        $scope.isLoggedIn = $rootScope.isLoggedIn;        
-        $scope.username = $rootScope.username;
-    });
-
+    function subscribeToUsernameChange() {
+        $scope.isLoggedIn = userService.GetIsLoggedIn();        
+        $scope.username = userService.GetUsername();
+    }
+    userService.registerCallbackToUsername(subscribeToUsernameChange);
+    
     $scope.toggleRegLoginForm = function() {
-        $rootScope.RegLoginForm.showForm = ! $rootScope.RegLoginForm.showForm;
+
+        loginFormService.SetShowForm(!loginFormService.GetShowForm());
       
-        if($rootScope.RegLoginForm.showForm == true) {
-            $rootScope.RegLoginForm.isOnLoginForm = true;
+        if(loginFormService.GetShowForm() == true) {
+            loginFormService.SetIsOnLoginForm(true);
         }
     }
 });

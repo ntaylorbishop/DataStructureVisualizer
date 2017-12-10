@@ -1,9 +1,8 @@
 
 angular.module('DataStructureVisualizer').
-controller("NodeViewController", function($scope, $rootScope) {
+controller("NodeViewController", function($scope, structureDataService) {
 
     //$scope.nodes = $rootScope.DataStructure.binarySearchTrees[0].arrayOfValues;
-    console.log($rootScope.DataStructure.binarySearchTrees[0]);
+    console.log(structureDataService.binarySearchTrees[0]);
     
-    debugger;
 });

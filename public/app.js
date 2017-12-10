@@ -14,22 +14,16 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
 
 //rootScope defaults
-angular.module('DataStructureVisualizer')
-.run(["$rootScope", function ($rootScope) {
-    angular.extend($rootScope, {
-        RegLoginForm: {
-            showForm: false,
-            isOnLoginForm: true,
-        },
-        isLoggedIn : false,
-        username : '',
-        DataStructure: {
-            currStructurePage : StructurePage.STRUCTURE_PAGE_BST,
-            binarySearchTrees : { },
-            stacks : { },
-            queues : { },
-            heaps : { },
-            linkedLists : { }
-        }
-    });
-}]);
+//angular.module('DataStructureVisualizer')
+//.run(["$rootScope", function ($rootScope) {
+//    angular.extend($rootScope, {
+//        DataStructure: {
+//            currStructurePage : StructurePage.STRUCTURE_PAGE_BST,
+//            binarySearchTrees : { },
+//            stacks : { },
+//            queues : { },
+//            heaps : { },
+//            linkedLists : { }
+//        }
+//    });
+//}]);

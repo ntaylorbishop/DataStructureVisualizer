@@ -5,24 +5,25 @@ component('regLoginForm', {
 });
 
 angular.module('DataStructureVisualizer').
-controller("RegLoginController", function($scope, $rootScope, $http) {
+controller("RegLoginController", function($scope, $rootScope, $http, userService, structureDataService, loginFormService, userService) {
 
   //Show / hide login form
   $scope.toggleRegLoginForm = function() {
-    $rootScope.RegLoginForm.showForm = ! $rootScope.RegLoginForm.showForm;
-  
-    if($rootScope.RegLoginForm.showForm == true) {
-        $rootScope.RegLoginForm.isOnLoginForm = true;
+
+    loginFormService.SetShowForm(!loginFormService.GetShowForm());
+
+    if(loginFormService.GetShowForm() == true) {
+      loginFormService.SetIsOnLoginForm(true);
     }
 }
 
   $scope.isRegLoginFormShown = function() {
-    return $rootScope.RegLoginForm.showForm;
+    return loginFormService.GetShowForm();
   }
 
-  $scope.$watch('$root.RegLoginForm.isOnLoginForm', function() {
+  function SubscribeToIsOnLoginForm() {
 
-    if($rootScope.RegLoginForm.isOnLoginForm == true) {
+    if(loginFormService.GetIsOnLoginForm() == true) {
       $scope.registrationText = 'Need to create an account?'; 
       $scope.formHeader = 'Please log in';
       $scope.submitBtn = 'Login';
@@ -34,10 +35,11 @@ controller("RegLoginController", function($scope, $rootScope, $http) {
       $scope.submitBtn = 'Register';
       $scope.outputMsg = 'NOTE: Info you submit is NOT safe';
     }
-  });
+  }
+  loginFormService.registerCallbackToIsOnLoginForm(SubscribeToIsOnLoginForm);
 
   $scope.switchToRegistration = function() {
-    $rootScope.RegLoginForm.isOnLoginForm = false;
+    loginFormService.SetIsOnLoginForm(true);
   }
 
   //Validation
@@ -49,7 +51,7 @@ controller("RegLoginController", function($scope, $rootScope, $http) {
 
     var isValid = true;
 
-    if($scope.password.length == 0 || ($scope.password == 'password' && $rootScope.RegLoginForm.isOnLoginForm == true)) {
+    if($scope.password.length == 0 || ($scope.password == 'password' && loginFormService.GetIsOnLoginForm() == true)) {
       $scope.outputMsg = 'Please enter a password';
       isValid = false;
     }
@@ -75,7 +77,7 @@ controller("RegLoginController", function($scope, $rootScope, $http) {
 
     $scope.outputMsg = '';
 
-    if($rootScope.RegLoginForm.isOnLoginForm == true) {
+    if(loginFormService.GetIsOnLoginForm() == true) {
       submitLogin();
     }
     else {
@@ -104,7 +106,7 @@ controller("RegLoginController", function($scope, $rootScope, $http) {
 
       $scope.outputMsg = data.outputMsg;
       $scope.isSubmitting = false;
-      $rootScope.username = $scope.username;
+      userService.SetUsername($scope.username);
 
       setTimeout(closeFormAndUpdateHeader, 1000);
     })
@@ -132,7 +134,8 @@ controller("RegLoginController", function($scope, $rootScope, $http) {
       }
       
       $scope.isSubmitting = false;
-      $rootScope.username = $scope.username;
+
+      userService.SetUsername($scope.username);
 
       setTimeout(closeFormAndUpdateHeader, 1000);      
     })
@@ -142,8 +145,8 @@ controller("RegLoginController", function($scope, $rootScope, $http) {
   }
 
   function closeFormAndUpdateHeader() {
-    $rootScope.isLoggedIn = true;       
-    $rootScope.RegLoginForm.showForm = false;
+    userService.SetIsLoggedIn(true);
+    loginFormService.SetShowForm(false);
     $rootScope.$apply();
   }
 });
