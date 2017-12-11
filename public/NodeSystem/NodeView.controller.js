@@ -1,4 +1,11 @@
 
+function ViewNode(position) {
+    this.position = position;
+}
+
+ViewNode.prototype = new BSTNode();
+
+
 angular.module('DataStructureVisualizer').
 controller("NodeViewController", function($scope, structureDataService) {
 

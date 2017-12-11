@@ -7,19 +7,3 @@ angular.module('DataStructureVisualizer', [
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
 }]);
-
-
-//rootScope defaults
-//angular.module('DataStructureVisualizer')
-//.run(["$rootScope", function ($rootScope) {
-//    angular.extend($rootScope, {
-//        DataStructure: {
-//            currStructurePage : StructurePage.STRUCTURE_PAGE_BST,
-//            binarySearchTrees : { },
-//            stacks : { },
-//            queues : { },
-//            heaps : { },
-//            linkedLists : { }
-//        }
-//    });
-//}]);

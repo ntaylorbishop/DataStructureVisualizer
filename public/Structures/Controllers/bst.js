@@ -1,59 +1,53 @@
 'use strict';
 
-class BSTNode {
-  constructor(value) {
-    this.value = value;
-    this.left = null;
-    this.right = null;
-  }
+//BSTNODE
+function BSTNode(value) {
+  this.value = value;
+  this.left = null;
+  this.right = null;
 }
 
 
-//BST definition
-class BinarySearchTree {
-  //CONSTRUCTOR
-  constructor(name, arrayOfValues) {
-    this.name = name;
+//BST
+function BinarySearchTree(name, arrayOfValues) {
+  this.name = name;
+  
+  //this.arrayOfValues = arrayOfValues;
+  
+  this.root = new BSTNode(arrayOfValues[0]);
+      
+  for(var i = 0; i < arrayOfValues.length; i++) {
+    this.insert(arrayOfValues[i]);
+  }
+}
 
-    //this.arrayOfValues = arrayOfValues;
+BinarySearchTree.prototype.insert = function(value) {
+  var currNode = this.root;
+  var newNode = new BSTNode(value);
 
-    this.root = new BSTNode(arrayOfValues[0]);
-    
-    for(var i = 0; i < arrayOfValues.length; i++) {
-      this.insert(arrayOfValues[i]);
-    }
+  if(this.root == null) {
+    this.root = newNode;
+    return;
   }
 
-  //METHODS
-  insert(value) {
+  while(currNode) {
 
-    var currNode = this.root;
-    var newNode = new BSTNode(value);
-
-    if(this.root == null) {
-      this.root = newNode;
-      return;
-    }
-
-    while(currNode) {
-
-      if(value < currNode.value) {
-        if(currNode.left) {
-          currNode = currNode.left;
-        }
-        else {
-          currNode.left = newNode;
-          break;
-        }
+    if(value < currNode.value) {
+      if(currNode.left) {
+        currNode = currNode.left;
       }
       else {
-        if(currNode.right) {
-          currNode = currNode.right;
-        }
-        else {
-          currNode.right = newNode;
-          break;
-        }
+        currNode.left = newNode;
+        break;
+      }
+    }
+    else {
+      if(currNode.right) {
+        currNode = currNode.right;
+      }
+      else {
+        currNode.right = newNode;
+        break;
       }
     }
   }
