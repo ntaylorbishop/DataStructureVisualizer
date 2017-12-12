@@ -88,7 +88,7 @@ return {
       }
 
       function draw(start, end) {
-        canvasContext.clearRect(0, 0, 1903, 900);        
+        //canvasContext.clearRect(0, 0, 1903, 900);        
         canvasContext.beginPath();
         canvasContext.moveTo(start.x, start.y);
         canvasContext.lineTo(end.x, end.y);
