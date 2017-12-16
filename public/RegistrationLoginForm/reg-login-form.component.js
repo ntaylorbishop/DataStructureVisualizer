@@ -39,7 +39,7 @@ controller("RegLoginController", function($scope, $rootScope, $http, userService
   loginFormService.registerCallbackToIsOnLoginForm(SubscribeToIsOnLoginForm);
 
   $scope.switchToRegistration = function() {
-    loginFormService.SetIsOnLoginForm(true);
+    loginFormService.SetIsOnLoginForm(false);
   }
 
   //Validation
@@ -101,14 +101,13 @@ controller("RegLoginController", function($scope, $rootScope, $http, userService
         $scope.outputMsg = 'Username does not exist.';
       }
       else {
+        debugger;
         $scope.outputMsg = data.outputMsg;
+        userService.SetUsername($scope.username);
+        setTimeout(closeFormAndUpdateHeader, 1000);
       }
 
-      $scope.outputMsg = data.outputMsg;
       $scope.isSubmitting = false;
-      userService.SetUsername($scope.username);
-
-      setTimeout(closeFormAndUpdateHeader, 1000);
     })
     .error(function(data) {
         console.log('Error: ' + data);
@@ -131,13 +130,11 @@ controller("RegLoginController", function($scope, $rootScope, $http, userService
       }
       else {
         $scope.outputMsg = data.outputMsg;
+        userService.SetUsername($scope.username);
+        setTimeout(closeFormAndUpdateHeader, 1000);      
       }
-      
+
       $scope.isSubmitting = false;
-
-      userService.SetUsername($scope.username);
-
-      setTimeout(closeFormAndUpdateHeader, 1000);      
     })
     .error(function(data) {
         console.log('Error: ' + data);

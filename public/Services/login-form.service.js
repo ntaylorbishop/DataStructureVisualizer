@@ -26,8 +26,9 @@ factory('loginFormService', function() {
             }
         },
 
-        SetIsOnLoginForm : function(isOnloginForm) {
-            this.isOnloginForm = isOnloginForm;
+        SetIsOnLoginForm : function(isOnLoginForm) {
+
+            this.isOnLoginForm = isOnLoginForm;
 
             for(var i = 0; i < this.isOnLoginFormCallbacks.length; i++) {
                 this.isOnLoginFormCallbacks[i]();
