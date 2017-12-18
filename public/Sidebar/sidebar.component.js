@@ -7,13 +7,6 @@ component('sidebar', {
 angular.module('DataStructureVisualizer').
 controller("SidebarController", function($scope, $rootScope, structureDataService) {
 
-  //structureDataService.binarySearchTrees[0] = new BinarySearchTree('first',  [ 0 ] );
-  //structureDataService.binarySearchTrees[1] = new BinarySearchTree('second', [ 0 ] );
-  //structureDataService.binarySearchTrees[2] = new BinarySearchTree('third',  [ 0 ] );
-  //structureDataService.binarySearchTrees[3] = new BinarySearchTree('fourth', [ 0 ] );
-  //structureDataService.binarySearchTrees[4] = new BinarySearchTree('fifth',  [ 0 ] );
-  //structureDataService.binarySearchTrees[5] = new BinarySearchTree('sixth',  [ 0 ] );
-
   function SubscribeToCurrStructurePage() {
     $scope.currStructurePage = structureDataService.GetCurrStructurePage();
     LoadInStructuresOfType($scope.currStructurePage);
@@ -23,6 +16,7 @@ controller("SidebarController", function($scope, $rootScope, structureDataServic
   function LoadInStructuresOfType(structureType) {
 
     $scope.structuresList = structureDataService.binarySearchTrees;
+    console.log($scope.structuresList);
     
     switch(structureType) {
       case StructurePage.STRUCTURE_PAGE_BST:

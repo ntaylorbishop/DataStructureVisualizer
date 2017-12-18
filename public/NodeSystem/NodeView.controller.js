@@ -10,7 +10,11 @@ controller("NodeViewController", function($scope, structureDataService, $documen
     var yDiff = 600;
 
     structureDataService.binarySearchTrees[0] = new BinarySearchTree('first');
-
+    structureDataService.binarySearchTrees[1] = new BinarySearchTree('first1');
+    structureDataService.binarySearchTrees[2] = new BinarySearchTree('first2');
+    structureDataService.binarySearchTrees[3] = new BinarySearchTree('first3');
+    structureDataService.binarySearchTrees[4] = new BinarySearchTree('first4');
+    
     structureDataService.binarySearchTrees[0].insert(100);
     structureDataService.binarySearchTrees[0].insert(25);
     structureDataService.binarySearchTrees[0].insert(20);

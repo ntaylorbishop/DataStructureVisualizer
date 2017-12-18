@@ -3,6 +3,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var binarySearchTreeSchema = new Schema({
+    owner: {
+
+    },
     title: {
         type: String,
         required: true,

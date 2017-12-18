@@ -3,8 +3,9 @@
         <div id="StructureTitle">{{structureTitle}}</div>
     </center>
     <div id="StructureLinks">
-        <div class="StructureLink" ng-repeat="dataStructure in structuresList">
-            <input type="text" class="StructureLinkName" value="{{dataStructure.name}}"></input>
+        <div class="StructureLink" ng-repeat="dataStructure in structuresList" ng-controller="StructureLinkController">
+            <div class="StructureLinkText" ng-show="!isSelected" ng-click="select()">{{dataStructure.name}}</div>
+            <input type="text" class="StructureLinkName" value="{{dataStructure.name}}" ng-show="isSelected" ng-keypress="unselect($event)" focus-element="isSelected"></input>
         </div>
     </div>
 </div>

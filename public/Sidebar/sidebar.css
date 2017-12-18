@@ -2,7 +2,7 @@ div#Sidebar {
     position: absolute;
     left: 0px;
     top: 47px;
-    width: 300px;
+    width: 15%;
     height: 100%;
     overflow: hidden;
     background-color: #283618;
@@ -55,4 +55,9 @@ div#Sidebar input.StructureLinkName:active {
     cursor: text;
     background-color: #606C38;
     border: none;    
+    border-radius: 5px;
+}
+
+div.StructureLinkText {
+    display: inline;
 }
