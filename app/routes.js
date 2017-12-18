@@ -66,7 +66,32 @@ module.exports = function (app) {
         });   
     });
 
-    app.get('/api/user/')
+    app.post('/api/structure/create-bst', function(req, res) {
+
+        bstModel.create({
+            owner: req.body.owner,
+            title: req.body.title,
+            values: req.body.values
+        }, function (err, allBSTs) {
+            if (err) {
+                console.log(err);
+                res.send({ 'successful' : false, 'allBSTs' :  [] });
+                return;
+            }
+            
+            bstModel.find({ 'owner': req.body.owner }, function (err, allBSTs) {
+                
+                if (err) {
+                    console.log(err);
+                    res.send({ 'successful' : false, 'allBSTs' :  [] });
+                }
+                else {
+                    console.log(allBSTs);
+                    res.send({ 'successful' : true, 'allBSTs' : allBSTs });                
+                }
+            });  
+        });
+    });
 
     // application -------------------------------------------------------------
     app.get('*', function(req, res) {

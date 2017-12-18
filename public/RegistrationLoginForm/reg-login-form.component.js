@@ -101,7 +101,6 @@ controller("RegLoginController", function($scope, $rootScope, $http, userService
         $scope.outputMsg = 'Username does not exist.';
       }
       else {
-        debugger;
         $scope.outputMsg = data.outputMsg;
         userService.SetUsername($scope.username);
         setTimeout(closeFormAndUpdateHeader, 1000);
