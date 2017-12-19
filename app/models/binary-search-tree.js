@@ -12,13 +12,12 @@ var binarySearchTreeSchema = new Schema({
     title: {
         type: String,
         required: true,
-        unique: false,
-        default: "UNTITLED"
+        default: "UNTITLED",
+
     },
     values: [{
-        value: Number,
+        type: Number,
         required: false,
-        unique: false,
     }],
     created_at: Date
 });
