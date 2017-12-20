@@ -16,7 +16,10 @@ controller("SidebarController", function($scope, $rootScope, structureDataServic
     function LoadInStructuresOfType(structureType) {
 
         $scope.structuresList = structureDataService.binarySearchTrees;
-        console.log($scope.structuresList);
+
+        for(var i = 0; i < $scope.structuresList.length; i++) {
+            $scope.structuresList[i].index = i;
+        }
     
         switch(structureType) {
             case StructurePage.STRUCTURE_PAGE_BST:
@@ -46,6 +49,12 @@ controller("SidebarController", function($scope, $rootScope, structureDataServic
 
         var username = userService.GetUsername();
         structureDataService.CreateStructure(username);
+    }
+
+    $scope.deleteStructure = function(indexInStructureArray) {
+
+        debugger;
+        console.log(indexInStructureArray);
     }
 
     structureDataService.SetCurrStructurePage(StructurePage.STRUCTURE_PAGE_BST);

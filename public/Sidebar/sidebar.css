@@ -21,7 +21,6 @@ div#Sidebar div.StructureLink {
     color: #FEFAE0;
     width: 100%;
     cursor: pointer; 
-    padding-left: 20px;
 }
 
 
@@ -29,15 +28,36 @@ div#Sidebar div.StructureLink:hover {
     color: #DDA15E;
     width: 100%;
     cursor: pointer;    
-    padding-left: 20px;
     background-color: #606C38;
 }
+
+div.StructureLink a {
+    visibility: hidden;
+}
+
+div#Sidebar div.StructureLink:hover a {
+    -webkit-filter: opacity(1.0) drop-shadow(0 0 0 rgb(254, 250, 254));
+    filter: opacity(1.0) drop-shadow(0 0 0 rgb(254, 250, 254));
+    visibility: visible;
+    float: right;
+    margin-right: 10px;
+    position: relative;
+    top: -3px;
+}
+
+div#Sidebar div.StructureLink img {
+    -webkit-filter: opacity(1.0) drop-shadow(0 0 0 rgb(221, 161, 94));
+    filter: opacity(1.0) drop-shadow(0 0 0 rgb(221, 161, 94));
+}
+
 
 div#Sidebar input.StructureLinkName {
     display: inline-block;
     resize: none;
     background-color: #283618;
     border: none;
+    padding-left: 20px;    
+    
 }
 
 div#Sidebar input.StructureLinkName:hover {
@@ -60,7 +80,9 @@ div#Sidebar input.StructureLinkName:active {
 
 div.StructureLinkText {
     display: inline;
+    padding-left: 20px;    
 }
+
 
 button#CreateStructure {
     position: absolute;
@@ -73,11 +95,9 @@ button#CreateStructure {
     color: #FEFAE0;
     border: none;
     font-size: 0.8em;
-    font-family: "Segoe UI",Arial,sans-serif;}
-
-button#CreateStructure {
-
+    font-family: "Segoe UI",Arial,sans-serif;
 }
+
 
 button#CreateStructure:hover {
     background-color: #DDA15E;

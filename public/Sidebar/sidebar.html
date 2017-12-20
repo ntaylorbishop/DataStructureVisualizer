@@ -6,6 +6,7 @@
         <div class="StructureLink" ng-repeat="dataStructure in structuresList" ng-controller="StructureLinkController">
             <div class="StructureLinkText" ng-show="!isSelected" ng-click="select()">{{dataStructure.name}}</div>
             <input type="text" class="StructureLinkName" value="{{dataStructure.name}}" ng-show="isSelected" ng-keypress="unselect($event)" focus-element="isSelected"></input>
+            <a ng-click="deleteStructure(dataStructure)"><img src="img/DeleteButton.png" /></a>
         </div>
     </div>
     <button id="CreateStructure" ng-click="createStructure()">Create {{createBtnTitle}}</button>
