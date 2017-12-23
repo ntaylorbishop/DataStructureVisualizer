@@ -12,6 +12,7 @@ factory('structureDataService', function($http) {
         heaps : [],
         linkedLists : [],
         structureChangeCallbacks : [],
+        structureSelectedCallbacks : [],
 
 
         //METHODS
@@ -55,7 +56,6 @@ factory('structureDataService', function($http) {
 
                     break;
                 default:
-                    debugger;
                     break;
             }
         },
@@ -63,7 +63,7 @@ factory('structureDataService', function($http) {
         createBST : function(user) {
 
             if(user == '') {
-                return;
+                return false;
             }
 
             var sendData = {
@@ -75,35 +75,54 @@ factory('structureDataService', function($http) {
             $http.post('/api/structure/create-bst', sendData)
             .success(function(allBSTs) {
 
-                var returnBSTs = {
-                    successful: true,
-                    BSTs: allBSTs
-                };
-
-
-
-                return returnBSTs;
+                this.binarySearchTrees = allBSTs;
+                return true;
             })
             .error(function(allBSTs) {
                 console.log('Error: ' + data);
 
-                var returnBSTs = {
-                    successful: false,
-                    BSTs: []
-                };
-
-                return returnBSTs;
+                return false;
             });
         },
 
         subscribeToStructureChange : function(callback) {
-            structureChangeCallbacks.push(callback);
+            this.structureChangeCallbacks.push(callback);
         },
 
         handleStructureChange : function() {
-            for(var i = 0; i < structureChangeCallbacks.length; i++) {
-                structureChangeCallbacks[i]();
+            for(var i = 0; i < this.structureChangeCallbacks.length; i++) {
+                this.structureChangeCallbacks[i]();
             }
+        },
+
+        handleStructureSelected : function(structureType, selectedStructure) {
+
+            debugger;
+
+            HERE;; //Cannot pass arguments to callbacks - need to register these as closures instead
+
+            for(var i = 0; i < this.structureSelectedCallbacks.length; i++) {
+                this.structureSelectedCallbacks[i](structureType, selectedStructure);
+            }
+        },
+
+        subscribeToStructureSelected : function(callback) {
+            this.structureSelectedCallbacks.push(callback);
+        },
+
+        //LOADING IN STRUCTURES
+        loadBSTs : function() {
+
+            $http.get('/api/structure/load-default-bsts')
+            .success(function(allBSTs) {
+                structureDataService.binarySearchTrees = allBSTs;                
+                structureDataService.handleStructureChange();
+                return true;
+            })
+            .error(function(allBSTs) {
+                console.log('Error: ' + data);
+                return false;
+            });
         }
     }
 

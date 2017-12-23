@@ -4,19 +4,29 @@
 angular.module('DataStructureVisualizer').
 controller("StructureLinkController", function($scope, structureDataService, $document) {
 
-    $scope.isSelected = false;
+    $scope.isTextSelected = false;
+    $scope.isTextHovered = false;
 
-    $scope.unselect = function($event) {
+    $scope.clickText = function() {
+        $scope.isTextSelected = true;                
+    }
 
-        console.log($event.keyCode);
-
+    $scope.enterText = function($event) {
         if($event.keyCode == 13) {
-            $scope.isSelected = false;
+            $scope.isTextSelected = true;        
             angular.element($event.srcElement).focus();
         }
     }
 
-    $scope.select = function($event) {
-        $scope.isSelected = true;
+    $scope.selectStructure = function(dataStructure) {
+
+        if(! $scope.isTextHovered) {
+            $scope.isTextSelected = false;
+            structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST);
+        }
+    }
+
+    $scope.isHoveringText = function(isHovering) {
+        $scope.isTextHovered = isHovering;
     }
 });

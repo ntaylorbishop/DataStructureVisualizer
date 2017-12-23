@@ -3,9 +3,9 @@
         <div id="StructureTitle">{{structureTitle}}</div>
     </center>
     <div id="StructureLinks">
-        <div class="StructureLink" ng-repeat="dataStructure in structuresList" ng-controller="StructureLinkController">
-            <div class="StructureLinkText" ng-show="!isSelected" ng-click="select()">{{dataStructure.name}}</div>
-            <input type="text" class="StructureLinkName" value="{{dataStructure.name}}" ng-show="isSelected" ng-keypress="unselect($event)" focus-element="isSelected"></input>
+        <div class="StructureLink" ng-repeat="dataStructure in structuresList" ng-controller="StructureLinkController" ng-click="selectStructure(dataStructure)">
+            <div class="StructureLinkText" ng-show="!isTextSelected" ng-mouseover="isHoveringText(true)" ng-mouseleave="isHoveringText(false)" ng-click="clickText()">{{dataStructure.title}}</div>
+            <input type="text" class="StructureLinkName" value="{{dataStructure.title}}" ng-show="isTextSelected" ng-keypress="enterText($event)" focus-element="isTextSelected"></input>
             <a ng-click="deleteStructure(dataStructure)"><img src="img/DeleteButton.png" /></a>
         </div>
     </div>

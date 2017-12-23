@@ -6,25 +6,34 @@ component('sidebar', {
 
 angular.module('DataStructureVisualizer').
 controller("SidebarController", function($scope, $rootScope, structureDataService, userService) {
+    
+    structureDataService.registerCallbackToCurrStructurePage(subscribeToCurrStructurePage);
+    structureDataService.setCurrStructurePage(StructurePage.STRUCTURE_PAGE_BST);
+    structureDataService.subscribeToStructureChange(onStructureDataChange);
 
     function subscribeToCurrStructurePage() {
         $scope.currStructurePage = structureDataService.getCurrStructurePage();
         loadInStructuresOfType($scope.currStructurePage);
     }
-    structureDataService.registerCallbackToCurrStructurePage(subscribeToCurrStructurePage);
 
-    function loadInStructuresOfType(structureType) {
-
+    function onStructureDataChange() {
         $scope.structuresList = structureDataService.binarySearchTrees;
 
         for(var i = 0; i < $scope.structuresList.length; i++) {
             $scope.structuresList[i].index = i;
         }
+    }
+
+
+    function loadInStructuresOfType(structureType) {
+        onStructureDataChange();
     
         switch(structureType) {
             case StructurePage.STRUCTURE_PAGE_BST:
                 $scope.structureTitle = 'Binary Search Trees';
                 $scope.createBtnTitle = 'BST';
+                structureDataService.loadBSTs();
+                onStructureDataChange();
                 break;
             case StructurePage.STRUCTURE_PAGE_STACK:
                 $scope.structureTitle = 'Stacks';
@@ -46,16 +55,11 @@ controller("SidebarController", function($scope, $rootScope, structureDataServic
     }
 
     $scope.createStructure = function() {
-
         var username = userService.getUsername();
         structureDataService.createStructure(username);
     }
 
     $scope.deleteStructure = function(indexInStructureArray) {
-
-        debugger;
         console.log(indexInStructureArray);
     }
-
-    structureDataService.setCurrStructurePage(StructurePage.STRUCTURE_PAGE_BST);
 });

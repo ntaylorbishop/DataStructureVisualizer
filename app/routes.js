@@ -93,6 +93,17 @@ module.exports = function (app) {
         });
     });
 
+    app.get('/api/structure/load-default-bsts', function(req, res) {
+
+        bstModel.find(function(err, allBSTs) {
+            if (err) {
+                res.send(err)
+            }
+
+            res.json(allBSTs);
+        });
+    });
+
     // application -------------------------------------------------------------
     app.get('*', function(req, res) {
         res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)

@@ -3,35 +3,28 @@
 //NODE VIEW CONTROLLER
 ////////////////////////////////////////////////////////////////////
 angular.module('DataStructureVisualizer').
-controller("NodeViewController", function($scope, structureDataService, $document) {
+controller("NodeViewController", function($scope, structureDataService, structureVisService, $document) {
 
-    var startPoint = new Vector2(995, 160);
-    var xDiff = 400;
-    var yDiff = 600;
+    structureDataService.subscribeToStructureSelected(this.structureSelectedEvent);
 
-    structureDataService.binarySearchTrees[0] = new BinarySearchTree('first');
-    structureDataService.binarySearchTrees[1] = new BinarySearchTree('first1');
-    structureDataService.binarySearchTrees[2] = new BinarySearchTree('first2');
-    structureDataService.binarySearchTrees[3] = new BinarySearchTree('first3');
-    structureDataService.binarySearchTrees[4] = new BinarySearchTree('first4');
-    
-    structureDataService.binarySearchTrees[0].insert(100);
-    structureDataService.binarySearchTrees[0].insert(25);
-    structureDataService.binarySearchTrees[0].insert(20);
-    structureDataService.binarySearchTrees[0].insert(50);
-    structureDataService.binarySearchTrees[0].insert(110);
-    structureDataService.binarySearchTrees[0].insert(105);
-    structureDataService.binarySearchTrees[0].insert(103);
-    structureDataService.binarySearchTrees[0].insert(113);
-    structureDataService.binarySearchTrees[0].insert(112);
+    console.log('HELLO');
 
+    var startPoint = structureVisService.startPoint;
+    var xDiff = structureVisService.xDiff;
+    var yDiff = structureVisService.yDiff;
+    var canvas = document.getElementById("LineDrawCanvas");
+    var canvasContext = canvas.getContext("2d");
     var array = [];
-
-    //POPULATE NODES
-    structureDataService.binarySearchTrees[0].generatePositionsInPanel(new Vector2(500, 160), xDiff * 2, yDiff);
-    structureDataService.binarySearchTrees[0].serialize(array);
-
     $scope.nodes = array;    
+    
+    this.structureSelectedEvent = function(structureType, dataStructure) {        
+        //POPULATE NODES
+        dataStructure.generatePositionsInPanel(new Vector2(500, 160), xDiff * 2, yDiff);
+        dataStructure.serialize(array);
+        
+        this.drawLinesBetweenNodes(structureDataService.binarySearchTrees[0].root);
+        $scope.nodes = array;
+    }
 
     //DRAW LINES
     this.draw = function(start, end) {
@@ -43,7 +36,7 @@ controller("NodeViewController", function($scope, structureDataService, $documen
         this.canvasContext.lineWidth = 1;
         this.canvasContext.closePath();
         this.canvasContext.stroke();    
-      }
+    }
 
     this.drawLinesBetweenNodes = function(node) {
         
@@ -60,8 +53,4 @@ controller("NodeViewController", function($scope, structureDataService, $documen
             this.drawLinesBetweenNodes(node.right);
         }
     }
-
-    var canvas = document.getElementById("LineDrawCanvas");
-    this.canvasContext = canvas.getContext("2d");
-    this.drawLinesBetweenNodes(structureDataService.binarySearchTrees[0].root);
 });
