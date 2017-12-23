@@ -2,10 +2,6 @@
 angular.module('DataStructureVisualizer').
 factory('structureDataService', function($http) {
 
-    function createLocalBST() {
-
-    }
-
     var structureDataService = {
         //DATA MEMBERS
         currStructurePage : StructurePage.STRUCTURE_PAGE_BST,
@@ -15,15 +11,16 @@ factory('structureDataService', function($http) {
         queues : [],
         heaps : [],
         linkedLists : [],
+        structureChangeCallbacks : [],
 
 
         //METHODS
-        RegisterCallbackToCurrStructurePage : function(callback) {
+        registerCallbackToCurrStructurePage : function(callback) {
             this.currStructurePageCallbacks.push(callback);
         },
 
 
-        SetCurrStructurePage : function(currStructurePage) {
+        setCurrStructurePage : function(currStructurePage) {
             this.currStructurePage = currStructurePage;
             
             for(var i = 0; i < this.currStructurePageCallbacks.length; i++) {
@@ -32,18 +29,18 @@ factory('structureDataService', function($http) {
         },
 
 
-        GetCurrStructurePage : function() {
+        getCurrStructurePage : function() {
             return this.currStructurePage;
         },
 
 
-        CreateStructure : function(user) {
+        createStructure : function(user) {
 
-            var currStructurePage = this.GetCurrStructurePage();
+            var currStructurePage = this.getCurrStructurePage();
 
             switch(currStructurePage) {
                 case StructurePage.STRUCTURE_PAGE_BST:
-                    this.CreateBST(user);
+                    this.createBST(user);
                     break;
                 case StructurePage.STRUCTURE_PAGE_STACK:    
 
@@ -63,7 +60,7 @@ factory('structureDataService', function($http) {
             }
         },
 
-        CreateBST : function(user) {
+        createBST : function(user) {
 
             if(user == '') {
                 return;
@@ -83,6 +80,8 @@ factory('structureDataService', function($http) {
                     BSTs: allBSTs
                 };
 
+
+
                 return returnBSTs;
             })
             .error(function(allBSTs) {
@@ -95,6 +94,16 @@ factory('structureDataService', function($http) {
 
                 return returnBSTs;
             });
+        },
+
+        subscribeToStructureChange : function(callback) {
+            structureChangeCallbacks.push(callback);
+        },
+
+        handleStructureChange : function() {
+            for(var i = 0; i < structureChangeCallbacks.length; i++) {
+                structureChangeCallbacks[i]();
+            }
         }
     }
 

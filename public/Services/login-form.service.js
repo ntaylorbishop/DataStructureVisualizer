@@ -18,7 +18,7 @@ factory('loginFormService', function() {
             this.isOnLoginFormCallbacks.push(callback);
         },
 
-        SetShowForm: function(showForm) {
+        setShowForm: function(showForm) {
             this.showForm = showForm;
             
             for(var i = 0; i < this.showFormCallbacks.length; i++) {
@@ -26,7 +26,7 @@ factory('loginFormService', function() {
             }
         },
 
-        SetIsOnLoginForm : function(isOnLoginForm) {
+        setIsOnLoginForm : function(isOnLoginForm) {
 
             this.isOnLoginForm = isOnLoginForm;
 
@@ -35,11 +35,11 @@ factory('loginFormService', function() {
             }
         },
 
-        GetShowForm : function() {
+        getShowForm : function() {
             return this.showForm;
         },
 
-        GetIsOnLoginForm : function() {
+        getIsOnLoginForm : function() {
             return this.isOnLoginForm;
         }
     };

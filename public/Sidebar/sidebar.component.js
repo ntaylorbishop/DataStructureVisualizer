@@ -7,13 +7,13 @@ component('sidebar', {
 angular.module('DataStructureVisualizer').
 controller("SidebarController", function($scope, $rootScope, structureDataService, userService) {
 
-    function SubscribeToCurrStructurePage() {
-        $scope.currStructurePage = structureDataService.GetCurrStructurePage();
-        LoadInStructuresOfType($scope.currStructurePage);
+    function subscribeToCurrStructurePage() {
+        $scope.currStructurePage = structureDataService.getCurrStructurePage();
+        loadInStructuresOfType($scope.currStructurePage);
     }
-    structureDataService.RegisterCallbackToCurrStructurePage(SubscribeToCurrStructurePage);
+    structureDataService.registerCallbackToCurrStructurePage(subscribeToCurrStructurePage);
 
-    function LoadInStructuresOfType(structureType) {
+    function loadInStructuresOfType(structureType) {
 
         $scope.structuresList = structureDataService.binarySearchTrees;
 
@@ -47,8 +47,8 @@ controller("SidebarController", function($scope, $rootScope, structureDataServic
 
     $scope.createStructure = function() {
 
-        var username = userService.GetUsername();
-        structureDataService.CreateStructure(username);
+        var username = userService.getUsername();
+        structureDataService.createStructure(username);
     }
 
     $scope.deleteStructure = function(indexInStructureArray) {
@@ -57,5 +57,5 @@ controller("SidebarController", function($scope, $rootScope, structureDataServic
         console.log(indexInStructureArray);
     }
 
-    structureDataService.SetCurrStructurePage(StructurePage.STRUCTURE_PAGE_BST);
+    structureDataService.setCurrStructurePage(StructurePage.STRUCTURE_PAGE_BST);
 });

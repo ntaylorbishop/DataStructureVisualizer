@@ -10,20 +10,20 @@ controller("RegLoginController", function($scope, $rootScope, $http, userService
   //Show / hide login form
   $scope.toggleRegLoginForm = function() {
 
-    loginFormService.SetShowForm(!loginFormService.GetShowForm());
+    loginFormService.setShowForm(!loginFormService.getShowForm());
 
-    if(loginFormService.GetShowForm() == true) {
-      loginFormService.SetIsOnLoginForm(true);
+    if(loginFormService.getShowForm() == true) {
+      loginFormService.setIsOnLoginForm(true);
     }
 }
 
   $scope.isRegLoginFormShown = function() {
-    return loginFormService.GetShowForm();
+    return loginFormService.getShowForm();
   }
 
   function SubscribeToIsOnLoginForm() {
 
-    if(loginFormService.GetIsOnLoginForm() == true) {
+    if(loginFormService.getIsOnLoginForm() == true) {
       $scope.registrationText = 'Need to create an account?'; 
       $scope.formHeader = 'Please log in';
       $scope.submitBtn = 'Login';
@@ -39,7 +39,7 @@ controller("RegLoginController", function($scope, $rootScope, $http, userService
   loginFormService.registerCallbackToIsOnLoginForm(SubscribeToIsOnLoginForm);
 
   $scope.switchToRegistration = function() {
-    loginFormService.SetIsOnLoginForm(false);
+    loginFormService.setIsOnLoginForm(false);
   }
 
   //Validation
@@ -51,7 +51,7 @@ controller("RegLoginController", function($scope, $rootScope, $http, userService
 
     var isValid = true;
 
-    if($scope.password.length == 0 || ($scope.password == 'password' && loginFormService.GetIsOnLoginForm() == true)) {
+    if($scope.password.length == 0 || ($scope.password == 'password' && loginFormService.getIsOnLoginForm() == true)) {
       $scope.outputMsg = 'Please enter a password';
       isValid = false;
     }
@@ -77,7 +77,7 @@ controller("RegLoginController", function($scope, $rootScope, $http, userService
 
     $scope.outputMsg = '';
 
-    if(loginFormService.GetIsOnLoginForm() == true) {
+    if(loginFormService.getIsOnLoginForm() == true) {
       submitLogin();
     }
     else {
@@ -102,7 +102,7 @@ controller("RegLoginController", function($scope, $rootScope, $http, userService
       }
       else {
         $scope.outputMsg = data.outputMsg;
-        userService.SetUsername($scope.username);
+        userService.setUsername($scope.username);
         setTimeout(closeFormAndUpdateHeader, 1000);
       }
 
@@ -129,7 +129,7 @@ controller("RegLoginController", function($scope, $rootScope, $http, userService
       }
       else {
         $scope.outputMsg = data.outputMsg;
-        userService.SetUsername($scope.username);
+        userService.setUsername($scope.username);
         setTimeout(closeFormAndUpdateHeader, 1000);      
       }
 
@@ -141,8 +141,8 @@ controller("RegLoginController", function($scope, $rootScope, $http, userService
   }
 
   function closeFormAndUpdateHeader() {
-    userService.SetIsLoggedIn(true);
-    loginFormService.SetShowForm(false);
+    userService.setIsLoggedIn(true);
+    loginFormService.setShowForm(false);
     $rootScope.$apply();
   }
 });

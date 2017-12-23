@@ -18,7 +18,7 @@ factory('userService', function() {
             this.usernameCallbacks.push(callback);
         },
 
-        SetUsername: function(username) {
+        setUsername: function(username) {
             this.username = username;
             
             for(var i = 0; i < this.usernameCallbacks.length; i++) {
@@ -26,7 +26,7 @@ factory('userService', function() {
             }
         },
 
-        SetIsLoggedIn : function(isLoggedIn) {
+        setIsLoggedIn : function(isLoggedIn) {
             this.isLoggedIn = isLoggedIn;
 
             for(var i = 0; i < this.isLoggedInCallbacks.length; i++) {
@@ -34,11 +34,11 @@ factory('userService', function() {
             }
         },
 
-        GetUsername : function() {
+        getUsername : function() {
             return this.username;
         },
 
-        GetIsLoggedIn : function() {
+        getIsLoggedIn : function() {
             return this.isLoggedIn;
         }
     };

@@ -6,23 +6,23 @@ controller("HeaderLoginController", function($scope, $rootScope, structureDataSe
 
     //FIX
     function subscribeToUserLogin() {
-        $scope.username = userService.GetUsername();
-        $scope.isLoggedIn = userService.GetIsLoggedIn();        
+        $scope.username = userService.getUsername();
+        $scope.isLoggedIn = userService.getIsLoggedIn();        
     }
     userService.registerCallbackToIsLoggedIn(subscribeToUserLogin);
 
     function subscribeToUsernameChange() {
-        $scope.isLoggedIn = userService.GetIsLoggedIn();        
-        $scope.username = userService.GetUsername();
+        $scope.isLoggedIn = userService.getIsLoggedIn();        
+        $scope.username = userService.getUsername();
     }
     userService.registerCallbackToUsername(subscribeToUsernameChange);
     
     $scope.toggleRegLoginForm = function() {
 
-        loginFormService.SetShowForm(!loginFormService.GetShowForm());
+        loginFormService.setShowForm(!loginFormService.getShowForm());
       
-        if(loginFormService.GetShowForm() == true) {
-            loginFormService.SetIsOnLoginForm(true);
+        if(loginFormService.getShowForm() == true) {
+            loginFormService.setIsOnLoginForm(true);
         }
     }
 });
