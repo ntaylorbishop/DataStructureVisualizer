@@ -5,9 +5,7 @@
 angular.module('DataStructureVisualizer').
 controller("NodeViewController", function($scope, structureDataService, structureVisService, $document) {
 
-    structureDataService.subscribeToStructureSelected(this.structureSelectedEvent);
-
-    console.log('HELLO');
+    structureDataService.subscribeToStructureSelected(structureSelectedEvent);
 
     var startPoint = structureVisService.startPoint;
     var xDiff = structureVisService.xDiff;
@@ -17,40 +15,63 @@ controller("NodeViewController", function($scope, structureDataService, structur
     var array = [];
     $scope.nodes = array;    
     
-    this.structureSelectedEvent = function(structureType, dataStructure) {        
-        //POPULATE NODES
-        dataStructure.generatePositionsInPanel(new Vector2(500, 160), xDiff * 2, yDiff);
-        dataStructure.serialize(array);
+    function structureSelectedEvent() {   
+
+        var dataStructure = structureDataService.selectedStructure.structure;
         
-        this.drawLinesBetweenNodes(structureDataService.binarySearchTrees[0].root);
+        console.log(structureDataService.selectedStructure.structureType);
+        console.log(structureDataService.selectedStructure.structure);
+
+        var bst = new BinarySearchTree(dataStructure.title);
+        
+        for(var i = 0; i < dataStructure.values.length; i++) {
+            bst.insert(dataStructure.values[i]);
+        }
+
+        var array = [];
+
+        //POPULATE NODES
+        bst.generatePositionsInPanel(new Vector2(500, 160), xDiff * 2, yDiff);
+        bst.serialize(array);
+        
+        canvasContext.clearRect(0, 0, 1903, 900);
+        drawLinesBetweenNodes(bst.root);
+
+        var nodes = [];
+
         $scope.nodes = array;
     }
 
     //DRAW LINES
-    this.draw = function(start, end) {
+    function draw(start, end) {
         //this.canvasContext.clearRect(0, 0, 1903, 900);        
-        this.canvasContext.beginPath();
-        this.canvasContext.moveTo(start.x, start.y);
-        this.canvasContext.lineTo(end.x, end.y);
-        this.canvasContext.strokeStyle="black";
-        this.canvasContext.lineWidth = 1;
-        this.canvasContext.closePath();
-        this.canvasContext.stroke();    
+        canvasContext.beginPath();
+        canvasContext.moveTo(start.x, start.y);
+        canvasContext.lineTo(end.x, end.y);
+        canvasContext.strokeStyle="black";
+        canvasContext.lineWidth = 1;
+        canvasContext.closePath();
+        canvasContext.stroke();    
     }
 
-    this.drawLinesBetweenNodes = function(node) {
+    function drawLinesBetweenNodes(node) {
+
+        if(node == null) {
+            return;
+        }
         
         var start = new Vector2(node.position.x + 25, node.position.y - 25);
 
+
         if(node.left != null) {
             var end = new Vector2(node.left.position.x + 25, node.left.position.y - 25);
-            this.draw(start, end);
-            this.drawLinesBetweenNodes(node.left);
+            draw(start, end);
+            drawLinesBetweenNodes(node.left);
         }
         if(node.right != null) {
             var end = new Vector2(node.right.position.x + 25, node.right.position.y - 25);
-            this.draw(start, end);
-            this.drawLinesBetweenNodes(node.right);
+            draw(start, end);
+            drawLinesBetweenNodes(node.right);
         }
     }
 });

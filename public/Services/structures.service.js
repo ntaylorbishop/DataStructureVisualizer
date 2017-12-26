@@ -13,7 +13,7 @@ factory('structureDataService', function($http) {
         linkedLists : [],
         structureChangeCallbacks : [],
         structureSelectedCallbacks : [],
-
+        selectedStructure : {},
 
         //METHODS
         registerCallbackToCurrStructurePage : function(callback) {
@@ -97,12 +97,11 @@ factory('structureDataService', function($http) {
 
         handleStructureSelected : function(structureType, selectedStructure) {
 
-            debugger;
-
-            HERE;; //Cannot pass arguments to callbacks - need to register these as closures instead
+            this.selectedStructure.structureType = structureType;
+            this.selectedStructure.structure = selectedStructure;
 
             for(var i = 0; i < this.structureSelectedCallbacks.length; i++) {
-                this.structureSelectedCallbacks[i](structureType, selectedStructure);
+                this.structureSelectedCallbacks[i]();
             }
         },
 

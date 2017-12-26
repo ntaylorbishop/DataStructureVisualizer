@@ -22,7 +22,7 @@ controller("StructureLinkController", function($scope, structureDataService, $do
 
         if(! $scope.isTextHovered) {
             $scope.isTextSelected = false;
-            structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST);
+            structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, dataStructure);
         }
     }
 
