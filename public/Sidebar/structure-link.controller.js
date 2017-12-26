@@ -13,8 +13,7 @@ controller("StructureLinkController", function($scope, structureDataService, $do
 
     $scope.enterText = function($event) {
         if($event.keyCode == 13) {
-            $scope.isTextSelected = true;        
-            angular.element($event.srcElement).focus();
+            $scope.isTextSelected = false;        
         }
     }
 

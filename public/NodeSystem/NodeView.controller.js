@@ -25,7 +25,12 @@ controller("NodeViewController", function($scope, structureDataService, structur
         var bst = new BinarySearchTree(dataStructure.title);
         
         for(var i = 0; i < dataStructure.values.length; i++) {
-            bst.insert(dataStructure.values[i]);
+            if(dataStructure.type == 0) {
+                bst.insert(parseInt(dataStructure.values[i]));
+            }
+            else {
+                bst.insert(dataStructure.values[i]);
+            }
         }
 
         var array = [];

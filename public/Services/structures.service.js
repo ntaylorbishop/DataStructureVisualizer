@@ -114,7 +114,7 @@ factory('structureDataService', function($http) {
 
             $http.get('/api/structure/load-default-bsts')
             .success(function(allBSTs) {
-                structureDataService.binarySearchTrees = allBSTs;                
+                structureDataService.binarySearchTrees = allBSTs;          
                 structureDataService.handleStructureChange();
                 return true;
             })

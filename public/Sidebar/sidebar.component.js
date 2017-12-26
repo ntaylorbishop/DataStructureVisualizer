@@ -19,7 +19,7 @@ controller("SidebarController", function($scope, $rootScope, structureDataServic
     function onStructureDataChange() {
         $scope.structuresList = structureDataService.binarySearchTrees;
 
-        
+
 
         for(var i = 0; i < $scope.structuresList.length; i++) {
             $scope.structuresList[i].index = i;
