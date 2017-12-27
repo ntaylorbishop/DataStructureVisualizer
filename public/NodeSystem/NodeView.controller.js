@@ -13,7 +13,7 @@ controller("NodeViewController", function($scope, structureDataService, structur
     var canvas = document.getElementById("LineDrawCanvas");
     var canvasContext = canvas.getContext("2d");
     var array = [];
-    $scope.nodes = array;    
+    $scope.nodes = array;
     
     function structureSelectedEvent() {   
 

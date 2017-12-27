@@ -1,6 +1,6 @@
 
 angular.module('DataStructureVisualizer').
-factory('structureDataService', function($http) {
+factory('structureDataService', function($http, userService) {
 
     var structureDataService = {
         //DATA MEMBERS
@@ -107,6 +107,36 @@ factory('structureDataService', function($http) {
 
         subscribeToStructureSelected : function(callback) {
             this.structureSelectedCallbacks.push(callback);
+        },
+        
+        updateCurrentStructure : function(newValue) {
+
+            var isLoggedIn = userService.getIsLoggedIn();
+
+            if(isLoggedIn) {
+                return; //Need to add this
+            }
+            else {
+                switch(this.selectedStructure.structureType) {
+                    case StructurePage.STRUCTURE_PAGE_BST:
+                        selectedStructure.insert();
+                        break;
+                    case StructurePage.STRUCTURE_PAGE_STACK:    
+    
+                        break;
+                    case StructurePage.STRUCTURE_PAGE_QUEUE:
+    
+                        break;
+                    case StructurePage.STRUCTURE_PAGE_HEAP:
+    
+                        break;
+                    case StructurePage.STRUCTURE_PAGE_LINKED_LIST:
+    
+                        break;
+                    default:
+                        break;
+                }
+            }
         },
 
         //LOADING IN STRUCTURES

@@ -37,3 +37,9 @@ button#SubmitNewNodeBtn {
 button#GenerateRandomNode {
 
 }
+
+div#ValueSubmitBox span#ErrorMessage {
+    color: #BC6C25;
+    margin-top: 30px;
+    padding-top: 30px;
+}
