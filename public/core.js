@@ -22,3 +22,33 @@ function extend(destination, source) {
     destination.prototype.constructor = destination;
     return source.prototype;
 }
+
+
+function isInt(value) {
+    var x;
+    if (isNaN(value)) {
+      return false;
+    }
+    x = parseFloat(value);
+    return (x | 0) === x;
+}
+
+
+function Vector2(x, y) {
+    this.x = x;
+    this.y = y;
+}
+
+
+function removeAtIndexFromArray(array, index) {    
+    if (index !== -1) {
+        array.splice(index, 1);
+    }
+}
+
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+  }

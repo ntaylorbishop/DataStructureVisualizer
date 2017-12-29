@@ -95,7 +95,7 @@ module.exports = function (app) {
 
     app.get('/api/structure/load-default-bsts', function(req, res) {
 
-        bstModel.find(function(err, allBSTs) {
+        bstModel.find({ 'owner': 'default' }, function(err, allBSTs) {
             if (err) {
                 res.send(err)
             }

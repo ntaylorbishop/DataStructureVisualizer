@@ -19,24 +19,21 @@ controller("NodeViewController", function($scope, structureDataService, structur
     $scope.nodes = array;
     
     function structureSelectedEvent() {   
-
         var dataStructure = structureDataService.selectedStructure.structure;
-        
-        console.log(structureDataService.selectedStructure.structureType);
-        console.log(structureDataService.selectedStructure.structure);
-
         var bst = new BinarySearchTree(dataStructure.title);
+
         
         for(var i = 0; i < dataStructure.values.length; i++) {
-            if(dataStructure.type == 0) {
-                bst.insert(parseInt(dataStructure.values[i]));
+            if(dataStructure.dataType == "Integer") {
+                bst.insert(parseInt(dataStructure.values[i]), i);
             }
             else {
-                bst.insert(dataStructure.values[i]);
+                bst.insert(dataStructure.values[i], i);
             }
         }
 
         var array = [];
+        var nodes = [];
 
         //POPULATE NODES
         bst.generatePositionsInPanel(new Vector2(500, 160), xDiff * 2, yDiff);
@@ -44,8 +41,6 @@ controller("NodeViewController", function($scope, structureDataService, structur
         
         canvasContext.clearRect(0, 0, 1903, 900);
         drawLinesBetweenNodes(bst.root);
-
-        var nodes = [];
 
         $scope.nodes = array;
     }
@@ -63,13 +58,11 @@ controller("NodeViewController", function($scope, structureDataService, structur
     }
 
     function drawLinesBetweenNodes(node) {
-
         if(node == null) {
             return;
         }
         
         var start = new Vector2(node.position.x + 25, node.position.y - 25);
-
 
         if(node.left != null) {
             var end = new Vector2(node.left.position.x + 25, node.left.position.y - 25);

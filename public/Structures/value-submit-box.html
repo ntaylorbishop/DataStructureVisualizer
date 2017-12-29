@@ -1,6 +1,6 @@
 <div id="ValueSubmitBox" ng-controller="ValueSubmitBoxController">
     <input value="0" ng-model="NewNodeValue" type="text" ng-keypress="submitNewNode($event)">
     <button id="SubmitNewNodeBtn" ng-click="submitNewNode(null)">Submit Node</button>
-    <button id="GenerateRandomNode">Generate Random</button>
+    <button id="GenerateRandomNode" ng-click="generateRandomNode()">Generate Random</button>
     <center><span id="ErrorMessage"><br/>{{errorMessage}}</span></center>
 </div>

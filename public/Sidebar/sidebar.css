@@ -82,27 +82,3 @@ div.StructureLinkText {
     display: inline;
     padding-left: 20px;    
 }
-
-
-button#CreateStructure {
-    position: absolute;
-    width: 80%;
-    margin-left: -40%;
-    left: 50%;
-    bottom: 100px;
-
-    background-color: #BC6C25;
-    color: #FEFAE0;
-    border: none;
-    font-size: 0.8em;
-    font-family: "Segoe UI",Arial,sans-serif;
-}
-
-
-button#CreateStructure:hover {
-    background-color: #DDA15E;
-    text-decoration:  none;
-    padding: 0;
-    border: none;
-    color: #FEFAE0;
-}

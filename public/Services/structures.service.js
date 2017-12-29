@@ -105,6 +105,12 @@ factory('structureDataService', function($http, userService) {
             }
         },
 
+        handleSelectedStructureDataChanged : function() {
+            for(var i = 0; i < this.structureSelectedCallbacks.length; i++) {
+                this.structureSelectedCallbacks[i]();
+            }
+        },
+
         subscribeToStructureSelected : function(callback) {
             this.structureSelectedCallbacks.push(callback);
         },
@@ -119,7 +125,65 @@ factory('structureDataService', function($http, userService) {
             else {
                 switch(this.selectedStructure.structureType) {
                     case StructurePage.STRUCTURE_PAGE_BST:
-                        selectedStructure.insert();
+                        if(this.selectedStructure.structure.dataType == "Integer") {
+                            if(isInt(newValue)) {
+                                //debugger;
+                                this.selectedStructure.structure.values.push(parseInt(newValue));
+                                this.handleSelectedStructureDataChanged();
+                                return '';
+                            }
+                            else {
+                                return 'Inserted value must be a number.';
+                            }
+                        }
+                        else if(this.selectedStructure.structure.dataType == "Character") {
+                            if(newValue.length == 1) {
+                                this.selectedStructure.structure.values.push(newValue);
+                                this.handleSelectedStructureDataChanged();
+                                return '';
+                            }
+                            else {
+                                return 'Inserted value must be a single character.';
+                            }
+                        }
+                        else if(this.selectedStructure.structure.dataType == "Word") {
+                            this.selectedStructure.structure.values.push(newValue);
+                            this.handleSelectedStructureDataChanged();
+                            return '';
+                        }
+                        break;
+                    case StructurePage.STRUCTURE_PAGE_STACK:    
+    
+                        break;
+                    case StructurePage.STRUCTURE_PAGE_QUEUE:
+    
+                        break;
+                    case StructurePage.STRUCTURE_PAGE_HEAP:
+    
+                        break;
+                    case StructurePage.STRUCTURE_PAGE_LINKED_LIST:
+    
+                        break;
+                    default:
+                        break;
+                }
+            }
+        },
+
+        deleteFromCurrentStructure : function(valueIndex) {
+
+            var isLoggedIn = userService.getIsLoggedIn();
+
+            if(isLoggedIn) {
+                return; //Need to add this
+            }
+            else {
+                switch(this.selectedStructure.structureType) {
+                    case StructurePage.STRUCTURE_PAGE_BST:
+                        debugger;
+                        removeAtIndexFromArray(this.selectedStructure.structure.values, valueIndex);
+                        debugger;
+                        this.handleSelectedStructureDataChanged();
                         break;
                     case StructurePage.STRUCTURE_PAGE_STACK:    
     

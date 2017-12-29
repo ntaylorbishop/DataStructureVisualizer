@@ -1,11 +1,12 @@
 'use strict';
 
 //BSTNODE
-function BSTNode(value, position) {
+function BSTNode(value, valueIndex, position) {
   this.value = value;
   this.left = null;
   this.right = null;
   this.position = position;
+  this.valueIndex = valueIndex;
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -18,9 +19,9 @@ function BinarySearchTree(name) {
 }
 
 //METHODS
-BinarySearchTree.prototype.insert = function(value) {
+BinarySearchTree.prototype.insert = function(value, valueIndex) {
   var currNode = this.root;
-  var newNode = new BSTNode(value, new Vector2(0, 0));
+  var newNode = new BSTNode(value, valueIndex, new Vector2(0, 0));
 
   if(this.root == null) {
     this.root = newNode;
@@ -59,7 +60,6 @@ BinarySearchTree.prototype.inorderPush = function(array, node) {
   }
 }
   
-  
 BinarySearchTree.prototype.serialize = function(array) {
 
   this.inorderPush(array, this.root);
@@ -82,6 +82,10 @@ BinarySearchTree.prototype.gatherPositions = function(node, startPos, panelWidth
   var ys = 20;
   var treeHeight = this.getTreeHeight(this.root);
   var xScale = panelWidth / this.totalNodes;
+
+  if(this.totalNodes < 4) {
+      xScale = panelWidth / 8;
+  }
   var yScale = (panelHeight - ys) / (treeHeight + 1);
   
   if (node != null) {  
