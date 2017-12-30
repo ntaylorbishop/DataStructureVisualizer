@@ -1,8 +1,10 @@
-<div id="DropUpMenuContainer">
-    <button id="CreateStructure" ng-click="createStructure()" ng-mouseenter="hover()" ng-mouseleave="unhover()">Create</button>
-    <div id="DropUpMenu">
-        <span class="DropUpMenuItem"><center>Numbers</center></span>
-        <span class="DropUpMenuItem"><center>Letters</center></span>
-        <span class="DropUpMenuItem"><center>Words</center></span>
-    </div>
-</div>
+<button id="CreateStructure">Create</button>
+<ul id="DropUpMenuContainer" ng-controller="DropUpMenuController">
+    <li id="DropUpMenu" tab-index="0">
+        <ul class="DropUpSubMenu">
+            <li ng-click="createStructure('Integer')"><center><a href="#">Numbers</a></center></li>
+            <li ng-click="createStructure('Character')"><center><a href="#">Letters</a></center></li>
+            <li ng-click="createStructure('Word')"><center><a href="#">Words</a></center></li>
+        </ul>
+    </li>
+</ul>

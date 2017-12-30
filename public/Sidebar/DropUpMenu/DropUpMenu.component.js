@@ -7,11 +7,7 @@ component('dropUpMenu', {
 angular.module('DataStructureVisualizer').
 controller("DropUpMenuController", function($scope, structureDataService) {
     
-    $scope.hover = function() {
-
+    $scope.createStructure = function(dataType) {
+        structureDataService.createStructure(dataType);
     }
-    $scope.unhover = function() {
-        
-    }
-
 });

@@ -1,13 +1,13 @@
 
-div#DropUpMenuContainer {
-    background-color:white;
+ul#DropUpMenuContainer {
 
     position: absolute;
     width: 80%;
-    display: block;
     margin-left: -40%;
     left: 50%;
-    bottom: 125px;
+    bottom: 100px;
+    padding: 0;
+    padding-bottom: 10px;
 }
 
 div#DropUpMenu {
@@ -36,11 +36,49 @@ button#CreateStructure {
 button#CreateStructure:hover {
     background-color: #DDA15E;
     text-decoration:  none;
-    padding: 0;
     border: none;
     color: #FEFAE0;
 }
 
-button#CreateStructure:hover + div#DropUpMenuContainer {
-    bottom: -100%;
+ul.DropUpSubMenu a {
+    text-decoration: none;
+    color: #FEFAE0;
+    border: none;
+    font-size: 0.8em;
+    font-family: "Segoe UI",Arial,sans-serif;
+}
+
+ul.DropUpSubMenu li {
+    background-color: #DDA15E;
+}
+
+ul.DropUpSubMenu li:hover {
+    background-color: #BC6C25;
+    cursor: pointer;
+}
+
+ul#DropUpMenuContainer,
+li#DropUpMenu,
+ul.DropUpSubMenu {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+ul.DropUpSubMenu {
+    transform: translateY(0em);
+    z-index: -1;
+    transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+    visibility: hidden; /* hides sub-menu */
+    opacity: 0;
+}
+
+ul#DropUpMenuContainer:focus .DropUpSubMenu,
+ul#DropUpMenuContainer:focus-within .DropUpSubMenu,
+ul#DropUpMenuContainer:hover .DropUpSubMenu,
+button#CreateStructure:hover + ul#DropUpMenuContainer li#DropUpMenu .DropUpSubMenu {
+    visibility: visible; /* shows sub-menu */
+    opacity: 1;
+    z-index: 1;
+    transform: translateY(0%);
+    transition-delay: 0s, 0s, 0.3s; /* this removes the transition delay so the menu will be visible while the other styles transition */
 }

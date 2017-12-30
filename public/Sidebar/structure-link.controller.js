@@ -28,6 +28,4 @@ controller("StructureLinkController", function($scope, structureDataService, $do
     $scope.isHoveringText = function(isHovering) {
         $scope.isTextHovered = isHovering;
     }
-
-    $scope.selectStructure($scope.structuresList[0]);
 });

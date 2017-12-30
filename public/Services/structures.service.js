@@ -35,13 +35,12 @@ factory('structureDataService', function($http, userService) {
         },
 
 
-        createStructure : function(user) {
-
+        createStructure : function(dataType) {
             var currStructurePage = this.getCurrStructurePage();
 
             switch(currStructurePage) {
                 case StructurePage.STRUCTURE_PAGE_BST:
-                    this.createBST(user);
+                    this.createBST();
                     break;
                 case StructurePage.STRUCTURE_PAGE_STACK:    
 
@@ -60,29 +59,35 @@ factory('structureDataService', function($http, userService) {
             }
         },
 
-        createBST : function(user) {
+        createBST : function(dataType) {
 
-            if(user == '') {
-                return false;
-            }
-
-            var sendData = {
-                owner: user,
+            var username = userService.getUsername();
+            var newBST = {
+                owner: username,
                 title: "UNTITLED",
-                values: []
+                values: [],
+                dataType: dataType
             }
 
-            $http.post('/api/structure/create-bst', sendData)
-            .success(function(allBSTs) {
-
-                this.binarySearchTrees = allBSTs;
+            if(!userService.getIsLoggedIn()) {
+                this.binarySearchTrees.push(newBST);
+                this.handleStructureChange();
+                this.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, newBST);
                 return true;
-            })
-            .error(function(allBSTs) {
-                console.log('Error: ' + data);
-
-                return false;
-            });
+            }
+            else {
+                $http.post('/api/structure/create-bst', newBST)
+                .success(function(allBSTs) {
+    
+                    this.binarySearchTrees = allBSTs;
+                    structureDataService.handleStructureChange();
+                    return true;
+                })
+                .error(function(allBSTs) {
+                    console.log('Error: ' + data);
+                    return false;
+                });
+            }
         },
 
         subscribeToStructureChange : function(callback) {
@@ -96,7 +101,6 @@ factory('structureDataService', function($http, userService) {
         },
 
         handleStructureSelected : function(structureType, selectedStructure) {
-
             this.selectedStructure.structureType = structureType;
             this.selectedStructure.structure = selectedStructure;
 
@@ -127,7 +131,6 @@ factory('structureDataService', function($http, userService) {
                     case StructurePage.STRUCTURE_PAGE_BST:
                         if(this.selectedStructure.structure.dataType == "Integer") {
                             if(isInt(newValue)) {
-                                //debugger;
                                 this.selectedStructure.structure.values.push(parseInt(newValue));
                                 this.handleSelectedStructureDataChanged();
                                 return '';
@@ -180,9 +183,7 @@ factory('structureDataService', function($http, userService) {
             else {
                 switch(this.selectedStructure.structureType) {
                     case StructurePage.STRUCTURE_PAGE_BST:
-                        debugger;
                         removeAtIndexFromArray(this.selectedStructure.structure.values, valueIndex);
-                        debugger;
                         this.handleSelectedStructureDataChanged();
                         break;
                     case StructurePage.STRUCTURE_PAGE_STACK:    
@@ -210,6 +211,7 @@ factory('structureDataService', function($http, userService) {
             .success(function(allBSTs) {
                 structureDataService.binarySearchTrees = allBSTs;          
                 structureDataService.handleStructureChange();
+                structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, structureDataService.binarySearchTrees[0]);
                 return true;
             })
             .error(function(allBSTs) {
