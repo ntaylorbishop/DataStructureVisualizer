@@ -24,7 +24,6 @@ controller("SidebarController", function($scope, $rootScope, structureDataServic
         }
     }
 
-
     function loadInStructuresOfType(structureType) {
         onStructureDataChange();
     

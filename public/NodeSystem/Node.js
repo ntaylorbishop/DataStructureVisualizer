@@ -5,4 +5,3 @@ class Node {
         this.links = links;
     }
 }
-

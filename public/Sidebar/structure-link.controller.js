@@ -28,4 +28,25 @@ controller("StructureLinkController", function($scope, structureDataService, $do
     $scope.isHoveringText = function(isHovering) {
         $scope.isTextHovered = isHovering;
     }
+
+    $scope.deleteStructure = function(dataStructure) {
+        
+        var removeIndex = dataStructure.index;       
+        structureDataService.deleteStructureAtIndex(dataStructure.index);
+
+        if($scope.structuresList.length == 0) {
+            structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, null);
+        }
+        else {
+            if(removeIndex < $scope.structuresList.length) {
+                debugger;
+                structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, $scope.structuresList[removeIndex + 1]);
+            }
+            else if(removeIndex == $scope.structuresList.length) {
+                debugger;
+                structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, $scope.structuresList[removeIndex - 1]);
+            }
+            debugger;
+        }
+    }
 });

@@ -18,14 +18,16 @@
   <link rel="stylesheet" href="Structures/value-submit-box.css">
   <link rel="stylesheet" href="NodeSystem/Node.css">
   <link rel="stylesheet" href="Sidebar/DropUpMenu/DropUpMenu.css">
+  <link rel="stylesheet" href="StructureTitle/StructureTitle.css">
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body>
   <div id="ContentContainer">
     <page-header></page-header>
     <sidebar></sidebar>
-    
+    <structure-title></structure-title>
     <canvas id="LineDrawCanvas" width="1903" height="900"></canvas>
+
     <node-view></node-view>
     <reg-login-form></reg-login-form>
     <value-submit-box></value-submit-box>
@@ -45,8 +47,9 @@
   <script src="Services/structure-visualization.service.js"></script>
   <script src="Structures/Controllers/bst.js"></script>
   <script src="Structures/Controllers/heap.js"></script>
-  <script src="Header/page-header.component.js"></script>
-  <script src="Header/header-login.controller.js"></script>
+  <script src="Header/PageHeader.component.js"></script>
+  <script src="Header/HeaderLogin.controller.js"></script>
+  <script src="Header/StructureLoader.controller.js"></script>
   <script src="NodeSystem/Link.js"></script>
   <script src="NodeSystem/Node.js"></script>
   <script src="NodeSystem/NodeView.component.js"></script>
@@ -55,9 +58,10 @@
   <script src="Sidebar/sidebar.component.js"></script>
   <script src="Sidebar/focus-element.directive.js"></script>
   <script src="Sidebar/structure-link.controller.js"></script>
-  <script src="Header/structure-loader.controller.js"></script>
   <script src="Structures/value-submit-box.component.js"></script>
   <script src="Sidebar/DropUpMenu/DropUpMenu.component.js"></script>
+  <script src="StructureTitle/StructureTitle.component.js"></script>
+
 </body>
 </html>
 

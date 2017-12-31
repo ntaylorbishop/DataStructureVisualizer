@@ -18,10 +18,17 @@ controller("NodeViewController", function($scope, structureDataService, structur
     var array = [];
     $scope.nodes = array;
     
-    function structureSelectedEvent() {   
+    function structureSelectedEvent() {           
         var dataStructure = structureDataService.selectedStructure.structure;
-        var bst = new BinarySearchTree(dataStructure.title);
+        canvasContext.clearRect(0, 0, 1903, 900);
 
+        if(dataStructure == null) {
+            $scope.nodes = [];
+            console.log("null!");
+            return;
+        }
+
+        var bst = new BinarySearchTree(dataStructure.title);
         
         for(var i = 0; i < dataStructure.values.length; i++) {
             if(dataStructure.dataType == "Integer") {
@@ -39,7 +46,6 @@ controller("NodeViewController", function($scope, structureDataService, structur
         bst.generatePositionsInPanel(new Vector2(500, 160), xDiff * 2, yDiff);
         bst.serialize(array);
         
-        canvasContext.clearRect(0, 0, 1903, 900);
         drawLinesBetweenNodes(bst.root);
 
         $scope.nodes = array;

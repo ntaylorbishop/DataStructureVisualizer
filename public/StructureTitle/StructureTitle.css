@@ -1,0 +1,18 @@
+div#HeaderStructureContainer {
+    position: absolute;
+    width: 200px;
+    left: 50%;
+    margin-left: -100px;
+}
+
+div#HeaderStructureTitle {
+    margin-top: 10px;
+    font-size: 1.5em;
+    font-family: "Segoe UI",Arial,sans-serif;
+}
+
+div#HeaderStructureType {
+    margin-top: 5px;
+    font-size: 1.2em;
+    font-family: "Segoe UI",Arial,sans-serif;
+}

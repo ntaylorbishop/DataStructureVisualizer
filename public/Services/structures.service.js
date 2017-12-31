@@ -3,6 +3,7 @@ angular.module('DataStructureVisualizer').
 factory('structureDataService', function($http, userService) {
 
     var structureDataService = {
+
         //DATA MEMBERS
         currStructurePage : StructurePage.STRUCTURE_PAGE_BST,
         currStructurePageCallbacks : [],
@@ -201,6 +202,37 @@ factory('structureDataService', function($http, userService) {
                     default:
                         break;
                 }
+            }
+        },
+
+        deleteStructureAtIndex : function(index) {
+
+            var isLoggedIn = userService.getIsLoggedIn();
+
+            if(isLoggedIn) {
+                return; //Need to add this
+            }
+            else {
+                switch(this.currStructurePage) {
+                    case StructurePage.STRUCTURE_PAGE_BST:
+                        removeAtIndexFromArray(structureDataService.binarySearchTrees, index);
+                        break;
+                    case StructurePage.STRUCTURE_PAGE_STACK:    
+                        removeAtIndexFromArray(structureDataService.stacks, index);
+                        break;
+                    case StructurePage.STRUCTURE_PAGE_QUEUE:
+                        removeAtIndexFromArray(structureDataService.queues, index);
+                        break;
+                    case StructurePage.STRUCTURE_PAGE_HEAP:
+                        removeAtIndexFromArray(structureDataService.heaps, index);
+                        break;
+                    case StructurePage.STRUCTURE_PAGE_LINKED_LIST:
+                        removeAtIndexFromArray(structureDataService.linkedLists, index);
+                        break;
+                    default:
+                        break;
+                }
+                this.handleStructureChange();
             }
         },
 

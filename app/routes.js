@@ -1,5 +1,5 @@
-var usersModel = require('./models/user');
-var bstModel = require('./models/binary-search-tree.js');
+var usersModel = require('./models/User.js');
+var bstModel = require('./models/BinarySearchTree.js');
 
 var outputMsgs = {
     UNEXPECTED_ERR : 'An unexpected error occurred. Please try again later',
