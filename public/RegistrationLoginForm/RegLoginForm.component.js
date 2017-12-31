@@ -1,7 +1,7 @@
 
 angular.module('DataStructureVisualizer').
 component('regLoginForm', {
-  templateUrl: 'RegistrationLoginForm/reg-login-form.html'
+  templateUrl: 'RegistrationLoginForm/RegLoginForm.html'
 });
 
 angular.module('DataStructureVisualizer').

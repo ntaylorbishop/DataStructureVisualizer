@@ -2,7 +2,7 @@
 
 angular.module('DataStructureVisualizer').
 component('pageHeader', {
-    templateUrl: 'Header/header.html',
+    templateUrl: 'Header/Header.html',
     controller: function PageHeaderController() { 
     }
 });

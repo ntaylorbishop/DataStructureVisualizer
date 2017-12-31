@@ -1,7 +1,7 @@
 
 angular.module('DataStructureVisualizer').
 component('sidebar', {
-    templateUrl: 'Sidebar/sidebar.html',
+    templateUrl: 'Sidebar/Sidebar.html',
 });
 
 angular.module('DataStructureVisualizer').

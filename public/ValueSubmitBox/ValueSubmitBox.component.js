@@ -2,7 +2,7 @@
 
 angular.module('DataStructureVisualizer').
 component('valueSubmitBox', {
-    templateUrl: 'Structures/value-submit-box.html',
+    templateUrl: 'ValueSubmitBox/ValueSubmitBox.html',
 });
 
 angular.module('DataStructureVisualizer').
