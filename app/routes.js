@@ -104,6 +104,11 @@ module.exports = function (app) {
         });
     });
 
+    app.post('/api/structure/get-user-bsts', function(req, res) {
+
+        console.log(req.body);
+    });
+
     // application -------------------------------------------------------------
     app.get('*', function(req, res) {
         res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)

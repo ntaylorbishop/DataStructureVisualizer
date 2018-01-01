@@ -120,7 +120,29 @@ factory('structureDataService', function($http, userService) {
             this.structureSelectedCallbacks.push(callback);
         },
         
-        updateCurrentStructure : function(newValue) {
+        addValueToCurrentStructure : function(newValue) {
+            switch(this.selectedStructure.structureType) {
+                case StructurePage.STRUCTURE_PAGE_BST:
+                    addValueToCurrentBST(newValue);
+                    break;
+                case StructurePage.STRUCTURE_PAGE_STACK:    
+
+                    break;
+                case StructurePage.STRUCTURE_PAGE_QUEUE:
+
+                    break;
+                case StructurePage.STRUCTURE_PAGE_HEAP:
+
+                    break;
+                case StructurePage.STRUCTURE_PAGE_LINKED_LIST:
+
+                    break;
+                default:
+                    break;
+            }
+        },
+        
+        addValueToCurrentBST : function(newValue) {
 
             var isLoggedIn = userService.getIsLoggedIn();
 
@@ -128,48 +150,30 @@ factory('structureDataService', function($http, userService) {
                 return; //Need to add this
             }
             else {
-                switch(this.selectedStructure.structureType) {
-                    case StructurePage.STRUCTURE_PAGE_BST:
-                        if(this.selectedStructure.structure.dataType == "Integer") {
-                            if(isInt(newValue)) {
-                                this.selectedStructure.structure.values.push(parseInt(newValue));
-                                this.handleSelectedStructureDataChanged();
-                                return '';
-                            }
-                            else {
-                                return 'Inserted value must be a number.';
-                            }
-                        }
-                        else if(this.selectedStructure.structure.dataType == "Character") {
-                            if(newValue.length == 1) {
-                                this.selectedStructure.structure.values.push(newValue);
-                                this.handleSelectedStructureDataChanged();
-                                return '';
-                            }
-                            else {
-                                return 'Inserted value must be a single character.';
-                            }
-                        }
-                        else if(this.selectedStructure.structure.dataType == "Word") {
-                            this.selectedStructure.structure.values.push(newValue);
-                            this.handleSelectedStructureDataChanged();
-                            return '';
-                        }
-                        break;
-                    case StructurePage.STRUCTURE_PAGE_STACK:    
-    
-                        break;
-                    case StructurePage.STRUCTURE_PAGE_QUEUE:
-    
-                        break;
-                    case StructurePage.STRUCTURE_PAGE_HEAP:
-    
-                        break;
-                    case StructurePage.STRUCTURE_PAGE_LINKED_LIST:
-    
-                        break;
-                    default:
-                        break;
+                if(this.selectedStructure.structure.dataType == "Integer") {
+                    if(isInt(newValue)) {
+                        this.selectedStructure.structure.values.push(parseInt(newValue));
+                        this.handleSelectedStructureDataChanged();
+                        return '';
+                    }
+                    else {
+                        return 'Inserted value must be a number.';
+                    }
+                }
+                else if(this.selectedStructure.structure.dataType == "Character") {
+                    if(newValue.length == 1) {
+                        this.selectedStructure.structure.values.push(newValue);
+                        this.handleSelectedStructureDataChanged();
+                        return '';
+                    }
+                    else {
+                        return 'Inserted value must be a single character.';
+                    }
+                }
+                else if(this.selectedStructure.structure.dataType == "Word") {
+                    this.selectedStructure.structure.values.push(newValue);
+                    this.handleSelectedStructureDataChanged();
+                    return '';
                 }
             }
         },

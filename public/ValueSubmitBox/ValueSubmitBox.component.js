@@ -21,7 +21,7 @@ controller("ValueSubmitBoxController", function($scope, structureDataService) {
     $scope.NewNodeValue = '0';
 
     function updateStructureInService(value) {
-        $scope.errorMessage = structureDataService.updateCurrentStructure(value);
+        $scope.errorMessage = structureDataService.addValueToCurrentStructure(value);
 
         if($scope.errorMessage == '') {
             $scope.errorMessage = defaultErrorMessage;

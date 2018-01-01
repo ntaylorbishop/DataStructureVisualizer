@@ -5,11 +5,12 @@ component('sidebar', {
 });
 
 angular.module('DataStructureVisualizer').
-controller("SidebarController", function($scope, $rootScope, structureDataService, userService) {
+controller("SidebarController", function($scope, $http, structureDataService, userService) {
     
     structureDataService.registerCallbackToCurrStructurePage(subscribeToCurrStructurePage);
     structureDataService.setCurrStructurePage(StructurePage.STRUCTURE_PAGE_BST);
     structureDataService.subscribeToStructureChange(onStructureDataChange);
+    userService.registerCallbackToIsLoggedIn(onUserLoggedIn);
 
     function subscribeToCurrStructurePage() {
         $scope.currStructurePage = structureDataService.getCurrStructurePage();
@@ -22,6 +23,18 @@ controller("SidebarController", function($scope, $rootScope, structureDataServic
         for(var i = 0; i < $scope.structuresList.length; i++) {
             $scope.structuresList[i].index = i;
         }
+    }
+
+    function onUserLoggedIn() {
+        console.log("Getting user BSTs");
+        var userData = {
+            username : userService.username,
+        };
+
+        $http.post('/api/structure/get-user-bsts', userData)
+        .success(function(data) {
+            
+        });
     }
 
     function loadInStructuresOfType(structureType) {
