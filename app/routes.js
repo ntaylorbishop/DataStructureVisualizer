@@ -1,5 +1,6 @@
 var usersModel = require('./models/User.js');
 var bstModel = require('./models/BinarySearchTree.js');
+var session = require("client-sessions");
 
 var outputMsgs = {
     UNEXPECTED_ERR : 'An unexpected error occurred. Please try again later',
@@ -11,6 +12,15 @@ var outputMsgs = {
 }
 
 module.exports = function (app) {
+
+    app.post('api/user/checkLogin', function(req, res) {
+        if(req.session && req.session.user) {
+            res.send({ 'loggedIn' : true, 'username' : req.session.user });
+        }
+        else {
+            res.send({ 'loggedIn' : false, 'username' : '' });
+        }
+    });
 
     // api ---------------------------------------------------------------------
     app.post('/api/user/login', function (req, res) {
@@ -24,7 +34,8 @@ module.exports = function (app) {
     
             if(user.length > 0) {
                 if(user[0].password == req.body.password) {
-                    res.send({ 'doesExist' : true, 'outputMsg' : outputMsgs.LOGIN_SUCCESSFUL });                    
+                    res.send({ 'doesExist' : true, 'outputMsg' : outputMsgs.LOGIN_SUCCESSFUL });
+                    req.session.user = req.body.username;
                 }
                 else {
                     res.send({ 'doesExist' : false, 'outputMsg' : outputMsgs.USERNAME_PW_MISMATCH });                                        
@@ -60,6 +71,7 @@ module.exports = function (app) {
                     }
                     else {
                         res.send({ 'accountCreated' : true, 'outputMsg' : outputMsgs.REGISTRATION_SUCCESSFUL });
+                        req.session.user = req.body.username;
                     }
                 });
             }

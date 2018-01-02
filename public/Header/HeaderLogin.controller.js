@@ -1,8 +1,17 @@
 
 angular.module('DataStructureVisualizer').
-controller("HeaderLoginController", function($scope, $rootScope, structureDataService, userService, loginFormService) {
+controller("HeaderLoginController", function($scope, $http, structureDataService, userService, loginFormService) {
 
     $scope.isLoggedIn = false;
+
+    $http.post('/api/user/checkLogin', {"data" : "none"})
+    .success(function(data) {
+
+      console.log(data);
+    })
+    .error(function(data) {
+        console.log('Error: ' + data);
+    });
 
     //FIX
     function subscribeToUserLogin() {

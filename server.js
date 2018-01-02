@@ -5,6 +5,7 @@ var mongoose        = require('mongoose');                     // mongoose for m
 var morgan          = require('morgan');             // log requests to the console (express4)
 var bodyParser      = require('body-parser');    // pull information from HTML POST (express4)
 var methodOverride  = require('method-override'); // simulate DELETE and PUT (express4)
+var session         = require('client-sessions');
 
 // configuration =================
 var dbURI = 'mongodb://localhost:27017/DataStructureVisualizer'; 
@@ -23,6 +24,13 @@ app.use(bodyParser.urlencoded({'extended':'true'}));            // parse applica
 app.use(bodyParser.json());                                     // parse application/json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(methodOverride());
+
+app.use(session({
+    cookieName: "userLoginInfo",
+    secret: 'h)Wf1g=2(~n>Y:}As_4uQ[!CHJ|ko$e6Dd]@5ORa9<mNX%=D|<M4mcs[{V_duW`L+c(5O+7|,O9`rbN,4!7:suVP=dbPq5>~%Hfc!xTLZ+Oj;0FQ]#U0CZFD(7Li~&P~',
+    duration: 5 * 60 * 1000,
+    activeDuration: 5 * 60 * 1000,
+}));
 
 // routes ======================================================================
 require('./app/Routes.js')(app);
