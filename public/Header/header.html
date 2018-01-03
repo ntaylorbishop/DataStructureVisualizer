@@ -7,7 +7,7 @@
         <a href="" ng-click="LoadLinkedList()">Linked List</a>
     </center>
     <div id="Username" ng-controller="HeaderLoginController" ng-show="isLoggedIn">
-        Welcome, {{username}}!
+        Welcome, {{username}}! <a href="#" ng-click="logout()">Logout.</a>
     </div>    
     <div id="Username" ng-controller="HeaderLoginController" ng-show="!isLoggedIn">
         Please <a href="#" ng-click="toggleRegLoginForm()">login.</a>

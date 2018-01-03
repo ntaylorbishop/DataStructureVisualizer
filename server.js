@@ -18,19 +18,19 @@ mongoose.connection.on('reconnected', function ()   { console.log('MongoDB: Data
 mongoose.connection.on('disconnected', function ()  { console.log('MongoDB: The connection was ended on: ' + dbURI );       });
 mongoose.connect(dbURI);
 
-app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
-app.use(morgan('dev'));                                         // log every request to the console
-app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
-app.use(bodyParser.json());                                     // parse application/json
-app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
-app.use(methodOverride());
-
 app.use(session({
     cookieName: "userLoginInfo",
     secret: 'h)Wf1g=2(~n>Y:}As_4uQ[!CHJ|ko$e6Dd]@5ORa9<mNX%=D|<M4mcs[{V_duW`L+c(5O+7|,O9`rbN,4!7:suVP=dbPq5>~%Hfc!xTLZ+Oj;0FQ]#U0CZFD(7Li~&P~',
     duration: 5 * 60 * 1000,
     activeDuration: 5 * 60 * 1000,
 }));
+
+app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
+app.use(morgan('dev'));                                         // log every request to the console
+app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
+app.use(bodyParser.json());                                     // parse application/json
+app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
+app.use(methodOverride());
 
 // routes ======================================================================
 require('./app/Routes.js')(app);

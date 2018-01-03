@@ -13,9 +13,9 @@ var outputMsgs = {
 
 module.exports = function (app) {
 
-    app.post('api/user/checkLogin', function(req, res) {
-        if(req.session && req.session.user) {
-            res.send({ 'loggedIn' : true, 'username' : req.session.user });
+    app.get('/api/user/checkLogin', function(req, res) {
+        if(req.userLoginInfo) {
+            res.send({ 'loggedIn' : req.userLoginInfo.loggedIn, 'username' : req.userLoginInfo.user });
         }
         else {
             res.send({ 'loggedIn' : false, 'username' : '' });
@@ -24,9 +24,7 @@ module.exports = function (app) {
 
     // api ---------------------------------------------------------------------
     app.post('/api/user/login', function (req, res) {
-        
         usersModel.find({ 'username': req.body.username }, function (err, user) {
-
             if (err) {
                 console.log(err);
                 res.send({ 'doesExist' : true, 'outputMsg' : outputMsgs.UNEXPECTED_ERR });
@@ -34,8 +32,9 @@ module.exports = function (app) {
     
             if(user.length > 0) {
                 if(user[0].password == req.body.password) {
+                    req.userLoginInfo.user = req.body.username;
+                    req.userLoginInfo.loggedIn = true;
                     res.send({ 'doesExist' : true, 'outputMsg' : outputMsgs.LOGIN_SUCCESSFUL });
-                    req.session.user = req.body.username;
                 }
                 else {
                     res.send({ 'doesExist' : false, 'outputMsg' : outputMsgs.USERNAME_PW_MISMATCH });                                        
@@ -47,11 +46,16 @@ module.exports = function (app) {
         });    
     });
 
+    // api ---------------------------------------------------------------------
+    app.post('/api/user/logout', function (req, res) {
+        req.userLoginInfo.reset();
+        console.log(req.userLoginInfo);
+        res.send({ 'loggedIn' : false, 'username' : '' });
+    });
+
     //Register user
     app.post('/api/user/register', function (req, res) {
-
         usersModel.find({ 'username': req.body.username }, function (err, users) {
-
             if (err) {
                 console.log(err);
                 res.send({ 'accountCreated' : false, 'outputMsg' : outputMsgs.UNEXPECTED_ERR });
@@ -70,8 +74,9 @@ module.exports = function (app) {
                         res.send({ 'accountCreated' : false, 'outputMsg' : outputMsgs.UNEXPECTED_ERR });
                     }
                     else {
+                        req.userLoginInfo.user = req.body.username;
+                        req.userLoginInfo.loggedIn = true;
                         res.send({ 'accountCreated' : true, 'outputMsg' : outputMsgs.REGISTRATION_SUCCESSFUL });
-                        req.session.user = req.body.username;
                     }
                 });
             }
@@ -79,7 +84,6 @@ module.exports = function (app) {
     });
 
     app.post('/api/structure/create-bst', function(req, res) {
-
         bstModel.create({
             owner: req.body.owner,
             title: req.body.title,
@@ -106,7 +110,6 @@ module.exports = function (app) {
     });
 
     app.get('/api/structure/load-default-bsts', function(req, res) {
-
         bstModel.find({ 'owner': 'default' }, function(err, allBSTs) {
             if (err) {
                 res.send(err)
@@ -117,7 +120,6 @@ module.exports = function (app) {
     });
 
     app.post('/api/structure/get-user-bsts', function(req, res) {
-
         console.log(req.body);
     });
 

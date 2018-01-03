@@ -45,24 +45,28 @@
 
 #header div#Username a:link {
     text-decoration:  none;
+    color: #BC6C25;
     margin: 0 0 0 0;
     padding: 0 0 0 0;    
 }
 
 #header div#Username a:visited {
     text-decoration:  none;
+    color: #BC6C25;
     margin: 0 0 0 0;
     padding: 0 0 0 0;    
 }
 
 #header div#Username a:hover {
     text-decoration:  none;
+    color: #DDA15E;
     margin: 0 0 0 0;
     padding: 0 0 0 0;
 }
 
 #header div#Username a:active {
     text-decoration:  none;
+    color: #BC6C25;
     margin: 0 0 0 0;
     padding: 0 0 0 0;    
 }
