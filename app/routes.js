@@ -85,9 +85,10 @@ module.exports = function (app) {
 
     app.post('/api/structure/create-bst', function(req, res) {
         bstModel.create({
-            owner: req.body.owner,
+            dataType: req.body.dataType,
+            values: req.body.values,
             title: req.body.title,
-            values: req.body.values
+            owner: req.body.owner
         }, function (err, allBSTs) {
             if (err) {
                 console.log(err);
@@ -96,13 +97,12 @@ module.exports = function (app) {
             }
             
             bstModel.find({ 'owner': req.body.owner }, function (err, allBSTs) {
-                
                 if (err) {
                     console.log(err);
                     res.send({ 'successful' : false, 'allBSTs' :  [] });
                 }
                 else {
-                    console.log(allBSTs);
+                    console.log(req.body);
                     res.send({ 'successful' : true, 'allBSTs' : allBSTs });                
                 }
             });  
@@ -121,6 +121,10 @@ module.exports = function (app) {
 
     app.post('/api/structure/get-user-bsts', function(req, res) {
         console.log(req.body);
+    });
+
+    app.post('api/structure/update-bst', function(req, res) {
+
     });
 
     // application -------------------------------------------------------------

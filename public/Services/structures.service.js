@@ -41,7 +41,7 @@ factory('structureDataService', function($http, userService) {
 
             switch(currStructurePage) {
                 case StructurePage.STRUCTURE_PAGE_BST:
-                    this.createBST();
+                    this.createBST(dataType);
                     break;
                 case StructurePage.STRUCTURE_PAGE_STACK:    
 
@@ -80,8 +80,11 @@ factory('structureDataService', function($http, userService) {
                 $http.post('/api/structure/create-bst', newBST)
                 .success(function(allBSTs) {
     
-                    this.binarySearchTrees = allBSTs;
+                    structureDataService.binarySearchTrees = allBSTs.allBSTs;
+                    var returnedBST = structureDataService.binarySearchTrees[structureDataService.binarySearchTrees.length - 1];
                     structureDataService.handleStructureChange();
+                    structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, returnedBST);
+                    debugger;
                     return true;
                 })
                 .error(function(allBSTs) {
@@ -147,14 +150,9 @@ factory('structureDataService', function($http, userService) {
             var isLoggedIn = userService.getIsLoggedIn();
 
             if(isLoggedIn) {
-                return; //Need to add this
-            }
-            else {
                 if(this.selectedStructure.structure.dataType == "Integer") {
                     if(isInt(newValue)) {
                         this.selectedStructure.structure.values.push(parseInt(newValue));
-                        this.handleSelectedStructureDataChanged();
-                        return '';
                     }
                     else {
                         return 'Inserted value must be a number.';
@@ -163,8 +161,6 @@ factory('structureDataService', function($http, userService) {
                 else if(this.selectedStructure.structure.dataType == "Character") {
                     if(newValue.length == 1) {
                         this.selectedStructure.structure.values.push(newValue);
-                        this.handleSelectedStructureDataChanged();
-                        return '';
                     }
                     else {
                         return 'Inserted value must be a single character.';
@@ -172,9 +168,32 @@ factory('structureDataService', function($http, userService) {
                 }
                 else if(this.selectedStructure.structure.dataType == "Word") {
                     this.selectedStructure.structure.values.push(newValue);
-                    this.handleSelectedStructureDataChanged();
-                    return '';
                 }
+                this.handleSelectedStructureDataChanged();
+                return '';            
+            }
+            else {
+                if(this.selectedStructure.structure.dataType == "Integer") {
+                    if(isInt(newValue)) {
+                        this.selectedStructure.structure.values.push(parseInt(newValue));
+                    }
+                    else {
+                        return 'Inserted value must be a number.';
+                    }
+                }
+                else if(this.selectedStructure.structure.dataType == "Character") {
+                    if(newValue.length == 1) {
+                        this.selectedStructure.structure.values.push(newValue);
+                    }
+                    else {
+                        return 'Inserted value must be a single character.';
+                    }
+                }
+                else if(this.selectedStructure.structure.dataType == "Word") {
+                    this.selectedStructure.structure.values.push(newValue);
+                }
+                this.handleSelectedStructureDataChanged();
+                return '';
             }
         },
 

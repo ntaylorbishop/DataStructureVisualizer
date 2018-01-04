@@ -19,8 +19,8 @@ var binarySearchTreeSchema = new Schema({
         type: String,
         required: false,
     }],
-    type: {
-        type: Number,
+    dataType: {
+        type: String,
         required: false,
     },
     created_at: Date

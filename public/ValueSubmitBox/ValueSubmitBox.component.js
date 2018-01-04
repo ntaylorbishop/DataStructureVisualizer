@@ -22,14 +22,12 @@ controller("ValueSubmitBoxController", function($scope, structureDataService) {
 
     function updateStructureInService(value) {
         $scope.errorMessage = structureDataService.addValueToCurrentStructure(value);
-
         if($scope.errorMessage == '') {
             $scope.errorMessage = defaultErrorMessage;
         }
     }
 
     $scope.submitNewNode = function(event) {
-
         if(event != null) {
             if(event.keyCode == 13) {
                 updateStructureInService($scope.NewNodeValue);
@@ -41,7 +39,6 @@ controller("ValueSubmitBoxController", function($scope, structureDataService) {
     }
 
     $scope.generateRandomNode = function() {
-
         var structureDataType = structureDataService.selectedStructure.structure.dataType;
         
         if(structureDataType == "Integer") {
