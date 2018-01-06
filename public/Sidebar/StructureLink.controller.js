@@ -39,14 +39,11 @@ controller("StructureLinkController", function($scope, structureDataService, $do
         }
         else {
             if(removeIndex < $scope.structuresList.length) {
-                debugger;
                 structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, $scope.structuresList[removeIndex + 1]);
             }
             else if(removeIndex == $scope.structuresList.length) {
-                debugger;
                 structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, $scope.structuresList[removeIndex - 1]);
             }
-            debugger;
         }
     }
 });

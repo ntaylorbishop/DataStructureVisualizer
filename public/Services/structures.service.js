@@ -84,7 +84,6 @@ factory('structureDataService', function($http, userService) {
                     var returnedBST = structureDataService.binarySearchTrees[structureDataService.binarySearchTrees.length - 1];
                     structureDataService.handleStructureChange();
                     structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, returnedBST);
-                    debugger;
                     return true;
                 })
                 .error(function(allBSTs) {
@@ -126,7 +125,7 @@ factory('structureDataService', function($http, userService) {
         addValueToCurrentStructure : function(newValue) {
             switch(this.selectedStructure.structureType) {
                 case StructurePage.STRUCTURE_PAGE_BST:
-                    addValueToCurrentBST(newValue);
+                    return this.addValueToCurrentBST(newValue);
                     break;
                 case StructurePage.STRUCTURE_PAGE_STACK:    
 
@@ -146,59 +145,52 @@ factory('structureDataService', function($http, userService) {
         },
         
         addValueToCurrentBST : function(newValue) {
-
             var isLoggedIn = userService.getIsLoggedIn();
 
-            if(isLoggedIn) {
-                if(this.selectedStructure.structure.dataType == "Integer") {
-                    if(isInt(newValue)) {
-                        this.selectedStructure.structure.values.push(parseInt(newValue));
-                    }
-                    else {
-                        return 'Inserted value must be a number.';
+            if(this.selectedStructure.structure.dataType == "Integer") {
+                if(isInt(newValue)) {
+                    this.selectedStructure.structure.values.push(parseInt(newValue));
+                    if(isLoggedIn) {
+                        this.postValueBST(newValue);
                     }
                 }
-                else if(this.selectedStructure.structure.dataType == "Character") {
-                    if(newValue.length == 1) {
-                        this.selectedStructure.structure.values.push(newValue);
-                    }
-                    else {
-                        return 'Inserted value must be a single character.';
-                    }
+                else {
+                    return 'Inserted value must be a number.';
                 }
-                else if(this.selectedStructure.structure.dataType == "Word") {
-                    this.selectedStructure.structure.values.push(newValue);
-                }
-                this.handleSelectedStructureDataChanged();
-                return '';            
             }
-            else {
-                if(this.selectedStructure.structure.dataType == "Integer") {
-                    if(isInt(newValue)) {
-                        this.selectedStructure.structure.values.push(parseInt(newValue));
-                    }
-                    else {
-                        return 'Inserted value must be a number.';
-                    }
-                }
-                else if(this.selectedStructure.structure.dataType == "Character") {
-                    if(newValue.length == 1) {
-                        this.selectedStructure.structure.values.push(newValue);
-                    }
-                    else {
-                        return 'Inserted value must be a single character.';
-                    }
-                }
-                else if(this.selectedStructure.structure.dataType == "Word") {
+            else if(this.selectedStructure.structure.dataType == "Character") {
+                if(newValue.length == 1) {
                     this.selectedStructure.structure.values.push(newValue);
+                    if(isLoggedIn) {
+                        this.postValueBST(newValue);
+                    }
                 }
-                this.handleSelectedStructureDataChanged();
-                return '';
+                else {
+                    return 'Inserted value must be a single character.';
+                }
             }
+            else if(this.selectedStructure.structure.dataType == "Word") {
+                this.selectedStructure.structure.values.push(newValue);
+                if(isLoggedIn) {
+                    this.postValueBST(newValue);
+                }
+            }
+            this.handleSelectedStructureDataChanged();
+            return '';
+        },
+
+        postValueBST : function(newValue) {
+            var sendData = { 'docId' : this.selectedStructure.structure._id, 'updatedStructure' : this.selectedStructure.structure };
+            $http.post('api/structure/update-bst', sendData)
+            .success(function(sentData) {
+            })
+            .error(function(err) {
+                //WARNING: need to handle this
+            });
+            return true;
         },
 
         deleteFromCurrentStructure : function(valueIndex) {
-
             var isLoggedIn = userService.getIsLoggedIn();
 
             if(isLoggedIn) {
@@ -229,7 +221,6 @@ factory('structureDataService', function($http, userService) {
         },
 
         deleteStructureAtIndex : function(index) {
-
             var isLoggedIn = userService.getIsLoggedIn();
 
             if(isLoggedIn) {
@@ -260,11 +251,28 @@ factory('structureDataService', function($http, userService) {
         },
 
         //LOADING IN STRUCTURES
-        loadBSTs : function() {
-
+        loadDefaultBSTs : function() {
             $http.get('/api/structure/load-default-bsts')
             .success(function(allBSTs) {
-                structureDataService.binarySearchTrees = allBSTs;          
+                structureDataService.binarySearchTrees = allBSTs;    
+                console.log(structureDataService.binarySearchTrees);      
+                structureDataService.handleStructureChange();
+                structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, structureDataService.binarySearchTrees[0]);
+                return true;
+            })
+            .error(function(allBSTs) {
+                console.log('Error: ' + data);
+                return false;
+            });
+        },
+
+        loadDefaultAndUserBSTs : function() {
+            var sendData = { 'username' : userService.getUsername() };
+
+            $http.post('/api/structure/get-default-and-user-bsts', sendData)
+            .success(function(allBSTs) {
+                structureDataService.binarySearchTrees = allBSTs;    
+                console.log(structureDataService.binarySearchTrees);      
                 structureDataService.handleStructureChange();
                 structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, structureDataService.binarySearchTrees[0]);
                 return true;

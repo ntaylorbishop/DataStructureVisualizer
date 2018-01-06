@@ -26,15 +26,11 @@ controller("SidebarController", function($scope, $http, structureDataService, us
     }
 
     function onUserLoggedIn() {
-        console.log("Getting user BSTs");
         var userData = {
             username : userService.username,
         };
 
-        $http.post('/api/structure/get-user-bsts', userData)
-        .success(function(data) {
-            
-        });
+        loadInStructuresOfType($scope.currStructurePage);
     }
 
     function loadInStructuresOfType(structureType) {
@@ -44,7 +40,12 @@ controller("SidebarController", function($scope, $http, structureDataService, us
             case StructurePage.STRUCTURE_PAGE_BST:
                 $scope.structureTitle = 'Binary Search Trees';
                 $scope.createBtnTitle = 'BST';
-                structureDataService.loadBSTs();
+                if(userService.getIsLoggedIn()) {
+                    structureDataService.loadDefaultAndUserBSTs();
+                }
+                else {
+                    structureDataService.loadDefaultBSTs();
+                }
                 onStructureDataChange();
                 break;
             case StructurePage.STRUCTURE_PAGE_STACK:

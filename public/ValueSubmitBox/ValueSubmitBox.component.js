@@ -25,6 +25,7 @@ controller("ValueSubmitBoxController", function($scope, structureDataService) {
         if($scope.errorMessage == '') {
             $scope.errorMessage = defaultErrorMessage;
         }
+        debugger;
     }
 
     $scope.submitNewNode = function(event) {

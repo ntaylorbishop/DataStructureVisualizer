@@ -74,6 +74,29 @@ module.exports = function (app) {
                         res.send({ 'accountCreated' : false, 'outputMsg' : outputMsgs.UNEXPECTED_ERR });
                     }
                     else {
+                        bstModel.find({ 'owner': 'default' }, function(err, defaultBSTs) {
+                            if (err) {
+                                res.send(err);
+                                return;
+                            }
+
+                            console.log(defaultBSTs);
+                            
+                            for(var i = 0; i < defaultBSTs.length; i++) {
+                                bstModel.create({
+                                    dataType: defaultBSTs[i].dataType,
+                                    values:   defaultBSTs[i].values,
+                                    title:    defaultBSTs[i].title,
+                                    owner:    req.body.username
+                                }, function (err, allBSTs) {
+                                    if (err) {
+                                        res.send(err);
+                                        return;
+                                    }
+                                });
+                            }
+                        });
+
                         req.userLoginInfo.user = req.body.username;
                         req.userLoginInfo.loggedIn = true;
                         res.send({ 'accountCreated' : true, 'outputMsg' : outputMsgs.REGISTRATION_SUCCESSFUL });
@@ -102,7 +125,6 @@ module.exports = function (app) {
                     res.send({ 'successful' : false, 'allBSTs' :  [] });
                 }
                 else {
-                    console.log(req.body);
                     res.send({ 'successful' : true, 'allBSTs' : allBSTs });                
                 }
             });  
@@ -114,17 +136,29 @@ module.exports = function (app) {
             if (err) {
                 res.send(err)
             }
-
             res.json(allBSTs);
         });
     });
 
-    app.post('/api/structure/get-user-bsts', function(req, res) {
-        console.log(req.body);
+    app.post('/api/structure/get-default-and-user-bsts', function(req, res) {
+        bstModel.find({ 'owner': req.body.username }, function(err, allBSTs) {
+            if (err) {
+                res.send(err)
+            }
+            res.json(allBSTs);
+        });
     });
 
-    app.post('api/structure/update-bst', function(req, res) {
-
+    app.post('/api/structure/update-bst', function(req, res) {
+        bstModel.findByIdAndUpdate(req.body.docId, { 'values' : req.body.updatedStructure.values }, function(err, doc) {
+            if (err) {
+                res.send({ 'successful' : false, 'error' : err });
+            }
+            else {
+                console.log(req.body.updatedStructure);
+                res.send({ 'successful' : true});
+            }
+        });
     });
 
     // application -------------------------------------------------------------
