@@ -1,4 +1,4 @@
-div.Node {
+div#NodeType-1 { /* Binary Search tree */
     background: #283618;  
     min-width: 50px;
     min-height: 50px;
@@ -29,12 +29,12 @@ div.NodeValue {
 }
 
 
-div.Node:hover {
+div#NodeType-1:hover { /* Binary Search tree */
     background-color: #606C38;
 
 }
 
-div.Node img {
+div#NodeType-1 img { /* Binary Search tree */
     display: none;
 
     -o-transition:.5s;
@@ -44,7 +44,7 @@ div.Node img {
     transition:.5s;
 }
 
-div.Node:hover img {
+div#NodeType-1:hover img { /* Binary Search tree */
     display: inline;
     margin-top: -5px;
 

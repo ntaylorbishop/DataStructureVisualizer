@@ -1,13 +1,11 @@
 
 angular.module('DataStructureVisualizer').
 factory('structureDataService', function($http, userService) {
-
     var structureDataService = {
-
         //DATA MEMBERS
-        currStructurePage : StructurePage.STRUCTURE_PAGE_BST,
+        currStructurePage : StructureType.STRUCTURE_TYPE_BST,
         currStructurePageCallbacks : [],
-        binarySearchTrees : [],
+        structures : [],
         structureChangeCallbacks : [],
         structureSelectedCallbacks : [],
         selectedStructure : {},
@@ -17,7 +15,6 @@ factory('structureDataService', function($http, userService) {
             this.currStructurePageCallbacks.push(callback);
         },
 
-
         setCurrStructurePage : function(currStructurePage) {
             this.currStructurePage = currStructurePage;
             
@@ -26,29 +23,27 @@ factory('structureDataService', function($http, userService) {
             }
         },
 
-
         getCurrStructurePage : function() {
             return this.currStructurePage;
         },
-
 
         createStructure : function(dataType) {
             var currStructurePage = this.getCurrStructurePage();
 
             switch(currStructurePage) {
-                case StructurePage.STRUCTURE_PAGE_BST:
-                    this.createBST(dataType);
+                case StructureType.STRUCTURE_TYPE_BST:
+                    this.createBST(dataType, StructureType.STRUCTURE_TYPE_BST);
                     break;
-                case StructurePage.STRUCTURE_PAGE_STACK:    
+                case StructureType.STRUCTURE_TYPE_STACK:    
 
                     break;
-                case StructurePage.STRUCTURE_PAGE_QUEUE:
+                case StructureType.STRUCTURE_TYPE_QUEUE:
 
                     break;
-                case StructurePage.STRUCTURE_PAGE_HEAP:
+                case StructureType.STRUCTURE_TYPE_HEAP:
 
                     break;
-                case StructurePage.STRUCTURE_PAGE_LINKED_LIST:
+                case StructureType.STRUCTURE_TYPE_LINKED_LIST:
 
                     break;
                 default:
@@ -56,30 +51,31 @@ factory('structureDataService', function($http, userService) {
             }
         },
 
-        createBST : function(dataType) {
+        createBST : function(dataType, structureType) {
 
             var username = userService.getUsername();
             var newBST = {
                 owner: username,
                 title: "UNTITLED",
                 values: [],
-                dataType: dataType
+                dataType: dataType,
+                structureType: structureType,
             }
 
             if(!userService.getIsLoggedIn()) {
-                this.binarySearchTrees.push(newBST);
+                this.structures.push(newBST);
                 this.handleStructureChange();
-                this.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, newBST);
+                this.handleStructureSelected(StructureType.STRUCTURE_TYPE_BST, newBST);
                 return true;
             }
             else {
-                $http.post('/api/structure/create-bst', newBST)
+                $http.post('/api/structure/create-structure', newBST)
                 .success(function(allBSTs) {
     
-                    structureDataService.binarySearchTrees = allBSTs.allBSTs;
-                    var returnedBST = structureDataService.binarySearchTrees[structureDataService.binarySearchTrees.length - 1];
+                    structureDataService.structures = allBSTs.allBSTs;
+                    var returnedBST = structureDataService.structures[structureDataService.structures.length - 1];
                     structureDataService.handleStructureChange();
-                    structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, returnedBST);
+                    structureDataService.handleStructureSelected(StructureType.STRUCTURE_TYPE_BST, returnedBST);
                     return true;
                 })
                 .error(function(allBSTs) {
@@ -119,35 +115,13 @@ factory('structureDataService', function($http, userService) {
         },
         
         addValueToCurrentStructure : function(newValue) {
-            switch(this.selectedStructure.structureType) {
-                case StructurePage.STRUCTURE_PAGE_BST:
-                    return this.addValueToCurrentBST(newValue);
-                    break;
-                case StructurePage.STRUCTURE_PAGE_STACK:    
-
-                    break;
-                case StructurePage.STRUCTURE_PAGE_QUEUE:
-
-                    break;
-                case StructurePage.STRUCTURE_PAGE_HEAP:
-
-                    break;
-                case StructurePage.STRUCTURE_PAGE_LINKED_LIST:
-
-                    break;
-                default:
-                    break;
-            }
-        },
-        
-        addValueToCurrentBST : function(newValue) {
             var isLoggedIn = userService.getIsLoggedIn();
 
             if(this.selectedStructure.structure.dataType == "Integer") {
                 if(isInt(newValue)) {
                     this.selectedStructure.structure.values.push(parseInt(newValue));
                     if(isLoggedIn) {
-                        this.postValueBST(newValue);
+                        this.postValueStructure(newValue);
                     }
                 }
                 else {
@@ -158,7 +132,7 @@ factory('structureDataService', function($http, userService) {
                 if(newValue.length == 1) {
                     this.selectedStructure.structure.values.push(newValue);
                     if(isLoggedIn) {
-                        this.postValueBST(newValue);
+                        this.postValueStructure(newValue);
                     }
                 }
                 else {
@@ -168,16 +142,16 @@ factory('structureDataService', function($http, userService) {
             else if(this.selectedStructure.structure.dataType == "Word") {
                 this.selectedStructure.structure.values.push(newValue);
                 if(isLoggedIn) {
-                    this.postValueBST(newValue);
+                    this.postValueStructure(newValue);
                 }
             }
             this.handleSelectedStructureDataChanged();
             return '';
         },
 
-        postValueBST : function(newValue) {
+        postValueStructure : function(newValue) {
             var sendData = { 'docId' : this.selectedStructure.structure._id, 'updatedStructure' : this.selectedStructure.structure };
-            $http.post('api/structure/update-bst', sendData)
+            $http.post('api/structure/update-structure', sendData)
             .success(function(sentData) {
             })
             .error(function(err) {
@@ -194,20 +168,20 @@ factory('structureDataService', function($http, userService) {
             }
             else {
                 switch(this.selectedStructure.structureType) {
-                    case StructurePage.STRUCTURE_PAGE_BST:
+                    case StructureType.STRUCTURE_TYPE_BST:
                         removeAtIndexFromArray(this.selectedStructure.structure.values, valueIndex);
                         this.handleSelectedStructureDataChanged();
                         break;
-                    case StructurePage.STRUCTURE_PAGE_STACK:    
+                    case StructureType.STRUCTURE_TYPE_STACK:    
     
                         break;
-                    case StructurePage.STRUCTURE_PAGE_QUEUE:
+                    case StructureType.STRUCTURE_TYPE_QUEUE:
     
                         break;
-                    case StructurePage.STRUCTURE_PAGE_HEAP:
+                    case StructureType.STRUCTURE_TYPE_HEAP:
     
                         break;
-                    case StructurePage.STRUCTURE_PAGE_LINKED_LIST:
+                    case StructureType.STRUCTURE_TYPE_LINKED_LIST:
     
                         break;
                     default:
@@ -217,7 +191,7 @@ factory('structureDataService', function($http, userService) {
         },
 
         deleteStructure : function(dataStructure) {
-            removeAtIndexFromArray(structureDataService.binarySearchTrees, dataStructure.index);
+            removeAtIndexFromArray(structureDataService.structures, dataStructure.index);
             var isLoggedIn = userService.getIsLoggedIn();
             console.log('deleting');
             if(isLoggedIn) {
@@ -238,7 +212,7 @@ factory('structureDataService', function($http, userService) {
         },
 
         changeNameOfStructure : function(dataStructure, newTitle) {
-            this.binarySearchTrees[dataStructure.index].title = newTitle;
+            this.structures[dataStructure.index].title = newTitle;
             
             var isLoggedIn = userService.getIsLoggedIn();
             if(isLoggedIn) {
@@ -258,30 +232,30 @@ factory('structureDataService', function($http, userService) {
         },
 
         //LOADING IN STRUCTURES
-        loadDefaultBSTs : function() {
-            $http.get('/api/structure/load-default-bsts')
-            .success(function(allBSTs) {
-                structureDataService.binarySearchTrees = allBSTs;    
-                console.log(structureDataService.binarySearchTrees);      
+        loadDefaultStructuresOfType : function(structureType) {
+            var sendData = { 'structureType' :  structureType };
+            $http.post('/api/structure/load-default-structures', sendData)
+            .success(function(allStructuresOfType) {
+                structureDataService.structures = allStructuresOfType;    
+                console.log(structureDataService.structures);      
                 structureDataService.handleStructureChange();
-                structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, structureDataService.binarySearchTrees[0]);
+                structureDataService.handleStructureSelected(structureType, structureDataService.structures[0]);
                 return true;
             })
-            .error(function(allBSTs) {
+            .error(function() {
                 console.log('Error: ' + data);
                 return false;
             });
         },
 
-        loadDefaultAndUserBSTs : function() {
-            var sendData = { 'username' : userService.getUsername() };
-
-            $http.post('/api/structure/get-default-and-user-bsts', sendData)
+        loadUserStructuresOfType : function(structureType) {
+            var sendData = { 'username' : userService.getUsername(), 'structureType' : structureType };
+            $http.post('/api/structure/get-user-structures', sendData)
             .success(function(allBSTs) {
-                structureDataService.binarySearchTrees = allBSTs;    
-                console.log(structureDataService.binarySearchTrees);      
+                structureDataService.structures = allBSTs;    
+                console.log(structureDataService.structures);      
                 structureDataService.handleStructureChange();
-                structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, structureDataService.binarySearchTrees[0]);
+                structureDataService.handleStructureSelected(StructureType.STRUCTURE_TYPE_BST, structureDataService.structures[0]);
                 return true;
             })
             .error(function(allBSTs) {

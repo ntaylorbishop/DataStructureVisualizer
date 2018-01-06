@@ -25,7 +25,7 @@ controller("StructureLinkController", function($scope, structureDataService, $do
     $scope.selectStructure = function(dataStructure) {
         if(! $scope.isTextHovered) {
             $scope.isTextSelected = false;
-            structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, dataStructure);
+            structureDataService.handleStructureSelected(StructureType.STRUCTURE_TYPE_BST, dataStructure);
         }
     }
 
@@ -39,14 +39,14 @@ controller("StructureLinkController", function($scope, structureDataService, $do
         structureDataService.deleteStructure(dataStructure);
 
         if($scope.structuresList.length == 0) {
-            structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, null);
+            structureDataService.handleStructureSelected(StructureType.STRUCTURE_TYPE_BST, null);
         }
         else {
             if(removeIndex < $scope.structuresList.length) {
-                structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, $scope.structuresList[removeIndex + 1]);
+                structureDataService.handleStructureSelected(StructureType.STRUCTURE_TYPE_BST, $scope.structuresList[removeIndex + 1]);
             }
             else if(removeIndex == $scope.structuresList.length) {
-                structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, $scope.structuresList[removeIndex - 1]);
+                structureDataService.handleStructureSelected(StructureType.STRUCTURE_TYPE_BST, $scope.structuresList[removeIndex - 1]);
             }
         }
     }

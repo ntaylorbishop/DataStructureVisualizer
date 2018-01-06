@@ -49,7 +49,6 @@ module.exports = function (app) {
     // api ---------------------------------------------------------------------
     app.post('/api/user/logout', function (req, res) {
         req.userLoginInfo.reset();
-        console.log(req.userLoginInfo);
         res.send({ 'loggedIn' : false, 'username' : '' });
     });
 
@@ -74,20 +73,19 @@ module.exports = function (app) {
                         res.send({ 'accountCreated' : false, 'outputMsg' : outputMsgs.UNEXPECTED_ERR });
                     }
                     else {
-                        bstModel.find({ 'owner': 'default' }, function(err, defaultBSTs) {
+                        bstModel.find({ 'owner': 'default' }, function(err, defaultStructures) {
                             if (err) {
                                 res.send(err);
                                 return;
                             }
-
-                            console.log(defaultBSTs);
                             
-                            for(var i = 0; i < defaultBSTs.length; i++) {
+                            for(var i = 0; i < defaultStructures.length; i++) {
                                 bstModel.create({
-                                    dataType: defaultBSTs[i].dataType,
-                                    values:   defaultBSTs[i].values,
-                                    title:    defaultBSTs[i].title,
-                                    owner:    req.body.username
+                                    dataType:       defaultStructures[i].dataType,
+                                    values:         defaultStructures[i].values,
+                                    title:          defaultStructures[i].title,
+                                    structureType:  defaultStructures[i].structureType,
+                                    owner:          req.body.username,
                                 }, function (err, allBSTs) {
                                     if (err) {
                                         res.send(err);
@@ -106,19 +104,20 @@ module.exports = function (app) {
         });   
     });
 
-    app.post('/api/structure/create-bst', function(req, res) {
+    app.post('/api/structure/create-structure', function(req, res) {
         bstModel.create({
             dataType: req.body.dataType,
             values: req.body.values,
             title: req.body.title,
-            owner: req.body.owner
+            owner: req.body.owner,
+            structureType: req.body.structureType,
         }, function (err, allBSTs) {
             if (err) {
                 console.log(err);
                 res.send({ 'successful' : false, 'allBSTs' :  [] });
                 return;
             }
-            
+
             bstModel.find({ 'owner': req.body.owner }, function (err, allBSTs) {
                 if (err) {
                     console.log(err);
@@ -131,32 +130,33 @@ module.exports = function (app) {
         });
     });
 
-    app.get('/api/structure/load-default-bsts', function(req, res) {
-        bstModel.find({ 'owner': 'default' }, function(err, allBSTs) {
+    app.post('/api/structure/load-default-structures', function(req, res) {
+
+        console.log(req.body.structureType);
+
+        bstModel.find({ 'owner': 'default', 'structureType' : req.body.structureType }, function(err, allStructuresOfType) {
             if (err) {
                 res.send(err)
             }
-            console.log(allBSTs);
+            res.json(allStructuresOfType);
+        });
+    });
+
+    app.post('/api/structure/get-user-structures', function(req, res) {
+        bstModel.find({ 'owner': req.body.username, 'structureType' : req.body.structureType }, function(err, allBSTs) {
+            if (err) {
+                res.send(err)
+            }
             res.json(allBSTs);
         });
     });
 
-    app.post('/api/structure/get-default-and-user-bsts', function(req, res) {
-        bstModel.find({ 'owner': req.body.username }, function(err, allBSTs) {
-            if (err) {
-                res.send(err)
-            }
-            res.json(allBSTs);
-        });
-    });
-
-    app.post('/api/structure/update-bst', function(req, res) {
+    app.post('/api/structure/update-structure', function(req, res) {
         bstModel.findByIdAndUpdate(req.body.docId, { 'values' : req.body.updatedStructure.values }, function(err, doc) {
             if (err) {
                 res.send({ 'successful' : false, 'error' : err });
             }
             else {
-                console.log(req.body.updatedStructure);
                 res.send({ 'successful' : true});
             }
         });
@@ -168,7 +168,6 @@ module.exports = function (app) {
                 res.send({ 'successful' : false, 'error' : err });
             }
             else {
-                console.log(req.body.updatedStructure);
                 res.send({ 'successful' : true});
             }
         });
@@ -180,7 +179,6 @@ module.exports = function (app) {
                 res.send({ 'successful' : false, 'error' : err });
             }
             else {
-                console.log(req.body.updatedStructure);
                 res.send({ 'successful' : true});
             }
         });

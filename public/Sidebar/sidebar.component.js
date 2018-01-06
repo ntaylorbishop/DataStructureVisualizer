@@ -8,7 +8,7 @@ angular.module('DataStructureVisualizer').
 controller("SidebarController", function($scope, $http, structureDataService, userService) {
     
     structureDataService.registerCallbackToCurrStructurePage(subscribeToCurrStructurePage);
-    structureDataService.setCurrStructurePage(StructurePage.STRUCTURE_PAGE_BST);
+    structureDataService.setCurrStructurePage(StructureType.STRUCTURE_TYPE_BST);
     structureDataService.subscribeToStructureChange(onStructureDataChange);
     userService.registerCallbackToIsLoggedIn(onUserLoggedIn);
 
@@ -18,7 +18,7 @@ controller("SidebarController", function($scope, $http, structureDataService, us
     }
 
     function onStructureDataChange() {
-        $scope.structuresList = structureDataService.binarySearchTrees;
+        $scope.structuresList = structureDataService.structures;
 
         for(var i = 0; i < $scope.structuresList.length; i++) {
             $scope.structuresList[i].index = i;
@@ -33,39 +33,38 @@ controller("SidebarController", function($scope, $http, structureDataService, us
         loadInStructuresOfType($scope.currStructurePage);
     }
 
-    function loadInStructuresOfType(structureType) {
-        onStructureDataChange();
-    
+    function loadInStructuresOfType(structureType) {    
         switch(structureType) {
-            case StructurePage.STRUCTURE_PAGE_BST:
+            case StructureType.STRUCTURE_TYPE_BST:
                 $scope.structureTitle = 'Binary Search Trees';
                 $scope.createBtnTitle = 'BST';
-                if(userService.getIsLoggedIn()) {
-                    structureDataService.loadDefaultAndUserBSTs();
-                }
-                else {
-                    structureDataService.loadDefaultBSTs();
-                }
-                onStructureDataChange();
                 break;
-            case StructurePage.STRUCTURE_PAGE_STACK:
+            case StructureType.STRUCTURE_TYPE_STACK:
                 $scope.structureTitle = 'Stacks';
                 $scope.createBtnTitle = 'Stack';        
                 break;
-            case StructurePage.STRUCTURE_PAGE_QUEUE:
+            case StructureType.STRUCTURE_TYPE_QUEUE:
                 $scope.structureTitle = 'Queues';
                 $scope.createBtnTitle = 'Queue';
                 break;
-            case StructurePage.STRUCTURE_PAGE_HEAP:
+            case StructureType.STRUCTURE_TYPE_HEAP:
                 $scope.structureTitle = 'Heaps';
                 $scope.createBtnTitle = 'Heap';
                 break;
-            case StructurePage.STRUCTURE_PAGE_LINKED_LIST:
+            case StructureType.STRUCTURE_TYPE_LINKED_LIST:
                 $scope.structureTitle = 'Linked Lists';    
                 $scope.createBtnTitle = 'Linked List';        
                 break;
         }
+        if(userService.getIsLoggedIn()) {
+            structureDataService.loadUserStructuresOfType(structureType);
+        }
+        else {
+            structureDataService.loadDefaultStructuresOfType(structureType);
+        }
+        onStructureDataChange();
     }
+
 
     $scope.createStructure = function() {
         var username = userService.getUsername();

@@ -3,22 +3,22 @@ angular.module('DataStructureVisualizer').
 controller("StructureLoaderController", function($scope, structureDataService) {
 
     $scope.LoadBST = function() {
-        structureDataService.setCurrStructurePage(StructurePage.STRUCTURE_PAGE_BST);
+        structureDataService.setCurrStructurePage(StructureType.STRUCTURE_TYPE_BST);
     };
 
     $scope.LoadStack = function() {
-        structureDataService.setCurrStructurePage(StructurePage.STRUCTURE_PAGE_STACK);
+        structureDataService.setCurrStructurePage(StructureType.STRUCTURE_TYPE_STACK);
     };
             
     $scope.LoadQueue = function() {
-        structureDataService.setCurrStructurePage(StructurePage.STRUCTURE_PAGE_QUEUE);
+        structureDataService.setCurrStructurePage(StructureType.STRUCTURE_TYPE_QUEUE);
     };
 
     $scope.LoadHeap = function() {
-        structureDataService.setCurrStructurePage(StructurePage.STRUCTURE_PAGE_HEAP);
+        structureDataService.setCurrStructurePage(StructureType.STRUCTURE_TYPE_HEAP);
     };
             
     $scope.LoadLinkedList = function() {
-        structureDataService.setCurrStructurePage(StructurePage.STRUCTURE_PAGE_LINKED_LIST);
+        structureDataService.setCurrStructurePage(StructureType.STRUCTURE_TYPE_LINKED_LIST);
     };
 });

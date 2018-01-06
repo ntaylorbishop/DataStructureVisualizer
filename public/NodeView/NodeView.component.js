@@ -1,7 +1,7 @@
 
 angular.module('DataStructureVisualizer').
 component('nodeView', {
-    templateUrl: 'NodeSystem/NodeView.html'
+    templateUrl: 'NodeView/NodeView.html'
 });
 
 
@@ -20,11 +20,11 @@ controller("NodeViewController", function($scope, structureDataService, structur
     
     function structureSelectedEvent() {           
         var dataStructure = structureDataService.selectedStructure.structure;
+        $scope.currStructureType = dataStructure.structureType;
         canvasContext.clearRect(0, 0, 1903, 900);
 
         if(dataStructure == null) {
             $scope.nodes = [];
-            console.log("null!");
             return;
         }
 
