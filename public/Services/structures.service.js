@@ -220,34 +220,45 @@ factory('structureDataService', function($http, userService) {
             }
         },
 
-        deleteStructureAtIndex : function(index) {
+        deleteStructure : function(dataStructure) {
+            removeAtIndexFromArray(structureDataService.binarySearchTrees, dataStructure.index);
             var isLoggedIn = userService.getIsLoggedIn();
-
+            console.log('deleting');
             if(isLoggedIn) {
-                return; //Need to add this
+                this.postDeleteStructure(dataStructure._id);
             }
-            else {
-                switch(this.currStructurePage) {
-                    case StructurePage.STRUCTURE_PAGE_BST:
-                        removeAtIndexFromArray(structureDataService.binarySearchTrees, index);
-                        break;
-                    case StructurePage.STRUCTURE_PAGE_STACK:    
-                        removeAtIndexFromArray(structureDataService.stacks, index);
-                        break;
-                    case StructurePage.STRUCTURE_PAGE_QUEUE:
-                        removeAtIndexFromArray(structureDataService.queues, index);
-                        break;
-                    case StructurePage.STRUCTURE_PAGE_HEAP:
-                        removeAtIndexFromArray(structureDataService.heaps, index);
-                        break;
-                    case StructurePage.STRUCTURE_PAGE_LINKED_LIST:
-                        removeAtIndexFromArray(structureDataService.linkedLists, index);
-                        break;
-                    default:
-                        break;
-                }
-                this.handleStructureChange();
+            this.handleStructureChange();
+        },
+
+        postDeleteStructure : function(docId) {
+            var sendData = { 'docId' : docId };
+            $http.post('/api/structure/delete-structure', sendData)
+            .success(function() {
+                //Handle success vs failure
+            })
+            .error(function(err) {
+                console.log('[Error] /api/structure/delete-structure: ' + err);
+            });
+        },
+
+        changeNameOfStructure : function(dataStructure, newTitle) {
+            this.binarySearchTrees[dataStructure.index].title = newTitle;
+            
+            var isLoggedIn = userService.getIsLoggedIn();
+            if(isLoggedIn) {
+                this.postTitleChange(dataStructure._id, newTitle);
             }
+        },
+
+        postTitleChange : function(docId, newTitle) {
+            var sendData = { 'docId' : docId, 'newTitle' : newTitle };
+            $http.post('/api/structure/update-title', sendData)
+            .success(function() {
+                //Handle success vs failure
+            })
+            .error(function(err) {
+                console.log('[Error] /api/structure/update-title: ' + err);
+            });
         },
 
         //LOADING IN STRUCTURES

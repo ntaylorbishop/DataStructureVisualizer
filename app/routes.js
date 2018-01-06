@@ -1,5 +1,5 @@
 var usersModel = require('./models/User.js');
-var bstModel = require('./models/BinarySearchTree.js');
+var bstModel = require('./models/StructureModel.js');
 var session = require("client-sessions");
 
 var outputMsgs = {
@@ -136,6 +136,7 @@ module.exports = function (app) {
             if (err) {
                 res.send(err)
             }
+            console.log(allBSTs);
             res.json(allBSTs);
         });
     });
@@ -157,6 +158,36 @@ module.exports = function (app) {
             else {
                 console.log(req.body.updatedStructure);
                 res.send({ 'successful' : true});
+            }
+        });
+    });
+
+    app.post('/api/structure/update-title', function(req, res) {
+        bstModel.findByIdAndUpdate(req.body.docId, { 'title' : req.body.newTitle }, function(err, doc) {
+            if (err) {
+                res.send({ 'successful' : false, 'error' : err });
+            }
+            else {
+                console.log(req.body.updatedStructure);
+                res.send({ 'successful' : true});
+            }
+        });
+    });
+
+    app.post('/api/structure/delete-structure', function(req, res) {
+        bstModel.findByIdAndUpdate(req.body.docId, { 'title' : req.body.newTitle }, function(err, doc) {
+            if (err) {
+                res.send({ 'successful' : false, 'error' : err });
+            }
+            else {
+                console.log(req.body.updatedStructure);
+                res.send({ 'successful' : true});
+            }
+        });
+
+        bstModel.find({ '_id' : req.body.docId }).remove( function(err) {
+            if(err) {
+                res.send({ 'successful' : false, 'error' : err });
             }
         });
     });

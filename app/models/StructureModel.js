@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var binarySearchTreeSchema = new Schema({
+var bstSchema = new Schema({
     owner: {
         type: String,
         required: true,
@@ -26,6 +26,6 @@ var binarySearchTreeSchema = new Schema({
     created_at: Date
 });
 
-var bstModel = mongoose.model('bstModel', binarySearchTreeSchema);
+var structure = mongoose.model('structure', bstSchema);
 
-module.exports = bstModel;
+module.exports = structure;

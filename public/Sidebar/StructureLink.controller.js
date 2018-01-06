@@ -17,8 +17,12 @@ controller("StructureLinkController", function($scope, structureDataService, $do
         }
     }
 
-    $scope.selectStructure = function(dataStructure) {
+    $scope.saveText = function(dataStructure) {
+        structureDataService.changeNameOfStructure(dataStructure, $scope.dataStructureTitle);
+        dataStructure.title = $scope.dataStructureTitle;
+    }
 
+    $scope.selectStructure = function(dataStructure) {
         if(! $scope.isTextHovered) {
             $scope.isTextSelected = false;
             structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, dataStructure);
@@ -32,7 +36,7 @@ controller("StructureLinkController", function($scope, structureDataService, $do
     $scope.deleteStructure = function(dataStructure) {
         
         var removeIndex = dataStructure.index;       
-        structureDataService.deleteStructureAtIndex(dataStructure.index);
+        structureDataService.deleteStructure(dataStructure);
 
         if($scope.structuresList.length == 0) {
             structureDataService.handleStructureSelected(StructurePage.STRUCTURE_PAGE_BST, null);
