@@ -23,6 +23,11 @@ var bstSchema = new Schema({
         type: String,
         required: false,
     },
+    structureType: {
+        type: Number,
+        required: true,
+        default: 0,
+    },
     created_at: Date
 });
 
