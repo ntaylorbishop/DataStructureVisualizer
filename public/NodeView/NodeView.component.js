@@ -6,10 +6,15 @@ component('nodeView', {
 
 
 angular.module('DataStructureVisualizer').
-controller("NodeViewController", function($scope, structureDataService, structureVisService, $document) {
+controller("NodeViewController", function($scope, structureDataService, $document) {
 
     structureDataService.subscribeToStructureSelected(structureSelectedEvent);
     //structureDataService.registerCallbackToCurrStructurePage(structureSelectedEvent);
+
+    //var startPoint = new Vector2(995, 160);
+    var startPoint = new Vector2(500, 160);
+    var xDiff = 400;
+    var yDiff = 600;
 
     var canvas = document.getElementById("LineDrawCanvas");
     var canvasContext = canvas.getContext("2d");
@@ -18,7 +23,6 @@ controller("NodeViewController", function($scope, structureDataService, structur
     
     function structureSelectedEvent() {
         
-        var startPoint = structureVisService.startPoint;
         var dataStructure = structureDataService.selectedStructure.structure;
         $scope.currStructureType = dataStructure.structureType;
         canvasContext.clearRect(0, 0, 1903, 900);
@@ -30,11 +34,10 @@ controller("NodeViewController", function($scope, structureDataService, structur
 
         switch(dataStructure.structureType) {
             case StructureType.STRUCTURE_TYPE_BST:
-                debugger;
-                drawBST(dataStructure, startPoint);
+                drawBST(dataStructure);
                 break;
             case StructureType.STRUCTURE_TYPE_STACK:
-
+                drawStack(dataStructure);
                 break;
             case StructureType.STRUCTURE_TYPE_QUEUE:
 
@@ -48,9 +51,7 @@ controller("NodeViewController", function($scope, structureDataService, structur
         }
    }
 
-    function drawBST(dataStructure, startPoint) {
-        var xDiff = structureVisService.xDiff;
-        var yDiff = structureVisService.yDiff;
+    function drawBST(dataStructure) {
         var bst = new BinarySearchTree(dataStructure.title);
         
         for(var i = 0; i < dataStructure.values.length; i++) {
@@ -63,15 +64,30 @@ controller("NodeViewController", function($scope, structureDataService, structur
         }
 
         var array = [];
-        var nodes = [];
 
         //POPULATE NODES
-        bst.generatePositionsInPanel(new Vector2(500, 160), xDiff * 2, yDiff);
+        bst.generatePositionsInPanel(startPoint, xDiff * 2, yDiff);
         bst.serialize(array);
         
         drawLinesBetweenNodes(bst.root);
 
         $scope.nodes = array;
+    }
+
+    function drawStack(dataStructure) {
+        var stack = new Stack(dataStructure.title);
+
+        for(var i = 0; i < dataStructure.values.length; i++) {
+            if(dataStructure.dataType == "Integer") {
+                stack.insert(parseInt(dataStructure.values[i]));
+            }
+            else {
+                stack.insert(dataStructure.values[i]);
+            }
+        }
+
+        stack.generatePositionsInPanel(startPoint, xDiff * 2, yDiff, 200, 31);
+        $scope.nodes = stack.values;
     }
 
     //DRAW LINES

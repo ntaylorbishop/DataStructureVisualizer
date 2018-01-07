@@ -12,6 +12,15 @@ div.Node {
     transition:.5s;
 }
 
+div.NodeValue {
+    font-size: 1.2em;
+    font-family: "Segoe UI",Arial,sans-serif;
+    color: white;
+    text-align: center;
+    pointer-events: auto;
+    z-index: 1;
+}
+
 div.Node:hover {
     background-color: #606C38;
 
@@ -23,19 +32,21 @@ div#NodeType-1 { /* Binary Search tree */
     min-height: 50px;
 }
 
-div.NodeValue {
+div#NodeValueType-1 {
     padding-top: 10px;
-    font-size: 1.2em;
-    font-family: "Segoe UI",Arial,sans-serif;
-    color: white;
-    text-align: center;
-    vertical-align: center;
-    pointer-events: auto;
-    z-index: 1;
     padding-left: 5px;
     padding-right: 5px;
+    vertical-align: center;
 }
 
+div#NodeValueType-2 {
+
+}
+
+div#NodeType-2 {
+    width: 200px;
+    height: 30px;
+}
 
 div#NodeType-1:hover { /* Binary Search tree */
     background-color: #606C38;

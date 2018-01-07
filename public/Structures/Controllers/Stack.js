@@ -1,12 +1,9 @@
 'use strict';
 
 //BSTNODE
-function BSTNode(value, valueIndex, position) {
-  this.value = value;
-  this.left = null;
-  this.right = null;
-  this.position = position;
-  this.valueIndex = valueIndex;
+function StackNode(value, position) {
+    this.value = value;
+    this.position = position;
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -14,115 +11,29 @@ function BSTNode(value, valueIndex, position) {
 ////////////////////////////////////////////////////////////////////
 
 //CONSTRUCTOR
-function BinarySearchTree(name) {
-  this.name = name;
+function Stack(name) {
+    this.name = name;
+    this.values = [];
 }
 
 //METHODS
-BinarySearchTree.prototype.insert = function(value, valueIndex) {
-  var currNode = this.root;
-  var newNode = new BSTNode(value, valueIndex, new Vector2(0, 0));
+Stack.prototype.insert = function(value) {
+    var newNode = new StackNode(value, new Vector2(0, 0));
+    this.values.push(newNode);
+}
 
-  if(this.root == null) {
-    this.root = newNode;
-    return;
-  }
+Stack.prototype.generatePositionsInPanel = function(startPos, panelWidth, panelHeight, width, height) {
+    this.computeNodePositions(startPos, panelWidth, panelHeight, width, height);
+}
 
-  while(currNode) {
-
-    if(value < currNode.value) {
-      if(currNode.left) {
-        currNode = currNode.left;
-      }
-      else {
-        currNode.left = newNode;
-        break;
-      }
+Stack.prototype.computeNodePositions = function(startPos, panelWidth, panelHeight, width, height) { 
+    var WARNING_MAGIC_NUMBER_HEIGHT = 50;
+    var WARNING_MAGIC_NUMBER_WIDTH = 130;
+    for(var i = 0; i < this.values.length; i++) {
+        var xPos = startPos.x + (panelWidth / 2) + WARNING_MAGIC_NUMBER_WIDTH - (width / 2);
+        var yPos = startPos.y + panelHeight - WARNING_MAGIC_NUMBER_HEIGHT - height * i;
+        this.values[i].position = new Vector2(xPos, yPos);
     }
-    else {
-      if(currNode.right) {
-        currNode = currNode.right;
-      }
-      else {
-        currNode.right = newNode;
-        break;
-      }
-    }
-  }
-}
-
-BinarySearchTree.prototype.inorderPush = function(array, node) {
-  
-  if(node) {
-    this.inorderPush(array, node.left);
-    array.push(node);
-    this.inorderPush(array, node.right);
-  }
-}
-  
-BinarySearchTree.prototype.serialize = function(array) {
-
-  this.inorderPush(array, this.root);
-}
-
-BinarySearchTree.prototype.generatePositionsInPanel = function(startPos, panelWidth, panelHeight) {
-
-  this.totalNodes = 0;
-  this.computeNodePositions();
-
-  this.gatherPositions(this.root, startPos, panelWidth, panelHeight);
-}
-
-BinarySearchTree.prototype.gatherPositions = function(node, startPos, panelWidth, panelHeight) {
-
-  var dx = 0;
-  var dy = 0;
-  var dx2 = 0;
-  var dy2 = 0;
-  var ys = 20;
-  var treeHeight = this.getTreeHeight(this.root);
-  var xScale = panelWidth / this.totalNodes;
-
-  if(this.totalNodes < 4) {
-      xScale = panelWidth / 8;
-  }
-  var yScale = (panelHeight - ys) / (treeHeight + 1);
-  
-  if (node != null) {  
-    this.gatherPositions(node.left, startPos, panelWidth, panelHeight); 
-    dx = node.position.x * xScale; // get x,y coords., and scale them  
-    dy = node.position.y * yScale; 
-
-    node.position = new Vector2(startPos.x + (dx - ys), startPos.y + dy);
-    this.gatherPositions(node.right, startPos, panelWidth, panelHeight); //now do right side of inorder traversal  
-  } 
-}
-
-BinarySearchTree.prototype.getTreeHeight = function(node) {
-
-  if (node == null) {
-    return -1; 
-  }
-  else {
-    return 1 + Math.max(this.getTreeHeight(node.left), this.getTreeHeight(node.right)); 
-  }
-}
-
-BinarySearchTree.prototype.inorderTraversal = function(node, depth) { 
-
-  if (node != null) { 
-    this.inorderTraversal(node.left, depth + 1);
-    this.totalNodes += 1;
-    node.position.x = this.totalNodes + 1;
-    node.position.y = depth - 1;
-    this.inorderTraversal(node.right, depth + 1); 
-  } 
-} 
-
-BinarySearchTree.prototype.computeNodePositions = function() { 
-
-    var depth = 1; 
-    this.inorderTraversal(this.root, depth); 
 } 
 
 
