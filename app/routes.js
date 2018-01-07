@@ -131,9 +131,6 @@ module.exports = function (app) {
     });
 
     app.post('/api/structure/load-default-structures', function(req, res) {
-
-        console.log(req.body.structureType);
-
         bstModel.find({ 'owner': 'default', 'structureType' : req.body.structureType }, function(err, allStructuresOfType) {
             if (err) {
                 res.send(err)

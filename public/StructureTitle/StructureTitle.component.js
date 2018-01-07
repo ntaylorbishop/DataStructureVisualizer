@@ -10,7 +10,9 @@ controller("StructureTitleController", function($scope, structureDataService) {
 
     structureDataService.subscribeToStructureSelected(onStructureChanged);
     function onStructureChanged() {
-        $scope.headerStructureTitle = structureDataService.selectedStructure.structure.title;
-        $scope.headerStructureType = structureDataService.selectedStructure.structure.dataType;
+        if(structureDataService.selectedStructure.structure) {
+            $scope.headerStructureTitle = structureDataService.selectedStructure.structure.title;
+            $scope.headerStructureType = structureDataService.selectedStructure.structure.dataType;
+        }
     }
 });

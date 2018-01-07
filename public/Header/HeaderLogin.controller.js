@@ -12,8 +12,6 @@ controller("HeaderLoginController", function($scope, $http, structureDataService
         .success(function(data) {
             userService.setUsername(data.username);
             userService.setIsLoggedIn(data.loggedIn);
-            console.log("CHECK LOGIN");
-            console.log(data);
 
         })
         .error(function(data) {
@@ -26,9 +24,6 @@ controller("HeaderLoginController", function($scope, $http, structureDataService
         .success(function(data) {
             userService.setUsername(data.username);
             userService.setIsLoggedIn(data.isLoggedIn);
-
-            console.log("LOGOUT");
-            console.log(data);
         })
         .error(function(data) {
             console.log('Error: ' + data);

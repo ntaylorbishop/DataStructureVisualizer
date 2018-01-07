@@ -1,18 +1,26 @@
-div#NodeType-1 { /* Binary Search tree */
+div.Node {
     background: #283618;  
-    min-width: 50px;
-    min-height: 50px;
-    border-radius: 50%;
+
+    cursor: pointer;
+    z-index: 0;
     position: absolute;
     pointer-events: auto;
-    z-index: 0;
-    cursor: pointer;
-
     -o-transition:.5s;
     -ms-transition:.5s;
     -moz-transition:.5s;
     -webkit-transition:.5s;
     transition:.5s;
+}
+
+div.Node:hover {
+    background-color: #606C38;
+
+}
+
+div#NodeType-1 { /* Binary Search tree */
+    border-radius: 50%;
+    min-width: 50px;
+    min-height: 50px;
 }
 
 div.NodeValue {

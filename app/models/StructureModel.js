@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var bstSchema = new Schema({
+var structureSchema = new Schema({
     owner: {
         type: String,
         required: true,
@@ -31,6 +31,6 @@ var bstSchema = new Schema({
     created_at: Date
 });
 
-var structure = mongoose.model('structure', bstSchema);
+var structure = mongoose.model('structure', structureSchema);
 
 module.exports = structure;

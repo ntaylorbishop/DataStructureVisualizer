@@ -193,7 +193,6 @@ factory('structureDataService', function($http, userService) {
         deleteStructure : function(dataStructure) {
             removeAtIndexFromArray(structureDataService.structures, dataStructure.index);
             var isLoggedIn = userService.getIsLoggedIn();
-            console.log('deleting');
             if(isLoggedIn) {
                 this.postDeleteStructure(dataStructure._id);
             }
@@ -237,7 +236,6 @@ factory('structureDataService', function($http, userService) {
             $http.post('/api/structure/load-default-structures', sendData)
             .success(function(allStructuresOfType) {
                 structureDataService.structures = allStructuresOfType;    
-                console.log(structureDataService.structures);      
                 structureDataService.handleStructureChange();
                 structureDataService.handleStructureSelected(structureType, structureDataService.structures[0]);
                 return true;
@@ -253,7 +251,6 @@ factory('structureDataService', function($http, userService) {
             $http.post('/api/structure/get-user-structures', sendData)
             .success(function(allBSTs) {
                 structureDataService.structures = allBSTs;    
-                console.log(structureDataService.structures);      
                 structureDataService.handleStructureChange();
                 structureDataService.handleStructureSelected(StructureType.STRUCTURE_TYPE_BST, structureDataService.structures[0]);
                 return true;

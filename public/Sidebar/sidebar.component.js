@@ -72,6 +72,5 @@ controller("SidebarController", function($scope, $http, structureDataService, us
     }
 
     $scope.deleteStructure = function(indexInStructureArray) {
-        console.log(indexInStructureArray);
     }
 });

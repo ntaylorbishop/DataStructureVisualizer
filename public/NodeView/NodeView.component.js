@@ -9,25 +9,48 @@ angular.module('DataStructureVisualizer').
 controller("NodeViewController", function($scope, structureDataService, structureVisService, $document) {
 
     structureDataService.subscribeToStructureSelected(structureSelectedEvent);
+    //structureDataService.registerCallbackToCurrStructurePage(structureSelectedEvent);
 
-    var startPoint = structureVisService.startPoint;
-    var xDiff = structureVisService.xDiff;
-    var yDiff = structureVisService.yDiff;
     var canvas = document.getElementById("LineDrawCanvas");
     var canvasContext = canvas.getContext("2d");
     var array = [];
     $scope.nodes = array;
     
-    function structureSelectedEvent() {           
+    function structureSelectedEvent() {
+        
+        var startPoint = structureVisService.startPoint;
         var dataStructure = structureDataService.selectedStructure.structure;
         $scope.currStructureType = dataStructure.structureType;
         canvasContext.clearRect(0, 0, 1903, 900);
-
+        
         if(dataStructure == null) {
             $scope.nodes = [];
             return;
         }
 
+        switch(dataStructure.structureType) {
+            case StructureType.STRUCTURE_TYPE_BST:
+                debugger;
+                drawBST(dataStructure, startPoint);
+                break;
+            case StructureType.STRUCTURE_TYPE_STACK:
+
+                break;
+            case StructureType.STRUCTURE_TYPE_QUEUE:
+
+                break;
+            case StructureType.STRUCTURE_TYPE_HEAP:
+
+                break;
+            case StructureType.STRUCTURE_TYPE_LINKED_LIST:
+
+                break;
+        }
+   }
+
+    function drawBST(dataStructure, startPoint) {
+        var xDiff = structureVisService.xDiff;
+        var yDiff = structureVisService.yDiff;
         var bst = new BinarySearchTree(dataStructure.title);
         
         for(var i = 0; i < dataStructure.values.length; i++) {
@@ -52,7 +75,7 @@ controller("NodeViewController", function($scope, structureDataService, structur
     }
 
     //DRAW LINES
-    function draw(start, end) {
+    function drawLine(start, end) {
         //this.canvasContext.clearRect(0, 0, 1903, 900);        
         canvasContext.beginPath();
         canvasContext.moveTo(start.x, start.y);
@@ -72,12 +95,12 @@ controller("NodeViewController", function($scope, structureDataService, structur
 
         if(node.left != null) {
             var end = new Vector2(node.left.position.x + 25, node.left.position.y - 25);
-            draw(start, end);
+            drawLine(start, end);
             drawLinesBetweenNodes(node.left);
         }
         if(node.right != null) {
             var end = new Vector2(node.right.position.x + 25, node.right.position.y - 25);
-            draw(start, end);
+            drawLine(start, end);
             drawLinesBetweenNodes(node.right);
         }
     }
