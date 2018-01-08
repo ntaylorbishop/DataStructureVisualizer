@@ -4,8 +4,7 @@
     </center>
     <div id="StructureLinks">
         <div class="StructureLink" ng-repeat="dataStructure in structuresList" ng-controller="StructureLinkController" ng-click="selectStructure(dataStructure)" ng-init="dataStructureTitle = dataStructure.title">
-            <div class="StructureLinkText" ng-show="!isTextSelected" ng-mouseover="isHoveringText(true)" ng-mouseleave="isHoveringText(false)" ng-click="clickText()">{{dataStructure.title}}</div>
-            <input type="text" class="StructureLinkName" ng-model="dataStructureTitle" ng-show="isTextSelected" ng-keypress="enterText($event)" focus-element="isTextSelected" ng-blur="saveText(dataStructure)"></input>
+            <div class="StructureLinkText" ng-mouseover="isHoveringText(true)" ng-mouseleave="isHoveringText(false)">{{dataStructure.title}}</div>
             <a ng-click="deleteStructure(dataStructure)"><img src="img/DeleteButton.png" /></a>
         </div>
     </div>

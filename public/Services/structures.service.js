@@ -121,7 +121,7 @@ factory('structureDataService', function($http, userService) {
                 if(isInt(newValue)) {
                     this.selectedStructure.structure.values.push(parseInt(newValue));
                     if(isLoggedIn) {
-                        this.postValueStructure(newValue);
+                        this.postUpdateStructure();
                     }
                 }
                 else {
@@ -132,7 +132,7 @@ factory('structureDataService', function($http, userService) {
                 if(newValue.length == 1) {
                     this.selectedStructure.structure.values.push(newValue);
                     if(isLoggedIn) {
-                        this.postValueStructure(newValue);
+                        this.postUpdateStructure();
                     }
                 }
                 else {
@@ -142,14 +142,14 @@ factory('structureDataService', function($http, userService) {
             else if(this.selectedStructure.structure.dataType == "Word") {
                 this.selectedStructure.structure.values.push(newValue);
                 if(isLoggedIn) {
-                    this.postValueStructure(newValue);
+                    this.postUpdateStructure();
                 }
             }
             this.handleSelectedStructureDataChanged();
             return '';
         },
 
-        postValueStructure : function(newValue) {
+        postUpdateStructure : function() {
             var sendData = { 'docId' : this.selectedStructure.structure._id, 'updatedStructure' : this.selectedStructure.structure };
             $http.post('api/structure/update-structure', sendData)
             .success(function(sentData) {
@@ -161,33 +161,33 @@ factory('structureDataService', function($http, userService) {
         },
 
         deleteFromCurrentStructure : function(valueIndex) {
-            var isLoggedIn = userService.getIsLoggedIn();
-
-            if(isLoggedIn) {
-                return; //Need to add this
-            }
-            else {
-                switch(this.selectedStructure.structureType) {
-                    case StructureType.STRUCTURE_TYPE_BST:
-                        removeAtIndexFromArray(this.selectedStructure.structure.values, valueIndex);
-                        this.handleSelectedStructureDataChanged();
-                        break;
-                    case StructureType.STRUCTURE_TYPE_STACK:    
-    
-                        break;
-                    case StructureType.STRUCTURE_TYPE_QUEUE:
-    
-                        break;
-                    case StructureType.STRUCTURE_TYPE_HEAP:
-    
-                        break;
-                    case StructureType.STRUCTURE_TYPE_LINKED_LIST:
-    
-                        break;
-                    default:
-                        break;
+            switch(this.selectedStructure.structureType) {
+                case StructureType.STRUCTURE_TYPE_BST:
+                removeAtIndexFromArray(this.selectedStructure.structure.values, valueIndex);
+                break;
+                case StructureType.STRUCTURE_TYPE_STACK:    
+                if(this.selectedStructure.structure.values.length > 0) {
+                    removeAtIndexFromArray(this.selectedStructure.structure.values, this.selectedStructure.structure.values.length - 1);
                 }
+                break;
+                case StructureType.STRUCTURE_TYPE_QUEUE:
+                
+                break;
+                case StructureType.STRUCTURE_TYPE_HEAP:
+                
+                break;
+                case StructureType.STRUCTURE_TYPE_LINKED_LIST:
+                
+                break;
+                default:
+                break;
             }
+            
+            var isLoggedIn = userService.getIsLoggedIn();
+            if(isLoggedIn) {
+                this.postUpdateStructure();
+            }
+            this.handleSelectedStructureDataChanged();
         },
 
         deleteStructure : function(dataStructure) {
@@ -210,12 +210,12 @@ factory('structureDataService', function($http, userService) {
             });
         },
 
-        changeNameOfStructure : function(dataStructure, newTitle) {
-            this.structures[dataStructure.index].title = newTitle;
-            
+        changeNameOfStructure : function(newTitle) {
+            this.selectedStructure.structure.title = newTitle;
+
             var isLoggedIn = userService.getIsLoggedIn();
             if(isLoggedIn) {
-                this.postTitleChange(dataStructure._id, newTitle);
+                this.postTitleChange(this.selectedStructure.structure._id, newTitle);
             }
         },
 

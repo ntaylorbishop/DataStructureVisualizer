@@ -25,7 +25,6 @@ div#Sidebar div.StructureLink {
 
 
 div#Sidebar div.StructureLink:hover {
-    color: #DDA15E;
     width: 100%;
     cursor: pointer;    
     background-color: #606C38;

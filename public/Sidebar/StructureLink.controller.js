@@ -23,10 +23,8 @@ controller("StructureLinkController", function($scope, structureDataService, $do
     }
 
     $scope.selectStructure = function(dataStructure) {
-        if(! $scope.isTextHovered) {
-            $scope.isTextSelected = false;
-            structureDataService.handleStructureSelected(StructureType.STRUCTURE_TYPE_BST, dataStructure);
-        }
+        $scope.isTextSelected = false;
+        structureDataService.handleStructureSelected(StructureType.STRUCTURE_TYPE_BST, dataStructure);
     }
 
     $scope.isHoveringText = function(isHovering) {

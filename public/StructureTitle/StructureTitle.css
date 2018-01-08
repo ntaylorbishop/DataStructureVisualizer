@@ -1,18 +1,60 @@
 div#HeaderStructureContainer {
     position: absolute;
-    width: 200px;
+    width: 400px;
     left: 50%;
-    margin-left: -100px;
+    margin-left: -200px;
+}
+
+div#HeaderStructureContainer div#TitleContainer {
+    width: 350px;
+    margin-top: 10px;
+    height: 50px;
+    border-radius: 10px;
+    margin-left: 10px;
 }
 
 div#HeaderStructureTitle {
-    margin-top: 10px;
+    margin-top: 5px;
     font-size: 1.5em;
     font-family: "Segoe UI",Arial,sans-serif;
+    float: left;
+    margin-left: 10px;
 }
 
 div#HeaderStructureType {
     margin-top: 5px;
     font-size: 1.2em;
     font-family: "Segoe UI",Arial,sans-serif;
+}
+
+div#HeaderStructureContainer img {
+    width: 25px;
+    height: 25px;
+    margin-left: 8px;
+    cursor: pointer;
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+div#HeaderStructureContainer input#HeaderStructureTitle {
+    margin-top: 5px;
+    font-size: 1.5em;
+    font-family: "Segoe UI",Arial,sans-serif;
+    border: 1px solid rgb(0, 0, 0);
+    float: left;
+    margin-left: 10px;
+    display: inline;
+
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: none;
+}
+
+div#HeaderStructureContainer input#HeaderStructureTitle:focus {
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: none;
 }

@@ -35,5 +35,3 @@ Stack.prototype.computeNodePositions = function(startPos, panelWidth, panelHeigh
         this.values[i].position = new Vector2(xPos, yPos);
     }
 } 
-
-

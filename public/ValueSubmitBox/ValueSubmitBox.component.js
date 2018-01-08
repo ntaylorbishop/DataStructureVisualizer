@@ -19,6 +19,9 @@ controller("ValueSubmitBoxController", function($scope, structureDataService) {
     var defaultErrorMessage = 'Please enter a value.';
     $scope.errorMessage = defaultErrorMessage;
     $scope.NewNodeValue = '0';
+    structureDataService.registerCallbackToCurrStructurePage(onCurrStructurePageChange);
+    $scope.isOnStack = false;
+    $scope.currStructureType = structureDataService.getCurrStructurePage();
 
     function updateStructureInService(value) {
         $scope.errorMessage = structureDataService.addValueToCurrentStructure(value);
@@ -54,5 +57,14 @@ controller("ValueSubmitBoxController", function($scope, structureDataService) {
             var idx = getRandomInt(0, endIdx);
             $scope.NewNodeValue = randomLetters[idx];
         }
+    }
+
+    $scope.removeNode = function() {
+        structureDataService.deleteFromCurrentStructure(0);
+    }
+
+    function onCurrStructurePageChange() {
+        $scope.isOnStack = (structureDataService.getCurrStructurePage() == StructureType.STRUCTURE_TYPE_STACK);
+        $scope.currStructureType = structureDataService.getCurrStructurePage();
     }
 });
