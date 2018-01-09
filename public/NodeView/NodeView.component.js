@@ -9,7 +9,8 @@ angular.module('DataStructureVisualizer').
 controller("NodeViewController", function($scope, structureDataService, $document) {
 
     structureDataService.subscribeToStructureSelected(structureSelectedEvent);
-    //structureDataService.registerCallbackToCurrStructurePage(structureSelectedEvent);
+    structureDataService.subscribeToStructureSelected(onStructureChanged);
+    $scope.oldStructureNumValues = -1;
 
     //var startPoint = new Vector2(995, 160);
     var startPoint = new Vector2(500, 160);
@@ -68,9 +69,7 @@ controller("NodeViewController", function($scope, structureDataService, $documen
         //POPULATE NODES
         bst.generatePositionsInPanel(startPoint, xDiff * 2, yDiff);
         bst.serialize(array);
-        
         drawLinesBetweenNodes(bst.root);
-
         $scope.nodes = array;
     }
 
@@ -88,6 +87,11 @@ controller("NodeViewController", function($scope, structureDataService, $documen
 
         stack.generatePositionsInPanel(startPoint, xDiff * 2, yDiff, 200, 31);
         $scope.nodes = stack.values;
+
+        for(var i = 0; i < $scope.nodes.length; i++) {
+            $scope.nodes[i].isLastIdx = false;
+        }
+        $scope.nodes[$scope.nodes.length - 1].isLastIdx = true;
     }
 
     //DRAW LINES
@@ -118,6 +122,25 @@ controller("NodeViewController", function($scope, structureDataService, $documen
             var end = new Vector2(node.right.position.x + 25, node.right.position.y - 25);
             drawLine(start, end);
             drawLinesBetweenNodes(node.right);
+        }
+    }
+
+    function onStructureChanged() {
+        var newStructureLength = structureDataService.selectedStructure.structure.values.length;
+        if($scope.oldStructureNumValues == undefined) {
+            $scope.oldStructureNumValues = newStructureLength;
+        }
+
+        $scope.structureLengthDiff = newStructureLength - $scope.oldStructureNumValues;
+        $scope.oldStructureNumValues = newStructureLength;
+    }
+
+    $scope.wasNodeDeleted = function() {
+        if($scope.structureLengthDiff < 0) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 });
