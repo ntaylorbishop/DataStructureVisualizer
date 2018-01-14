@@ -2,7 +2,7 @@
 <div id="NodeStructure" ng-controller="NodeViewController">
     <div id="{{ 'NodeType-' + currStructureType }}" class="Node{{animNode}}" ng-repeat="node in nodes" 
     style="left: {{node.position.x}}px; top: {{node.position.y}}px" ng-controller="NodeController" 
-    ng-mouseenter="isHovered = true;" ng-mouseleave="isHovered = false;" ng-click="deleteStructure(node)"
+    ng-mouseenter="setHovered(true)" ng-mouseleave="setHovered(false)" ng-click="deleteNode(node)"
     data-ng-init="setToPushOrPopNode(node)">
         <div id="{{ 'NodeValueType-' + currStructureType }}" class="NodeValue" ng-show="!isHovered"><center>{{node.value}}</center></div>
         <div id="{{ 'NodeValueType-' + currStructureType }}" class="NodeValue" ng-show="isHovered"><center><img src="img/DeleteButton.png"/></center></div>

@@ -7,23 +7,26 @@ component('nodeView', {
 
 angular.module('DataStructureVisualizer').
 controller("NodeViewController", function($scope, structureDataService, $document) {
+    structureDataService.structureSelectedEvent.subscribe(structureSelectedEvent);
+    structureDataService.structureChangeCalledEventListener = triggerDeleteNodeAnimation;
 
-    structureDataService.subscribeToStructureSelected(structureSelectedEvent);
-    structureDataService.subscribeToStructureSelected(onStructureChanged);
-    $scope.oldStructureNumValues = -1;
-
-    //var startPoint = new Vector2(995, 160);
     var startPoint = new Vector2(500, 160);
     var xDiff = 400;
     var yDiff = 600;
-
     var canvas = document.getElementById("LineDrawCanvas");
     var canvasContext = canvas.getContext("2d");
     var array = [];
     $scope.nodes = array;
+    $scope.isNodeBeingDeleted = false;
+    $scope.animShouldPlay = false;
+
+    function triggerDeleteNodeAnimation() {
+        $scope.isNodeBeingDeleted = true;
+        structureSelectedEvent();
+        return 1;
+    }
     
-    function structureSelectedEvent() {
-        
+    function structureSelectedEvent() {        
         var dataStructure = structureDataService.selectedStructure.structure;
         $scope.currStructureType = dataStructure.structureType;
         canvasContext.clearRect(0, 0, 1903, 900);
@@ -39,6 +42,7 @@ controller("NodeViewController", function($scope, structureDataService, $documen
                 break;
             case StructureType.STRUCTURE_TYPE_STACK:
                 drawStack(dataStructure);
+                console.log(dataStructure);
                 break;
             case StructureType.STRUCTURE_TYPE_QUEUE:
 
@@ -84,7 +88,6 @@ controller("NodeViewController", function($scope, structureDataService, $documen
                 stack.insert(dataStructure.values[i]);
             }
         }
-
         stack.generatePositionsInPanel(startPoint, xDiff * 2, yDiff, 200, 31);
         $scope.nodes = stack.values;
 
@@ -123,16 +126,6 @@ controller("NodeViewController", function($scope, structureDataService, $documen
             drawLine(start, end);
             drawLinesBetweenNodes(node.right);
         }
-    }
-
-    function onStructureChanged() {
-        var newStructureLength = structureDataService.selectedStructure.structure.values.length;
-        if($scope.oldStructureNumValues == undefined) {
-            $scope.oldStructureNumValues = newStructureLength;
-        }
-
-        $scope.structureLengthDiff = newStructureLength - $scope.oldStructureNumValues;
-        $scope.oldStructureNumValues = newStructureLength;
     }
 
     $scope.wasNodeDeleted = function() {

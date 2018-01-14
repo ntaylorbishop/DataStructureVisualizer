@@ -4,23 +4,18 @@ factory('structureDataService', function($http, userService) {
     var structureDataService = {
         //DATA MEMBERS
         currStructurePage : StructureType.STRUCTURE_TYPE_BST,
-        currStructurePageCallbacks : [],
+        structurePageChangedEvent : new Event(),
         structures : [],
-        structureChangeCallbacks : [],
-        structureSelectedCallbacks : [],
+        structureChangedEvent : new Event(),
+        structureSelectedEvent : new Event(),
+        structureChangeCalledEventListener : {},
         selectedStructure : {},
+        isDeletingNode : false,
 
         //METHODS
-        registerCallbackToCurrStructurePage : function(callback) {
-            this.currStructurePageCallbacks.push(callback);
-        },
-
         setCurrStructurePage : function(currStructurePage) {
             this.currStructurePage = currStructurePage;
-            
-            for(var i = 0; i < this.currStructurePageCallbacks.length; i++) {
-                this.currStructurePageCallbacks[i]();
-            }
+            this.structurePageChangedEvent.fire();
         },
 
         getCurrStructurePage : function() {
@@ -85,68 +80,69 @@ factory('structureDataService', function($http, userService) {
             }
         },
 
-        subscribeToStructureChange : function(callback) {
-            this.structureChangeCallbacks.push(callback);
-        },
-
         handleStructureChange : function() {
-            for(var i = 0; i < this.structureChangeCallbacks.length; i++) {
-                this.structureChangeCallbacks[i]();
-            }
+            this.structureChangedEvent.fire();
         },
 
         handleStructureSelected : function(structureType, selectedStructure) {
             this.selectedStructure.structureType = structureType;
             this.selectedStructure.structure = selectedStructure;
 
-            for(var i = 0; i < this.structureSelectedCallbacks.length; i++) {
-                this.structureSelectedCallbacks[i]();
-            }
+            this.structureSelectedEvent.fire();
         },
 
         handleSelectedStructureDataChanged : function() {
-            for(var i = 0; i < this.structureSelectedCallbacks.length; i++) {
-                this.structureSelectedCallbacks[i]();
-            }
-        },
-
-        subscribeToStructureSelected : function(callback) {
-            this.structureSelectedCallbacks.push(callback);
+            this.structureSelectedEvent.fire();
         },
         
         addValueToCurrentStructure : function(newValue) {
+            this.selectedStructure.changeType = 'Add';
+            var timeoutInSeconds = 0;
+            if(this.structureChangeCalledEventListener != undefined) {
+                timeoutInSeconds = this.structureChangeCalledEventListener();
+            }
+
+            var valueToAdd;
+            var retErr = '';
             var isLoggedIn = userService.getIsLoggedIn();
 
             if(this.selectedStructure.structure.dataType == "Integer") {
                 if(isInt(newValue)) {
-                    this.selectedStructure.structure.values.push(parseInt(newValue));
+                    valueToAdd = parseInt(newValue);
                     if(isLoggedIn) {
                         this.postUpdateStructure();
                     }
                 }
                 else {
-                    return 'Inserted value must be a number.';
+                    retErr = 'Inserted value must be a number.';
                 }
             }
             else if(this.selectedStructure.structure.dataType == "Character") {
                 if(newValue.length == 1) {
-                    this.selectedStructure.structure.values.push(newValue);
+                    valueToAdd = newValue;
                     if(isLoggedIn) {
                         this.postUpdateStructure();
                     }
                 }
                 else {
-                    return 'Inserted value must be a single character.';
+                    retErr = 'Inserted value must be a single character.';
                 }
             }
             else if(this.selectedStructure.structure.dataType == "Word") {
-                this.selectedStructure.structure.values.push(newValue);
+                valueToAdd = newValue;
                 if(isLoggedIn) {
                     this.postUpdateStructure();
                 }
             }
-            this.handleSelectedStructureDataChanged();
-            return '';
+            retErr = '';
+
+            if(retErr == '') {
+                setTimeout(function() {
+                    structureDataService.selectedStructure.structure.values.push(valueToAdd);
+                    structureDataService.handleSelectedStructureDataChanged();
+                }, timeoutInSeconds * 1000);
+            }
+            return retErr;
         },
 
         postUpdateStructure : function() {
@@ -161,33 +157,42 @@ factory('structureDataService', function($http, userService) {
         },
 
         deleteFromCurrentStructure : function(valueIndex) {
-            switch(this.selectedStructure.structureType) {
-                case StructureType.STRUCTURE_TYPE_BST:
-                removeAtIndexFromArray(this.selectedStructure.structure.values, valueIndex);
-                break;
-                case StructureType.STRUCTURE_TYPE_STACK:    
-                if(this.selectedStructure.structure.values.length > 0) {
-                    removeAtIndexFromArray(this.selectedStructure.structure.values, this.selectedStructure.structure.values.length - 1);
+
+            this.selectedStructure.changeType = 'Delete';
+            var timeoutInSeconds = 0;
+            if(this.structureChangeCalledEventListener != undefined) {
+                timeoutInSeconds = this.structureChangeCalledEventListener();
+            }
+
+            setTimeout(function() {
+                switch(structureDataService.selectedStructure.structureType) {
+                    case StructureType.STRUCTURE_TYPE_BST:
+                    removeAtIndexFromArray(structureDataService.selectedStructure.structure.values, valueIndex);
+                    break;
+                    case StructureType.STRUCTURE_TYPE_STACK:    
+                    if(structureDataService.selectedStructure.structure.values.length > 0) {
+                        removeAtIndexFromArray(structureDataService.selectedStructure.structure.values, structureDataService.selectedStructure.structure.values.length - 1);
+                    }
+                    break;
+                    case StructureType.STRUCTURE_TYPE_QUEUE:
+                    
+                    break;
+                    case StructureType.STRUCTURE_TYPE_HEAP:
+                    
+                    break;
+                    case StructureType.STRUCTURE_TYPE_LINKED_LIST:
+                    
+                    break;
+                    default:
+                    break;
                 }
-                break;
-                case StructureType.STRUCTURE_TYPE_QUEUE:
                 
-                break;
-                case StructureType.STRUCTURE_TYPE_HEAP:
-                
-                break;
-                case StructureType.STRUCTURE_TYPE_LINKED_LIST:
-                
-                break;
-                default:
-                break;
-            }
-            
-            var isLoggedIn = userService.getIsLoggedIn();
-            if(isLoggedIn) {
-                this.postUpdateStructure();
-            }
-            this.handleSelectedStructureDataChanged();
+                var isLoggedIn = userService.getIsLoggedIn();
+                if(isLoggedIn) {
+                    structureDataService.postUpdateStructure();
+                }
+                structureDataService.handleSelectedStructureDataChanged();
+            }, timeoutInSeconds * 1000);
         },
 
         deleteStructure : function(dataStructure) {

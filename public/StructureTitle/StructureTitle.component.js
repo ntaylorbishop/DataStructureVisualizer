@@ -10,7 +10,7 @@ controller("StructureTitleController", function($scope, structureDataService) {
 
     $scope.isHovered = "";
     $scope.isTextSelected = false;
-    structureDataService.subscribeToStructureSelected(onStructureChanged);
+    structureDataService.structureSelectedEvent.subscribe(onStructureChanged);
     $scope.savedText = "";
 
     function onStructureChanged() {

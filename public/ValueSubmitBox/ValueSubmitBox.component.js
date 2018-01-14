@@ -19,7 +19,7 @@ controller("ValueSubmitBoxController", function($scope, structureDataService) {
     var defaultErrorMessage = 'Please enter a value.';
     $scope.errorMessage = defaultErrorMessage;
     $scope.NewNodeValue = '0';
-    structureDataService.registerCallbackToCurrStructurePage(onCurrStructurePageChange);
+    structureDataService.structurePageChangedEvent.subscribe(onCurrStructurePageChange);
     $scope.isOnStack = false;
     $scope.currStructureType = structureDataService.getCurrStructurePage();
 

@@ -12,6 +12,10 @@ div.Node {
     transition:.5s;
 }
 
+div.NodeHide {
+    opacity: 0;
+}
+
 div.NodePush {
     background: #283618;  
     cursor: pointer;

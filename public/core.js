@@ -51,4 +51,23 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-  }
+}
+
+function Event() {
+
+    this.callbacks = [];
+
+    this.subscribe = function(callback) {
+        this.callbacks.push(callback);
+    }
+
+    this.unsubscribe = function(callback) {
+        this.callbacks = this.callbacks.filter((subscriber) => subscriber !== callback);
+    }
+
+    this.fire = function() {
+        for(var i = 0; i < this.callbacks.length; i++) {
+            this.callbacks[i](arguments);
+        }
+    }
+}

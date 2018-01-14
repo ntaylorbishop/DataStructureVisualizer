@@ -7,9 +7,9 @@ component('sidebar', {
 angular.module('DataStructureVisualizer').
 controller("SidebarController", function($scope, $http, structureDataService, userService) {
     
-    structureDataService.registerCallbackToCurrStructurePage(subscribeToCurrStructurePage);
+    structureDataService.structurePageChangedEvent.subscribe(subscribeToCurrStructurePage);
     structureDataService.setCurrStructurePage(StructureType.STRUCTURE_TYPE_BST);
-    structureDataService.subscribeToStructureChange(onStructureDataChange);
+    structureDataService.structureChangedEvent.subscribe(onStructureDataChange);
     userService.registerCallbackToIsLoggedIn(onUserLoggedIn);
 
     function subscribeToCurrStructurePage() {
