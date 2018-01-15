@@ -8,9 +8,11 @@ factory('structureDataService', function($http, userService) {
         structures : [],
         structureChangedEvent : new Event(),
         structureSelectedEvent : new Event(),
-        structureChangeCalledEventListener : {},
+        structureAddCalledEventListener : {},
+        structureDeleteCalledEventListener : {},
         selectedStructure : {},
         isDeletingNode : false,
+        animTimer : { 'timerId' : null, 'isTimerActive' : false },
 
         //METHODS
         setCurrStructurePage : function(currStructurePage) {
@@ -98,8 +100,8 @@ factory('structureDataService', function($http, userService) {
         addValueToCurrentStructure : function(newValue) {
             this.selectedStructure.changeType = 'Add';
             var timeoutInSeconds = 0;
-            if(this.structureChangeCalledEventListener != undefined) {
-                timeoutInSeconds = this.structureChangeCalledEventListener();
+            if(this.structureAddCalledEventListener != undefined) {
+                timeoutInSeconds = this.structureAddCalledEventListener();
             }
 
             var valueToAdd;
@@ -157,42 +159,53 @@ factory('structureDataService', function($http, userService) {
         },
 
         deleteFromCurrentStructure : function(valueIndex) {
-
             this.selectedStructure.changeType = 'Delete';
-            var timeoutInSeconds = 0;
-            if(this.structureChangeCalledEventListener != undefined) {
-                timeoutInSeconds = this.structureChangeCalledEventListener();
+
+            if(this.animTimer.isTimerActive) {
+                this.deleteValueFromCurrentStructure();
+                structureDataService.handleSelectedStructureDataChanged();
             }
 
-            setTimeout(function() {
-                switch(structureDataService.selectedStructure.structureType) {
-                    case StructureType.STRUCTURE_TYPE_BST:
-                    removeAtIndexFromArray(structureDataService.selectedStructure.structure.values, valueIndex);
-                    break;
-                    case StructureType.STRUCTURE_TYPE_STACK:    
-                    if(structureDataService.selectedStructure.structure.values.length > 0) {
-                        removeAtIndexFromArray(structureDataService.selectedStructure.structure.values, structureDataService.selectedStructure.structure.values.length - 1);
-                    }
-                    break;
-                    case StructureType.STRUCTURE_TYPE_QUEUE:
-                    
-                    break;
-                    case StructureType.STRUCTURE_TYPE_HEAP:
-                    
-                    break;
-                    case StructureType.STRUCTURE_TYPE_LINKED_LIST:
-                    
-                    break;
-                    default:
-                    break;
-                }
+            var timeoutInSeconds = 0;
+            if(this.structureDeleteCalledEventListener != undefined) {
+                timeoutInSeconds = this.structureDeleteCalledEventListener();
+            }
+
+            this.animTimer.isTimerActive = true;
+            this.animTimer.timerId = setTimeout(function() {
+                structureDataService.deleteValueFromCurrentStructure(valueIndex);
                 
                 var isLoggedIn = userService.getIsLoggedIn();
                 if(isLoggedIn) {
                     structureDataService.postUpdateStructure();
                 }
+                structureDataService.animTimer.isTimerActive = false;
                 structureDataService.handleSelectedStructureDataChanged();
             }, timeoutInSeconds * 1000);
+        },
+
+        deleteValueFromCurrentStructure : function(valueIndex) {
+            switch(structureDataService.selectedStructure.structureType) {
+                case StructureType.STRUCTURE_TYPE_BST:
+                removeAtIndexFromArray(structureDataService.selectedStructure.structure.values, valueIndex);
+                break;
+                case StructureType.STRUCTURE_TYPE_STACK:    
+                if(structureDataService.selectedStructure.structure.values.length > 0) {
+                    removeAtIndexFromArray(structureDataService.selectedStructure.structure.values, structureDataService.selectedStructure.structure.values.length - 1);
+                }
+                break;
+                case StructureType.STRUCTURE_TYPE_QUEUE:
+                
+                break;
+                case StructureType.STRUCTURE_TYPE_HEAP:
+                
+                break;
+                case StructureType.STRUCTURE_TYPE_LINKED_LIST:
+                
+                break;
+                default:
+                break;
+            }
         },
 
         deleteStructure : function(dataStructure) {

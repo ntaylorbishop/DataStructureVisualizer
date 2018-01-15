@@ -21,10 +21,9 @@ controller("NodeController", function($scope, structureDataService) {
         else if(changeType == 'Delete') {
             $scope.animNode = "Pop";
             setToHideAfterAnimation();
+            structureDataService.selectedStructure.changeType = 'None';
         }
 
-
-        structureDataService.selectedStructure.changeType = 'None';
     }
 
     function setToHideAfterAnimation() {

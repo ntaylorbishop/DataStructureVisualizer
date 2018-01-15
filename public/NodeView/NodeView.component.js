@@ -8,7 +8,8 @@ component('nodeView', {
 angular.module('DataStructureVisualizer').
 controller("NodeViewController", function($scope, structureDataService, $document) {
     structureDataService.structureSelectedEvent.subscribe(structureSelectedEvent);
-    structureDataService.structureChangeCalledEventListener = triggerDeleteNodeAnimation;
+    structureDataService.structureAddCalledEventListener = triggerAddNodeAnimation;
+    structureDataService.structureDeleteCalledEventListener = triggerDeleteNodeAnimation;
 
     var startPoint = new Vector2(500, 160);
     var xDiff = 400;
@@ -17,16 +18,17 @@ controller("NodeViewController", function($scope, structureDataService, $documen
     var canvasContext = canvas.getContext("2d");
     var array = [];
     $scope.nodes = array;
-    $scope.isNodeBeingDeleted = false;
-    $scope.animShouldPlay = false;
 
     function triggerDeleteNodeAnimation() {
-        $scope.isNodeBeingDeleted = true;
         structureSelectedEvent();
         return 1;
     }
+
+    function triggerAddNodeAnimation() {
+        return 0;
+    }
     
-    function structureSelectedEvent() {        
+    function structureSelectedEvent() {       
         var dataStructure = structureDataService.selectedStructure.structure;
         $scope.currStructureType = dataStructure.structureType;
         canvasContext.clearRect(0, 0, 1903, 900);
@@ -42,7 +44,6 @@ controller("NodeViewController", function($scope, structureDataService, $documen
                 break;
             case StructureType.STRUCTURE_TYPE_STACK:
                 drawStack(dataStructure);
-                console.log(dataStructure);
                 break;
             case StructureType.STRUCTURE_TYPE_QUEUE:
 
@@ -89,12 +90,17 @@ controller("NodeViewController", function($scope, structureDataService, $documen
             }
         }
         stack.generatePositionsInPanel(startPoint, xDiff * 2, yDiff, 200, 31);
+
+        for(var i = 0; i < stack.values.length; i++) {
+            stack.values[i].isLastIdx = false;
+        }
+        stack.values[stack.values.length - 1].isLastIdx = true;
         $scope.nodes = stack.values;
 
-        for(var i = 0; i < $scope.nodes.length; i++) {
-            $scope.nodes[i].isLastIdx = false;
+        //HACK - apply not getting called when Push is called for the first time
+        if(structureDataService.selectedStructure.changeType == 'Add') {
+            $scope.$apply();
         }
-        $scope.nodes[$scope.nodes.length - 1].isLastIdx = true;
     }
 
     //DRAW LINES
