@@ -77,7 +77,8 @@ div.Node:hover {
 
 }
 
-div#NodeType-1 { /* Binary Search tree */
+/* Binary Search tree */
+div#NodeType-1 { 
     border-radius: 50%;
     min-width: 50px;
     min-height: 50px;
@@ -90,21 +91,12 @@ div#NodeValueType-1 {
     vertical-align: center;
 }
 
-div#NodeValueType-2 {
-
-}
-
-div#NodeType-2 {
-    width: 200px;
-    height: 30px;
-}
-
-div#NodeType-1:hover { /* Binary Search tree */
+div#NodeType-1:hover {
     background-color: #606C38;
 
 }
 
-div#NodeType-1 img { /* Binary Search tree */
+div#NodeType-1 img {
     display: none;
 
     -o-transition:.5s;
@@ -114,11 +106,26 @@ div#NodeType-1 img { /* Binary Search tree */
     transition:.5s;
 }
 
-div#NodeType-1:hover img { /* Binary Search tree */
+div#NodeType-1:hover img {
     display: inline;
     margin-top: -5px;
 
     -webkit-filter: opacity(1.0) drop-shadow(0 0 0 rgb(254, 250, 254));
     filter: opacity(1.0) drop-shadow(0 0 0 rgb(254, 250, 254));
 }
-  
+
+/* Stack */
+div#NodeType-2 {
+    width: 200px;
+    height: 30px;
+}
+
+div#NodeValueType-2 {
+
+}
+
+/* Queue */
+div#NodeType-3 {
+    width: 100px;
+    height: 100px;
+}

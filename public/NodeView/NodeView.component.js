@@ -57,6 +57,7 @@ controller("NodeViewController", function($scope, structureDataService, $documen
         }
    }
 
+   //DRAW BST====================================================================
     function drawBST(dataStructure) {
         var bst = new BinarySearchTree(dataStructure.title);
         
@@ -76,31 +77,6 @@ controller("NodeViewController", function($scope, structureDataService, $documen
         bst.serialize(array);
         drawLinesBetweenNodes(bst.root);
         $scope.nodes = array;
-    }
-
-    function drawStack(dataStructure) {
-        var stack = new Stack(dataStructure.title);
-
-        for(var i = 0; i < dataStructure.values.length; i++) {
-            if(dataStructure.dataType == "Integer") {
-                stack.insert(parseInt(dataStructure.values[i]));
-            }
-            else {
-                stack.insert(dataStructure.values[i]);
-            }
-        }
-        stack.generatePositionsInPanel(startPoint, xDiff * 2, yDiff, 200, 31);
-
-        for(var i = 0; i < stack.values.length; i++) {
-            stack.values[i].isLastIdx = false;
-        }
-        stack.values[stack.values.length - 1].isLastIdx = true;
-        $scope.nodes = stack.values;
-
-        //HACK - apply not getting called when Push is called for the first time
-        if(structureDataService.selectedStructure.changeType == 'Add') {
-            $scope.$apply();
-        }
     }
 
     //DRAW LINES
@@ -134,12 +110,34 @@ controller("NodeViewController", function($scope, structureDataService, $documen
         }
     }
 
-    $scope.wasNodeDeleted = function() {
-        if($scope.structureLengthDiff < 0) {
-            return true;
+    //DRAW STACK====================================================================
+    function drawStack(dataStructure) {
+        var stack = new Stack(dataStructure.title);
+
+        for(var i = 0; i < dataStructure.values.length; i++) {
+            if(dataStructure.dataType == "Integer") {
+                stack.insert(parseInt(dataStructure.values[i]));
+            }
+            else {
+                stack.insert(dataStructure.values[i]);
+            }
         }
-        else {
-            return false;
+        stack.generatePositionsInPanel(startPoint, xDiff * 2, yDiff, 200, 31);
+
+        for(var i = 0; i < stack.values.length; i++) {
+            stack.values[i].isLastIdx = false;
         }
+        stack.values[stack.values.length - 1].isLastIdx = true;
+        $scope.nodes = stack.values;
+
+        //HACK - apply not getting called when Push is called for the first time
+        if(structureDataService.selectedStructure.changeType == 'Add') {
+            $scope.$apply();
+        }
+    }
+
+    //DRAW QUEUE====================================================================
+    function drawQueue(dataStructure) {
+        
     }
 });

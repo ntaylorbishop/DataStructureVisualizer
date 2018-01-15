@@ -30,11 +30,5 @@ controller("PageHeaderController", function($scope, structureDataService, userSe
 
     function loadStructuresOfType(structureType) {
         structureDataService.setCurrStructurePage(structureType);
-        //if(userService.getIsLoggedIn()) {
-        //    structureDataService.loadUserStructuresOfType(structureType);
-        //}
-        //else {
-        //    structureDataService.loadDefaultStructuresOfType(structureType);
-        //}
     }
 });
