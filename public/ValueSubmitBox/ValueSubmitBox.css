@@ -49,11 +49,11 @@ div#ValueSubmitBox #Pop-1 {
 }
 
 /* Stack */
-div#ValueSubmitBox #SubmitNewNodeBtn-2, #GenerateRandomNode-2 { 
+div#ValueSubmitBox #SubmitNewNodeBtn-2, #GenerateRandomNode-2, #SubmitNewNodeBtn-3, #GenerateRandomNode-3 { 
     width: 200px;
 }
 
-div#ValueSubmitBox #Pop-2 {
+div#ValueSubmitBox #Pop-2, #Pop-3 {
     visibility: visible;
     display: inline-block;
     width: 200px;
