@@ -22,16 +22,24 @@ Queue.prototype.insert = function(value) {
     this.values.push(newNode);
 }
 
-Queue.prototype.generatePositionsInPanel = function(startPos, panelWidth, panelHeight, width, height) {
-    this.computeNodePositions(startPos, panelWidth, panelHeight, width, height);
+Queue.prototype.generatePositionsInPanel = function(startPos, panelWidth, panelHeight, width, height, windowWidth) {
+    this.computeNodePositions(startPos, panelWidth, panelHeight, width, height, windowWidth);
 }
 
-Queue.prototype.computeNodePositions = function(startPos, panelWidth, panelHeight, width, height) { 
+Queue.prototype.computeNodePositions = function(startPos, panelWidth, panelHeight, width, height, windowWidth) { 
     var WARNING_MAGIC_NUMBER_HEIGHT = 50;
     var WARNING_MAGIC_NUMBER_WIDTH = 130;
+
+    //var middleOfScreen = new Vector2(panelWidth / 2, panelHeight / 2);
+    var middleOfScreen = new Vector2(panelWidth / 2, panelHeight / 2);
+    var totalWidth = (this.values.length) * width;
+    var xOffset = windowWidth * 0.35;
+    var yOffset = 50;
+
     for(var i = 0; i < this.values.length; i++) {
-        var xPos = startPos.x + (panelWidth / 2) + WARNING_MAGIC_NUMBER_WIDTH - (width / 2);
-        var yPos = startPos.y + panelHeight - WARNING_MAGIC_NUMBER_HEIGHT - height * i;
+        var xPos = middleOfScreen.x - (totalWidth / 2) + xOffset + (width + 2) * i;
+        //var xPos = middleOfScreen.x - (totalWidth / 2) + (width + 2) * i;
+        var yPos = middleOfScreen.y + yOffset;
         this.values[i].position = new Vector2(xPos, yPos);
     }
 } 

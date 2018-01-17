@@ -29,7 +29,9 @@ controller("NodeController", function($scope, structureDataService) {
     function setToHideAfterAnimation() {
         setTimeout( function(){
             $scope.animNode = "Hide";
-            $scope.$apply();
+            if(!$scope.$$phase) {
+                $scope.$apply();
+            }
         }, 800 );
     }
 

@@ -139,8 +139,13 @@ factory('structureDataService', function($http, userService) {
             retErr = '';
 
             if(retErr == '') {
-                setTimeout(function() {
-                    structureDataService.selectedStructure.structure.values.push(valueToAdd);
+                setTimeout(function() {                    
+                    if(structureDataService.selectedStructure.structure.structureType == 3) {
+                        structureDataService.selectedStructure.structure.values.unshift(valueToAdd);
+                    }
+                    else {
+                        structureDataService.selectedStructure.structure.values.push(valueToAdd);
+                    }
                     structureDataService.handleSelectedStructureDataChanged();
                 }, timeoutInSeconds * 1000);
             }
@@ -164,6 +169,7 @@ factory('structureDataService', function($http, userService) {
             if(this.animTimer.isTimerActive) {
                 this.deleteValueFromCurrentStructure();
                 structureDataService.handleSelectedStructureDataChanged();
+                return;
             }
 
             var timeoutInSeconds = 0;
@@ -179,8 +185,8 @@ factory('structureDataService', function($http, userService) {
                 if(isLoggedIn) {
                     structureDataService.postUpdateStructure();
                 }
-                structureDataService.animTimer.isTimerActive = false;
                 structureDataService.handleSelectedStructureDataChanged();
+                structureDataService.animTimer.isTimerActive = false;
             }, timeoutInSeconds * 1000);
         },
 
@@ -190,12 +196,16 @@ factory('structureDataService', function($http, userService) {
                 removeAtIndexFromArray(structureDataService.selectedStructure.structure.values, valueIndex);
                 break;
                 case StructureType.STRUCTURE_TYPE_STACK:    
-                if(structureDataService.selectedStructure.structure.values.length > 0) {
-                    removeAtIndexFromArray(structureDataService.selectedStructure.structure.values, structureDataService.selectedStructure.structure.values.length - 1);
-                }
+                    if(structureDataService.selectedStructure.structure.values.length > 0) {
+                        var idx = structureDataService.selectedStructure.structure.values.length - 1;
+                        removeAtIndexFromArray(structureDataService.selectedStructure.structure.values, idx);
+                    }
                 break;
                 case StructureType.STRUCTURE_TYPE_QUEUE:
-                
+                    if(structureDataService.selectedStructure.structure.values.length > 0) {
+                        var idx = structureDataService.selectedStructure.structure.values.length - 1;
+                        removeAtIndexFromArray(structureDataService.selectedStructure.structure.values, idx);
+                    }
                 break;
                 case StructureType.STRUCTURE_TYPE_HEAP:
                 

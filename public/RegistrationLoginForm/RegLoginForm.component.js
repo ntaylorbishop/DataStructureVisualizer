@@ -143,6 +143,8 @@ controller("RegLoginController", function($scope, $rootScope, $http, userService
   function closeFormAndUpdateHeader() {
     userService.setIsLoggedIn(true);
     loginFormService.setShowForm(false);
-    $rootScope.$apply();
+    if(!$scope.$$phase) {
+        $scope.$apply();
+    }
   }
 });
